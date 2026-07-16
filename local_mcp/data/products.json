@@ -1,0 +1,72 @@
+{
+  "_notice": "강의 실습용 가상 데이터입니다. 실존하는 회사·상품과 무관합니다.",
+  "company": "행복생명(가상)",
+  "products": [
+    {
+      "id": "WL-001",
+      "name": "(가상) 든든한 종신보험",
+      "category": "종신보험",
+      "monthly_premium_krw": 218000,
+      "coverage": "사망보험금 1억 원, 재해사망 시 2억 원",
+      "surrender_value_10y_pct": 74.2,
+      "riders": ["암진단특약", "입원일당특약"],
+      "target": "40대 가장, 상속·유족 보장 목적",
+      "caution": "10년 이내 해지 시 환급률이 낮아 중도해지에 불리함"
+    },
+    {
+      "id": "WL-002",
+      "name": "(가상) 변액 종신보험 미래설계",
+      "category": "종신보험",
+      "monthly_premium_krw": 265000,
+      "coverage": "사망보험금 1억 원 + 펀드 운용 실적 연동",
+      "surrender_value_10y_pct": 68.5,
+      "riders": ["재해사망특약"],
+      "target": "투자 성향이 있는 30~40대",
+      "caution": "운용 실적에 따라 해약환급금 변동, 원금 손실 가능"
+    },
+    {
+      "id": "TR-001",
+      "name": "(가상) 알뜰 정기보험 e세이브",
+      "category": "정기보험",
+      "monthly_premium_krw": 39000,
+      "coverage": "60세 만기 사망보험금 1억 원",
+      "surrender_value_10y_pct": 0.0,
+      "riders": [],
+      "target": "보장은 크게, 보험료는 최소로 원하는 30대",
+      "caution": "순수보장형으로 만기·해지 환급금 없음"
+    },
+    {
+      "id": "CI-001",
+      "name": "(가상) 3대질병 집중보장보험",
+      "category": "건강보험",
+      "monthly_premium_krw": 87000,
+      "coverage": "암 진단 5천만 원, 뇌졸중·급성심근경색 각 3천만 원",
+      "surrender_value_10y_pct": 41.0,
+      "riders": ["항암치료특약", "간병인지원특약"],
+      "target": "가족력이 있는 40~50대",
+      "caution": "가입 후 90일 면책기간, 1년 내 진단 시 50% 지급"
+    },
+    {
+      "id": "AN-001",
+      "name": "(가상) 평생월급 연금보험",
+      "category": "연금보험",
+      "monthly_premium_krw": 300000,
+      "coverage": "65세부터 종신 월 52만 원 예시(공시이율 기준)",
+      "surrender_value_10y_pct": 88.9,
+      "riders": ["보증기간 20년 옵션"],
+      "target": "노후 현금흐름을 원하는 40~50대",
+      "caution": "예시 연금액은 공시이율 변동 시 달라질 수 있음"
+    },
+    {
+      "id": "SV-001",
+      "name": "(가상) 어린이 성장저축보험",
+      "category": "저축보험",
+      "monthly_premium_krw": 150000,
+      "coverage": "만기환급 + 자녀 골절·화상 등 생활보장",
+      "surrender_value_10y_pct": 96.3,
+      "riders": ["교육자금특약"],
+      "target": "자녀 학자금을 준비하는 30~40대 부모",
+      "caution": "저축성이지만 초기 사업비 공제로 단기 해지 시 원금 미달"
+    }
+  ]
+}
