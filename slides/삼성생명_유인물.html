@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>유인물 — 일하는 법을 만드는 4시간</title>
+<style>
+  :root{
+    --paper:#F9F6EE; --ink:#22232A; --muted:#6C665E; --faint:#9C9587;
+    --seal:#C2402A; --seal-soft:rgba(194,64,42,.08);
+    --slate:#47627E; --line:rgba(34,35,42,.16);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:"Apple SD Gothic Neo","Pretendard","Noto Sans KR","Malgun Gothic",sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .sheet{width:210mm; min-height:297mm; margin:0 auto; padding:14mm 16mm 12mm; position:relative}
+  header{display:flex; align-items:baseline; justify-content:space-between;
+    border-bottom:2.5px solid var(--ink); padding-bottom:10px; margin-bottom:16px}
+  header h1{font-size:21px; font-weight:800; letter-spacing:-.01em}
+  header h1 em{font-style:normal; color:var(--seal)}
+  header .meta{font-size:11px; color:var(--muted); letter-spacing:.06em}
+  h2{display:flex; align-items:center; gap:8px;
+    font-size:12px; font-weight:800; letter-spacing:.18em; color:var(--seal);
+    margin:18px 0 8px}
+  h2::before{content:""; width:8px; height:8px; background:var(--seal); flex:none}
+  table{border-collapse:collapse; width:100%; font-size:12.5px}
+  th{font-size:10px; font-weight:700; letter-spacing:.1em; color:var(--muted);
+    text-align:left; padding:5px 9px; border-bottom:1.5px solid var(--ink)}
+  td{padding:7px 9px; border-bottom:1px solid var(--line); line-height:1.5; vertical-align:top}
+  tr.hl td{background:var(--seal-soft)}
+  tr.hl td:first-child{border-left:2.5px solid var(--seal)}
+  .seal-c{color:var(--seal); font-weight:700}
+  .slate-c{color:var(--slate)}
+  small.note{display:block; font-size:10.5px; color:var(--faint); margin-top:5px; line-height:1.5}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:0 24px}
+  ol.steps{padding-left:20px; font-size:12.5px; line-height:1.65}
+  ol.steps li{margin-bottom:4px}
+  ul.qs{list-style:none; font-size:12.5px; line-height:1.6}
+  ul.qs li{padding:6px 0 6px 26px; position:relative; border-bottom:1px solid var(--line)}
+  ul.qs li:last-child{border-bottom:none}
+  ul.qs li b.q{position:absolute; left:0; top:6px; color:var(--seal); font-size:12px}
+  .prompt{border:1.5px solid var(--seal); border-radius:8px; background:var(--seal-soft);
+    padding:10px 14px; font-size:13.5px; font-weight:700; line-height:1.6; margin-top:2px}
+  .prompt small{display:block; font-weight:400; font-size:10.5px; color:var(--muted); margin-top:5px}
+  .four{counter-reset:f; font-size:13px; line-height:1.7; list-style:none}
+  .four li{padding-left:26px; position:relative; margin-bottom:5px}
+  .four li::before{counter-increment:f; content:counter(f);
+    position:absolute; left:0; top:1px; width:17px; height:17px;
+    border:1.5px solid var(--seal); border-radius:4px; color:var(--seal);
+    font-size:10.5px; font-weight:800; display:flex; align-items:center; justify-content:center;
+    transform:rotate(-4deg)}
+  footer{position:absolute; left:16mm; right:16mm; bottom:9mm;
+    display:flex; justify-content:space-between; align-items:center;
+    border-top:1px solid var(--line); padding-top:7px;
+    font-size:10px; color:var(--faint); letter-spacing:.05em}
+  @media print{
+    body{background:#fff}
+    .sheet{margin:0; width:auto}
+    @page{size:A4; margin:0}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <header>
+    <h1>일하는 법을 만드는 4시간 — <em>한 장 유인물</em></h1>
+    <div class="meta">삼성생명 AI 활용 교육 · 2026-07-21 · 13:30–17:30</div>
+  </header>
+
+  <h2>오늘 나오는 말은 네 개뿐입니다</h2>
+  <table>
+    <thead><tr><th style="width:78px">용어</th><th>한 줄 정의</th><th style="width:140px">회사 비유</th><th style="width:104px">오늘</th></tr></thead>
+    <tbody>
+      <tr class="hl"><td><b>Skill</b></td><td>AI에게 주는 재사용 가능한 업무 지침서 (문서 파일)</td><td>표준업무절차서</td><td class="seal-c">직접 만든다</td></tr>
+      <tr><td><b>Connector</b></td><td>AI가 외부 시스템에 접근하는 표준 연결 통로</td><td>시스템 권한 있는 창구</td><td class="seal-c">직접 연결한다</td></tr>
+      <tr><td><b>Plugin</b></td><td>Skill·설정·연결을 묶어 배포하는 패키지</td><td>팀 표준 업무 키트</td><td>개념만</td></tr>
+      <tr><td><b>Agent</b></td><td>위 재료로 "행동→관찰→사고→재행동" 루프를 도는 실행 주체</td><td>일 위임받은 주니어</td><td>이미 준비되어 있다</td></tr>
+    </tbody>
+  </table>
+  <small class="note">MCP는 Connector의 기술 규격 이름입니다 — 대화에서는 Connector라고 부르시면 충분합니다.
+  색 규칙: <span class="seal-c">인주색 = 내 것(문서로 남는 자산)</span> · <span class="slate-c">회청색 = 빌려 쓰는 것(플랫폼·구독)</span></small>
+
+  <h2>기억할 곱셈 한 줄</h2>
+  <table>
+    <tbody>
+      <tr>
+        <td style="width:33%"><b class="seal-c">내가 쓴 문서 (Skill)</b><br>절차 · 판단 기준 · 도구 목록<br><small class="note">내 것 — 이식 · 상속</small></td>
+        <td style="width:33%"><b class="slate-c">× 빌린 실행력 (하네스)</b><br>루프 · 재시도 · 위임<br><small class="note">구독 — 계약 종료 시 반납</small></td>
+        <td><b>= 일하는 에이전트</b><br>목표를 향해 관찰·재시도하는 실행<br><small class="note">둘이 결합된 순간에만 존재</small></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="grid2">
+    <div>
+      <h2>벤더에게 드릴 세 가지 질문</h2>
+      <ul class="qs">
+        <li><b class="q">①</b> 시연에 쓴 모델과 우리가 도입할 모델이 같습니까?</li>
+        <li><b class="q">②</b> 우리 모델 기준으로 최적화됐다는 근거는 무엇입니까?</li>
+        <li><b class="q">③</b> 이 플랫폼을 떠나면, 우리가 만든 것 중 무엇이 남습니까?</li>
+      </ul>
+    </div>
+    <div>
+      <h2>모델 고르기 — 내 업무 3문제 테스트</h2>
+      <ol class="steps">
+        <li>자주 하는 과제 3개 선정 (요약 1 · 판단 1 · 작성 1)</li>
+        <li>모델을 보기 전에 "좋은 결과의 기준"부터 적기</li>
+        <li>후보 모델들에 동일하게 시키고 기준표로 채점</li>
+        <li>점수+속도+비용으로 결정 — 분기마다 재평가</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <h2>도구 3초 판별법</h2>
+      <table>
+        <tbody>
+          <tr><td>아이디어 탐색 · 문서 1~3개</td><td style="width:96px"><b>Desktop</b></td></tr>
+          <tr><td>보고서 20건 → 비교표 1개</td><td><b>Code</b></td></tr>
+          <tr class="hl"><td>매주 반복하는 정형 산출물</td><td class="seal-c"><b>Code + Skill</b></td></tr>
+          <tr><td>화면 보며 즉시 다듬기</td><td><b>Desktop</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h2>실습 — 복사해서 쓰는 요청 문장</h2>
+      <div class="prompt">"이걸 재사용 가능한 Skill(업무 지침서)로 만들어줘.<br>빠진 정보가 있으면 질문 5개까지만 해줘."
+        <small>먼저 메모장에 3가지: ① 언제 하는 일 ② 일하는 순서 ③ 결과물의 형식.
+        성공 기준 = 내 지침대로 결과 형식이 바뀌는 것.</small>
+      </div>
+    </div>
+  </div>
+
+  <h2>오늘의 네 문장</h2>
+  <ul class="four">
+    <li>에이전트는 이미 준비되어 있다 — 내가 만들 것은 <b class="seal-c">Skill</b>이다.</li>
+    <li>모델은 점수표가 아니라 <b class="seal-c">내 업무 3문제</b>로, 하네스와의 묶음으로 고른다.</li>
+    <li>대화면 Desktop, 파일 작업이면 Code.</li>
+    <li>배워야 할 것은 구현 기술이 아니라 <b class="seal-c">내 업무의 연출 언어</b>다.</li>
+  </ul>
+
+  <h2>안전 수칙 (금융사 필수)</h2>
+  <ul class="four" style="counter-reset:f">
+    <li>AI는 <b>내 권한 이상은 절대 못 봅니다</b> — 연결 전 권한 범위를 확인하세요.</li>
+    <li>붙이는 법만큼 <b class="seal-c">끊는 법</b>(연결 해제·권한 회수)을 알아두세요.</li>
+    <li>고객정보·내부정보는 회사 보안 지침이 허용하는 범위에서만.</li>
+  </ul>
+
+  <footer>
+    <span>다음 주 과제 — Skill 딱 하나만 더 만들어보기. 그 파일이 어느 플랫폼을 쓰든 들고 다닐 자산입니다.</span>
+    <span>1 / 1</span>
+  </footer>
+</div>
+</body>
+</html>

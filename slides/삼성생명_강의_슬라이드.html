@@ -3,30 +3,36 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>에이전트를 만들지 마세요 — 삼성생명 4시간 강의</title>
+<title>일하는 법을 만드는 4시간 — 삼성생명 AI 교육</title>
 <style>
+  /* ═══════════ 디자인 시스템: 먹 · 한지 · 인주 ═══════════
+     의미 규칙 — 인주(주홍) = 내 것 / 회청 = 빌린 것          */
   :root{
-    --ground:#0F1522; --panel:#1A2334; --panel2:#141C2C;
-    --text:#EAEEF6; --muted:#93A0B8; --faint:#5E6A82;
-    --gold:#E3B14F; --gold-soft:rgba(227,177,79,.14);
-    --blue:#7FB3E8; --line:rgba(147,160,184,.22);
-    --warn:#E88D8D;
+    --ground:#17181D; --panel:#1F2026; --panel2:#1B1C22;
+    --ink:#F1EBDF;   --muted:#A79F90; --faint:#6E685C;
+    --seal:#E4593B;  --seal-deep:#C74228; --seal-soft:rgba(228,89,59,.12);
+    --slate:#8FA4BC; --slate-soft:rgba(143,164,188,.10);
+    --line:rgba(241,235,223,.15); --line-strong:rgba(241,235,223,.32);
   }
   :root[data-theme="light"]{
-    --ground:#F3F4F7; --panel:#FFFFFF; --panel2:#EAECF1;
-    --text:#1B2536; --muted:#5A6780; --faint:#98A2B5;
-    --gold:#A87B22; --gold-soft:rgba(168,123,34,.12);
-    --blue:#2E6FAE; --line:rgba(27,37,54,.16);
-    --warn:#B54A4A;
+    --ground:#F6F1E6; --panel:#FDFAF2; --panel2:#EFE9DB;
+    --ink:#22232A;   --muted:#6C665A; --faint:#9C9587;
+    --seal:#C2402A;  --seal-deep:#A33321; --seal-soft:rgba(194,64,42,.10);
+    --slate:#47627E; --slate-soft:rgba(71,98,126,.08);
+    --line:rgba(34,35,42,.14); --line-strong:rgba(34,35,42,.30);
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html,body{height:100%}
   body{
-    background:var(--ground); color:var(--text);
+    background:var(--ground); color:var(--ink);
     font-family:"Apple SD Gothic Neo","Pretendard","Noto Sans KR","Malgun Gothic",sans-serif;
     overflow:hidden; -webkit-font-smoothing:antialiased;
   }
   #viewport{position:fixed; inset:0}
+  #viewport::after{ /* 한지 질감 */
+    content:""; position:absolute; inset:0; pointer-events:none; opacity:.05;
+    background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2"/><feColorMatrix values="0 0 0 0 0.6 0 0 0 0 0.55 0 0 0 0 0.5 0 0 0 0.6 0"/></filter><rect width="240" height="240" filter="url(%23n)"/></svg>');
+  }
   .stage{
     position:absolute; left:50%; top:50%;
     width:1280px; height:720px;
@@ -35,172 +41,268 @@
   }
   .slide{
     position:absolute; inset:0; display:none;
-    flex-direction:column; padding:72px 96px 88px;
+    flex-direction:column; padding:78px 104px 96px;
     background:var(--ground);
   }
   .slide.active{display:flex}
+
+  /* ---------- 등장 모션: 요소가 순서대로 떠오른다 ---------- */
   @media (prefers-reduced-motion:no-preference){
-    .slide.active{animation:fadein .28s ease}
-    @keyframes fadein{from{opacity:0}to{opacity:1}}
+    .slide.active .rise{animation:rise .65s cubic-bezier(.2,.75,.25,1) both}
+    .slide.active .d1{animation-delay:.08s}
+    .slide.active .d2{animation-delay:.18s}
+    .slide.active .d3{animation-delay:.28s}
+    .slide.active .d4{animation-delay:.38s}
+    @keyframes rise{from{opacity:0; transform:translateY(22px)}to{opacity:1; transform:none}}
   }
 
-  /* ---------- typographic roles ---------- */
+  /* ---------- 단계 리빌(fragment): → 키로 하나씩 ---------- */
+  .fr{opacity:0; transform:translateY(14px);
+      transition:opacity .5s cubic-bezier(.2,.75,.25,1), transform .5s cubic-bezier(.2,.75,.25,1)}
+  .fr.on{opacity:1; transform:none}
+  @media (prefers-reduced-motion:reduce){
+    .fr{transform:none; transition:opacity .2s}
+  }
+
+  /* ---------- 타이포 롤 ---------- */
   .eyebrow{
-    font-size:17px; font-weight:700; letter-spacing:.14em;
-    color:var(--gold); margin-bottom:26px;
+    display:flex; align-items:center; gap:12px;
+    font-size:15px; font-weight:700; letter-spacing:.26em;
+    color:var(--seal); margin-bottom:30px;
   }
-  .eyebrow.live{color:var(--warn)}
+  .eyebrow::before{content:""; width:9px; height:9px; background:var(--seal); flex:none}
+  .eyebrow.live::before{animation:pulse 1.6s ease infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
   h1{
-    font-size:54px; line-height:1.22; font-weight:800;
-    letter-spacing:-.015em; text-wrap:balance; margin-bottom:34px;
+    font-size:52px; line-height:1.26; font-weight:800;
+    letter-spacing:-.02em; text-wrap:balance; margin-bottom:36px;
   }
-  h1 em{font-style:normal; color:var(--gold)}
-  .body{font-size:26px; line-height:1.65; color:var(--text); max-width:980px}
-  .body p+p{margin-top:18px}
+  h1 em{font-style:normal; color:var(--seal)}
+  .body{font-size:27px; line-height:1.7; max-width:990px; font-weight:400}
+  .body p+p{margin-top:20px}
   .muted{color:var(--muted)}
-  .fn{font-size:16px; color:var(--faint); margin-top:auto; padding-top:24px; line-height:1.5}
-  .gold{color:var(--gold)} .blue{color:var(--blue)}
+  .seal-c{color:var(--seal)} .slate-c{color:var(--slate)}
+  .fn{font-size:16px; color:var(--faint); margin-top:auto; padding-top:26px; line-height:1.55}
   ul.plain{list-style:none}
-  ul.plain li{padding-left:30px; position:relative; margin-bottom:16px; font-size:25px; line-height:1.55}
-  ul.plain li::before{content:""; position:absolute; left:2px; top:.62em; width:12px; height:3px; background:var(--gold)}
+  ul.plain li{padding-left:34px; position:relative; margin-bottom:20px; font-size:26px; line-height:1.6}
+  ul.plain li::before{content:""; position:absolute; left:2px; top:.58em; width:14px; height:3px; background:var(--seal)}
 
-  /* statement slide: one huge line */
-  .slide.statement{justify-content:center; align-items:flex-start}
-  .slide.statement h1{font-size:66px; max-width:1050px}
-  .slide.statement .sub{font-size:28px; color:var(--muted); line-height:1.6; max-width:900px}
+  /* statement: 한 호흡 슬라이드 */
+  .slide.statement{justify-content:center}
+  .slide.statement h1{font-size:64px; line-height:1.3; max-width:1080px; margin-bottom:30px}
+  .slide.statement .sub{font-size:27px; color:var(--muted); line-height:1.7; max-width:920px}
 
-  /* divider */
+  /* ---------- 교시 도장(전각) 디바이더 ---------- */
   .slide.divider{justify-content:center}
-  .divider .big-n{
-    font-size:220px; font-weight:800; line-height:1; color:var(--gold);
-    letter-spacing:-.04em; font-variant-numeric:tabular-nums;
+  .divider-row{display:flex; align-items:center; gap:52px}
+  .seal-block{
+    width:190px; height:190px; flex:none;
+    border:4px solid var(--seal); border-radius:14px;
+    display:flex; align-items:center; justify-content:center;
+    transform:rotate(-3deg); position:relative;
   }
-  .divider .word{font-size:58px; font-weight:800; margin-top:8px; letter-spacing:-.01em}
-  .divider .desc{font-size:26px; color:var(--muted); margin-top:22px; max-width:820px; line-height:1.6}
+  .seal-block::after{ /* 인주 번짐 */
+    content:""; position:absolute; inset:-4px; border-radius:14px;
+    box-shadow:0 0 0 1px var(--seal-soft), inset 0 0 26px var(--seal-soft);
+  }
+  .seal-block .n{font-size:112px; font-weight:800; color:var(--seal);
+    font-variant-numeric:tabular-nums; letter-spacing:-.05em; line-height:1}
+  @media (prefers-reduced-motion:no-preference){
+    .slide.active .seal-block{animation:stamp .5s cubic-bezier(.2,1.4,.4,1) .25s both}
+  }
+  @keyframes stamp{
+    from{opacity:0; transform:rotate(-8deg) scale(1.7)}
+    to{opacity:1; transform:rotate(-3deg) scale(1)}
+  }
+  .divider .word{font-size:66px; font-weight:800; letter-spacing:-.01em}
+  .divider .desc{font-size:25px; color:var(--muted); margin-top:16px; max-width:760px; line-height:1.65}
 
-  /* cards & grids */
-  .cols{display:grid; gap:22px; margin-top:6px}
+  /* ---------- 카드 · 그리드 ---------- */
+  .cols{display:grid; gap:22px; margin-top:4px}
   .cols.c2{grid-template-columns:1fr 1fr}
   .cols.c3{grid-template-columns:1fr 1fr 1fr}
   .card{
-    background:var(--panel); border:1px solid var(--line); border-radius:10px;
-    padding:26px 28px;
+    background:var(--panel); border:1px solid var(--line); border-radius:12px;
+    padding:28px 30px;
   }
-  .card .k{font-size:18px; font-weight:700; letter-spacing:.08em; color:var(--gold); margin-bottom:12px}
-  .card .v{font-size:23px; line-height:1.55}
-  .card .v small{display:block; font-size:17px; color:var(--muted); margin-top:10px; line-height:1.5}
+  .card .k{font-size:17px; font-weight:700; letter-spacing:.12em; color:var(--seal); margin-bottom:14px}
+  .card .v{font-size:24px; line-height:1.55; font-weight:600}
+  .card .v small{display:block; font-size:17px; color:var(--muted); margin-top:12px; line-height:1.55; font-weight:400}
 
-  /* tables */
-  table{border-collapse:collapse; width:100%; font-size:21px; margin-top:4px}
-  th{font-size:16px; font-weight:700; letter-spacing:.08em; color:var(--muted);
-     text-align:left; padding:10px 16px; border-bottom:2px solid var(--line)}
-  td{padding:13px 16px; border-bottom:1px solid var(--line); line-height:1.45; vertical-align:top}
+  /* ---------- 표 ---------- */
+  table{border-collapse:collapse; width:100%; font-size:22px; margin-top:4px}
+  th{font-size:15px; font-weight:700; letter-spacing:.1em; color:var(--muted);
+     text-align:left; padding:12px 18px; border-bottom:2px solid var(--line-strong)}
+  td{padding:15px 18px; border-bottom:1px solid var(--line); line-height:1.5; vertical-align:middle}
   td.num{font-variant-numeric:tabular-nums; white-space:nowrap}
-  tr.hl td{background:var(--gold-soft)}
-  .tbl-note{font-size:16px; color:var(--faint); margin-top:14px}
+  tr.hl td{background:var(--seal-soft)}
+  tr.hl td:first-child{border-left:3px solid var(--seal)}
+  .slide.dense{padding-top:60px}
+  .dense .eyebrow{margin-bottom:22px}
+  .dense h1{font-size:44px; margin-bottom:26px}
+  .dense td{padding:11px 18px; font-size:21px}
+  .dense .tbl-note{margin-top:14px}
+  .tbl-note{font-size:16px; color:var(--faint); margin-top:16px}
+  .cbar{display:inline-block; height:8px; border-radius:4px; background:var(--slate);
+    opacity:.65; vertical-align:middle; margin-left:14px}
 
-  /* loop diagram */
-  .loop{display:flex; align-items:center; gap:0; margin:30px 0 10px}
+  /* ---------- 루프 다이어그램 ---------- */
+  .loop{display:flex; align-items:center; margin:34px 0 14px}
   .loop .node{
-    background:var(--panel); border:1.5px solid var(--gold); border-radius:999px;
-    padding:20px 40px; font-size:27px; font-weight:700; white-space:nowrap;
+    background:var(--panel); border:1.5px solid var(--seal); border-radius:999px;
+    padding:20px 42px; font-size:27px; font-weight:700; white-space:nowrap;
   }
-  .loop .arr{font-size:30px; color:var(--gold); padding:0 20px}
+  .loop .arr{font-size:30px; color:var(--seal); padding:0 22px}
 
-  /* layers diagram */
-  .layers{display:flex; flex-direction:column; gap:14px; margin-top:8px; max-width:1000px}
-  .layer{display:grid; grid-template-columns:190px 1fr 260px; align-items:center;
-    border:1px solid var(--line); border-radius:10px; padding:20px 28px; background:var(--panel)}
-  .layer.top{border-color:var(--gold); background:var(--gold-soft)}
-  .layer .name{font-size:28px; font-weight:800}
+  /* ---------- 3층 구조 ---------- */
+  .layers{display:flex; flex-direction:column; gap:14px; margin-top:8px; max-width:1010px}
+  .layer{display:grid; grid-template-columns:190px 1fr 250px; align-items:center;
+    border:1px solid var(--line); border-radius:12px; padding:22px 30px; background:var(--panel)}
+  .layer .name{font-size:29px; font-weight:800}
   .layer .what{font-size:22px; color:var(--muted)}
-  .layer .who{font-size:22px; font-weight:700; text-align:right}
-  .layer.top .who{color:var(--gold)}
+  .layer .who{font-size:22px; font-weight:700; text-align:right; color:var(--slate)}
+  .layer.top{border-color:var(--seal); background:var(--seal-soft)}
+  .layer.top .who{color:var(--seal)}
 
-  /* timeline */
-  .timeline{display:flex; flex-direction:column; gap:0; margin-top:6px}
-  .tl{display:grid; grid-template-columns:210px 1fr; gap:26px; padding:17px 0;
+  /* ---------- 타임라인 ---------- */
+  .timeline{display:flex; flex-direction:column; margin-top:6px}
+  .tl{display:grid; grid-template-columns:215px 1fr; gap:28px; padding:19px 0;
       border-bottom:1px solid var(--line); align-items:baseline}
   .tl:last-child{border-bottom:none}
-  .tl .when{font-size:22px; font-weight:800; color:var(--gold); font-variant-numeric:tabular-nums}
-  .tl .what{font-size:23px; line-height:1.5}
+  .tl .when{font-size:23px; font-weight:800; color:var(--seal); font-variant-numeric:tabular-nums}
+  .tl .what{font-size:24px; line-height:1.5}
   .tl .what small{color:var(--muted); font-size:18px}
 
-  /* quote */
-  .quote{border-left:4px solid var(--gold); padding:8px 0 8px 30px; margin:22px 0}
-  .quote .q{font-size:30px; line-height:1.5; font-weight:600}
-  .quote .who{font-size:19px; color:var(--muted); margin-top:12px}
+  /* ---------- 인용 ---------- */
+  .quote{border-left:4px solid var(--seal); padding:10px 0 10px 32px; margin:24px 0}
+  .quote .q{font-size:31px; line-height:1.55; font-weight:700}
+  .quote .who{font-size:19px; color:var(--muted); margin-top:14px}
 
   .verify{
     display:inline-block; font-size:14px; font-weight:700; letter-spacing:.06em;
-    color:var(--warn); border:1px solid var(--warn); border-radius:4px;
-    padding:3px 8px; vertical-align:middle; margin-left:10px;
+    color:var(--seal); border:1px dashed var(--seal); border-radius:4px;
+    padding:3px 9px; vertical-align:middle; margin-left:10px;
   }
 
-  /* equation diagram (Skill × 실행력 = 에이전트) */
-  .equation{display:grid; grid-template-columns:1fr 56px 1fr 56px 1fr; align-items:stretch; gap:0; margin-top:10px}
-  .eq-box{border-radius:12px; padding:26px 24px; display:flex; flex-direction:column; gap:10px;
+  /* ---------- 곱셈 도식: 내 것 × 빌린 것 ---------- */
+  .equation{display:grid; grid-template-columns:1fr 54px 1fr 54px 1fr; align-items:stretch; margin-top:8px}
+  .eq-box{border-radius:14px; padding:28px 24px; display:flex; flex-direction:column; gap:12px;
     background:var(--panel); border:1.5px solid var(--line); text-align:center}
-  .eq-box.mine{border-color:var(--gold); background:var(--gold-soft)}
-  .eq-box.result{border-color:var(--blue)}
-  .eq-title{font-size:26px; font-weight:800}
-  .eq-sub{font-size:19px; color:var(--muted); line-height:1.5; flex:1}
-  .eq-tag{font-size:16px; font-weight:700; letter-spacing:.04em; border-top:1px solid var(--line); padding-top:12px}
-  .eq-op{font-size:44px; font-weight:300; color:var(--faint); display:flex; align-items:center; justify-content:center}
-  .verdicts{display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:26px}
-  .verdict{display:flex; align-items:center; gap:16px; font-size:22px;
-    border:1px solid var(--line); border-radius:10px; padding:16px 22px; background:var(--panel2)}
-  .verdict small{color:var(--muted); font-size:17px}
-  .stamp{flex:none; font-size:18px; font-weight:800; letter-spacing:.06em;
-    border:2px solid; border-radius:8px; padding:6px 14px}
-  .stamp.t{color:var(--gold); border-color:var(--gold)}
-  .stamp.f{color:var(--warn); border-color:var(--warn)}
+  .eq-box.mine{border-color:var(--seal); background:var(--seal-soft)}
+  .eq-box.rent{border-color:var(--slate); background:var(--slate-soft)}
+  .eq-title{font-size:27px; font-weight:800}
+  .eq-sub{font-size:19px; color:var(--muted); line-height:1.55; flex:1}
+  .eq-tag{font-size:17px; font-weight:700; border-top:1px solid var(--line); padding-top:13px}
+  .eq-box.mine .eq-tag{color:var(--seal)}
+  .eq-box.rent .eq-tag{color:var(--slate)}
+  .eq-op{font-size:46px; font-weight:300; color:var(--faint); display:flex; align-items:center; justify-content:center}
 
-  /* fork diagram (한 문장 → 두 독해) */
-  .fork{display:flex; flex-direction:column; align-items:center; margin-top:6px}
-  .fork-root{font-size:38px; font-weight:800; letter-spacing:-.01em;
-    border:1.5px solid var(--line); background:var(--panel); border-radius:12px; padding:18px 46px}
-  .fork svg{display:block; width:920px; height:64px}
+  /* ---------- 도장 판정 ---------- */
+  .verdicts{display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:28px}
+  .verdict{display:flex; align-items:center; gap:18px; font-size:22px;
+    border:1px solid var(--line); border-radius:12px; padding:18px 24px; background:var(--panel2)}
+  .verdict small{color:var(--muted); font-size:17px}
+  .stamp{flex:none; font-size:19px; font-weight:800; letter-spacing:.1em;
+    border:3px solid; border-radius:8px; padding:8px 15px; transform:rotate(-4deg)}
+  .stamp.t{color:var(--seal); border-color:var(--seal);
+    box-shadow:inset 0 0 14px var(--seal-soft)}
+  .stamp.f{color:var(--faint); border-color:var(--faint); border-style:dashed}
+  @media (prefers-reduced-motion:no-preference){
+    .fr.on .stamp, .slide.active .stamp.auto{animation:stamp-s .45s cubic-bezier(.2,1.5,.4,1) both}
+    @keyframes stamp-s{from{opacity:0; transform:rotate(-10deg) scale(1.8)}to{opacity:1; transform:rotate(-4deg) scale(1)}}
+  }
+
+  /* ---------- 갈림길(두 독해) ---------- */
+  .fork{display:flex; flex-direction:column; align-items:center; margin-top:2px}
+  .fork-root{font-size:38px; font-weight:800;
+    border:1.5px solid var(--line-strong); background:var(--panel); border-radius:12px; padding:18px 48px}
+  .fork svg{display:block; width:920px; height:58px}
   .fork svg line{stroke:var(--faint); stroke-width:2}
   .fork-branches{display:grid; grid-template-columns:1fr 1fr; gap:26px; width:100%}
-  .branch{border-radius:12px; padding:24px 28px; background:var(--panel); border:1.5px solid var(--line)}
-  .branch.true{border-color:var(--gold); background:var(--gold-soft)}
-  .branch.false{border-color:var(--warn)}
-  .branch .b-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:12px}
+  .branch{border-radius:14px; padding:24px 28px; background:var(--panel); border:1.5px solid var(--line)}
+  .branch.true{border-color:var(--seal); background:var(--seal-soft)}
+  .branch.hold{border-color:var(--slate)}
+  .branch .b-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:14px}
   .branch .b-name{font-size:23px; font-weight:800}
-  .branch .b-quote{font-size:25px; font-weight:600; line-height:1.45; margin-bottom:10px}
-  .branch .b-why{font-size:18px; color:var(--muted); line-height:1.55}
-  .fork-trick{margin-top:24px; width:100%; text-align:center; font-size:21px;
+  .branch .b-quote{font-size:25px; font-weight:600; line-height:1.5; margin-bottom:10px}
+  .branch .b-why{font-size:18px; color:var(--muted); line-height:1.6}
+  .fork-note{margin-top:24px; width:100%; text-align:center; font-size:21px;
     border:1px dashed var(--faint); border-radius:10px; padding:16px 20px; color:var(--muted)}
-  .fork-trick b{color:var(--warn)}
+  .fork-note b{color:var(--seal)}
 
-  /* two-context verdict (임대 사무실) */
+  /* ---------- 두 맥락(사무실) ---------- */
   .ctx-pair{display:grid; grid-template-columns:1fr 1fr; gap:26px; margin-top:8px}
-  .ctx{border:1px solid var(--line); border-radius:12px; padding:26px 28px; background:var(--panel)}
-  .ctx .c-where{font-size:17px; font-weight:700; letter-spacing:.1em; color:var(--muted); margin-bottom:14px}
-  .ctx .c-say{font-size:27px; font-weight:700; margin-bottom:12px}
-  .ctx .c-note{font-size:19px; color:var(--muted); line-height:1.55}
-  .ctx.ok{border-color:var(--gold)} .ctx.no{border-color:var(--warn)}
+  .ctx{border:1.5px solid var(--line); border-radius:14px; padding:28px 30px; background:var(--panel)}
+  .ctx .c-where{font-size:16px; font-weight:700; letter-spacing:.16em; color:var(--muted); margin-bottom:16px}
+  .ctx .c-say{font-size:29px; font-weight:800; margin-bottom:14px}
+  .ctx .c-note{font-size:19px; color:var(--muted); line-height:1.6}
+  .ctx.ok{border-color:var(--seal); background:var(--seal-soft)}
+  .ctx.no{border-color:var(--slate)}
 
-  /* chrome */
-  #bar{position:absolute; left:0; bottom:0; height:4px; background:var(--gold); width:0; transition:width .2s}
-  #meta{
-    position:absolute; right:28px; bottom:16px; font-size:14px; color:var(--faint);
-    font-variant-numeric:tabular-nums; letter-spacing:.05em;
+  /* ---------- 쉬는 시간 카운트다운 ---------- */
+  .slide.break-slide{justify-content:center; align-items:center; text-align:center}
+  .break-slide .clock{
+    font-size:200px; font-weight:800; line-height:1; letter-spacing:-.02em;
+    font-variant-numeric:tabular-nums; margin:18px 0 30px;
   }
-  #part{position:absolute; left:28px; bottom:16px; font-size:14px; color:var(--faint); letter-spacing:.1em}
+  .break-slide .clock.done{color:var(--seal)}
+  .break-slide .next-up{font-size:25px; color:var(--muted); letter-spacing:.02em}
+  .break-slide .hint{font-size:15px; color:var(--faint); margin-top:34px}
+
+  /* ---------- 발표자 시계 (C 키) ---------- */
+  #hud{position:fixed; top:18px; right:28px; display:none; gap:22px; z-index:6;
+    font-size:15px; color:var(--faint); font-variant-numeric:tabular-nums; letter-spacing:.08em}
+  body.hud #hud{display:flex}
+  #hud .el{color:var(--seal)}
+
+  /* ---------- 블랙아웃 (B 키) ---------- */
+  #blk{position:fixed; inset:0; background:#000; display:none; z-index:60}
+  body.black #blk{display:block}
+
+  /* ---------- 목차 오버레이 (O 키) ---------- */
+  #toc{position:fixed; inset:0; background:rgba(10,10,14,.6); display:none; z-index:40;
+    align-items:center; justify-content:center}
+  body.toc #toc{display:flex}
+  .toc-inner{background:var(--panel); border:1px solid var(--line-strong); border-radius:16px;
+    padding:36px 44px; width:min(1160px,92vw); max-height:84vh; overflow:auto;
+    columns:3; column-gap:44px}
+  .toc-part{font-size:13px; font-weight:700; letter-spacing:.2em; color:var(--seal);
+    margin:16px 0 8px; break-after:avoid}
+  .toc-part:first-child{margin-top:0}
+  .toc-item{display:block; width:100%; text-align:left; background:none; border:none;
+    color:var(--ink); font:inherit; font-size:15px; line-height:1.45;
+    padding:4px 8px; border-radius:6px; cursor:pointer; break-inside:avoid}
+  .toc-item:hover,.toc-item:focus-visible{background:var(--seal-soft); color:var(--seal)}
+  .toc-item .n{color:var(--faint); font-variant-numeric:tabular-nums; margin-right:9px}
+
+  /* ---------- 인쇄 = 백업 PDF ---------- */
+  @media print{
+    html,body{height:auto; overflow:visible; background:var(--ground)}
+    #viewport{position:static}
+    #viewport::after{display:none}
+    .stage{position:static; transform:none; width:1280px; height:auto}
+    .slide{position:relative; display:flex; width:1280px; height:720px;
+      page-break-after:always; break-inside:avoid}
+    .fr{opacity:1; transform:none; transition:none}
+    #bar,#meta,#part,#help,#hud,#blk,#toc,.note{display:none !important}
+    @page{size:1280px 720px; margin:0}
+  }
+
+  /* ---------- 크롬 ---------- */
+  #bar{position:absolute; left:0; bottom:0; height:3px; background:var(--seal); width:0; transition:width .25s}
+  #meta{position:absolute; right:30px; bottom:16px; font-size:14px; color:var(--faint);
+    font-variant-numeric:tabular-nums; letter-spacing:.06em}
+  #part{position:absolute; left:30px; bottom:16px; font-size:14px; color:var(--faint); letter-spacing:.14em}
+  #help{position:absolute; left:50%; bottom:16px; transform:translateX(-50%);
+    font-size:13px; color:var(--faint); letter-spacing:.05em}
   .note{display:none}
   body.notes .note{
-    display:block; position:absolute; left:96px; right:96px; bottom:60px;
-    background:var(--panel2); border:1px solid var(--gold); border-radius:10px;
-    padding:18px 24px; font-size:18px; line-height:1.6; color:var(--muted); z-index:5;
+    display:block; position:absolute; left:104px; right:104px; bottom:64px;
+    background:var(--panel2); border:1px solid var(--seal); border-radius:12px;
+    padding:20px 26px; font-size:18px; line-height:1.65; color:var(--muted); z-index:5;
   }
-  .note b{color:var(--text)}
-  #help{
-    position:absolute; left:50%; bottom:18px; transform:translateX(-50%);
-    font-size:13px; color:var(--faint); letter-spacing:.04em;
-  }
-  :focus-visible{outline:2px solid var(--gold); outline-offset:2px}
+  .note b{color:var(--ink)}
+  :focus-visible{outline:2px solid var(--seal); outline-offset:2px}
 </style>
 </head>
 <body>
@@ -209,439 +311,470 @@
 <!-- ═══════════════ 오프닝 ═══════════════ -->
 
 <section class="slide statement" data-part="오프닝">
-  <div class="eyebrow">삼성생명 AI 활용 교육 · 13:30–17:30</div>
-  <h1>에이전트를 만들지 마세요.<br>에이전트에게 줄 <em>일하는 법</em>을 만드세요.</h1>
-  <p class="sub">Agent · Connector · Skill — 비개발자를 위한 4시간</p>
-  <aside class="note"><b>3D 인트로 직후 이 슬라이드.</b> 아직 아무것도 설명하지 않는다.</aside>
+  <div class="eyebrow rise">삼성생명 AI 활용 교육 · 13:30–17:30</div>
+  <h1 class="rise d1">오늘 우리가 만드는 것은,<br>에이전트에게 줄 <em>일하는 법</em>입니다.</h1>
+  <p class="sub rise d2">Agent · Connector · Skill — 비개발자를 위한 4시간</p>
+  <aside class="note"><b>3D 인트로 직후 이 슬라이드.</b> 아직 아무것도 설명하지 않는다. "일하는 법이 뭔지는 차차 말씀드리겠습니다."</aside>
 </section>
 
 <section class="slide statement" data-part="오프닝">
-  <h1>방금 그 화면을 만든 사람은<br><em>3D 기술을 모릅니다.</em></h1>
-  <p class="sub">무엇을 배워서 만들 수 있었는지는 — 3교시 끝에 공개합니다.</p>
+  <h1 class="rise">방금 그 화면을 만든 사람은<br><em>3D 기술을 모릅니다.</em></h1>
+  <p class="sub rise d2">무엇을 배워서 만들 수 있었는지 — 3교시 끝에 공개합니다.</p>
   <aside class="note"><b>4시간짜리 떡밥.</b> "three.js"라는 단어도 여기선 쓰지 않는다. 3교시 이탈 방지 장치.</aside>
 </section>
 
 <section class="slide" data-part="오프닝">
-  <div class="eyebrow">오늘의 지도</div>
-  <h1>네 시간, 하나의 이야기</h1>
+  <div class="eyebrow rise">오늘의 지도</div>
+  <h1 class="rise d1">네 시간, 하나의 이야기</h1>
   <div class="cols c2">
-    <div class="card"><div class="k">1교시 · 진실</div><div class="v">"에이전트"라는 말의 거품을 걷어내면 무엇이 남는가<small>Agent · Connector · Plugin · Skill</small></div></div>
-    <div class="card"><div class="k">2교시 · 엔진</div><div class="v">그 일을 시킬 모델은 어떻게 고르는가<small>프론티어 모델 선별</small></div></div>
-    <div class="card"><div class="k">3교시 · 작업대</div><div class="v">그 모델을 어떤 도구에서 부리는가<small>Claude Desktop vs Claude Code</small></div></div>
-    <div class="card"><div class="k">4교시 · 손</div><div class="v">직접 만들어보고 퇴근한다<small>내 업무 Skill 1개 + Connector 연결</small></div></div>
+    <div class="card fr"><div class="k">1교시 · 언어</div><div class="v">"에이전트"라는 말, 차분히 풀어보기<small>Agent · Connector · Plugin · Skill</small></div></div>
+    <div class="card fr"><div class="k">2교시 · 엔진</div><div class="v">일을 맡길 모델은 어떻게 고르는가<small>프론티어 모델 선별</small></div></div>
+    <div class="card fr"><div class="k">3교시 · 작업대</div><div class="v">그 모델을 어떤 도구에서 부리는가<small>Claude Desktop vs Claude Code</small></div></div>
+    <div class="card fr"><div class="k">4교시 · 손</div><div class="v">직접 만들어보고 퇴근한다<small>내 업무 Skill 1개 + Connector 연결</small></div></div>
   </div>
 </section>
 
-<!-- ═══════════════ 1교시 ═══════════════ -->
+<!-- ═══════════════ 1교시 · 언어 ═══════════════ -->
 
-<section class="slide divider" data-part="1교시 · 진실">
-  <div class="big-n">1</div>
-  <div class="word">진실</div>
-  <p class="desc">"에이전트 만들어야 한다던데요?" — 그 말의 실체를 해부합니다.</p>
-</section>
-
-<section class="slide" data-part="1교시 · 진실">
-  <div class="eyebrow">2022년 겨울</div>
-  <h1>"이게 무슨 AI냐"</h1>
-  <div class="body">
-    <p>ChatGPT가 처음 나왔을 때를 기억하십니까. 말장난이나 한다고, 계산도 틀린다고 비웃음을 받았습니다.</p>
-    <p>그 비웃음 받던 물건은 <span class="gold">수조 원</span>을 들여 만든 것이었습니다.</p>
+<section class="slide divider" data-part="1교시 · 언어">
+  <div class="divider-row">
+    <div class="seal-block"><span class="n">1</span></div>
+    <div>
+      <div class="word rise d1">언어</div>
+      <p class="desc rise d2">요즘 어디서나 들리는 "에이전트"라는 말 —<br>그 뜻을 차분히 풀어보는 것에서 시작합니다.</p>
+    </div>
   </div>
-  <aside class="note">청중 반응 끌어내기: "그때 써보신 분?" 손들게 하기.</aside>
 </section>
 
-<section class="slide statement" data-part="1교시 · 진실">
-  <h1>수조 원을 들여도 조롱받던 그 일을,<br>몇천만 원짜리 프로젝트로<br><em>"우리 회사 전용 에이전트"</em>를 만들면 될까요?</h1>
-  <p class="sub">답은 드리지 않겠습니다. 이 시간 내내 같이 들고 갑니다.</p>
+<section class="slide" data-part="1교시 · 언어">
+  <div class="eyebrow rise">2022년 겨울</div>
+  <h1 class="rise d1">"이게 무슨 AI냐"</h1>
+  <div class="body rise d2">
+    <p>ChatGPT가 처음 나왔을 때를 기억하십니까.<br>말장난이나 한다고, 계산도 틀린다고 웃음거리가 됐습니다.</p>
+    <p class="fr">그 물건을 만드는 데 <span class="seal-c">수조 원</span>이 들었습니다.</p>
+  </div>
+  <aside class="note">청중 반응 끌어내기: "그때 써보신 분?" 손들게 하기. 마지막 줄은 →키로 등장.</aside>
 </section>
 
-<section class="slide" data-part="1교시 · 진실">
-  <div class="eyebrow">에이전트의 진짜 정의</div>
-  <h1>목표를 향해, 스스로 반복하는 것</h1>
-  <div class="loop">
+<section class="slide statement" data-part="1교시 · 언어">
+  <div class="eyebrow rise">오늘의 질문</div>
+  <h1 class="rise d1">이 어려운 일을 —<br>어디까지 직접 만들고,<br>어디서부터 <em>가져다 쓰면</em> 될까요?</h1>
+  <p class="sub rise d2">답을 정해두지 않겠습니다. 4시간 동안 같이 들고 갑니다.</p>
+  <aside class="note">비난이 아니라 make-or-buy 질문으로. "회사마다 에이전트 구축 이야기가 나오는데, 무엇을 사고 무엇을 만들지 기준이 있어야 합니다" 톤.</aside>
+</section>
+
+<section class="slide" data-part="1교시 · 언어">
+  <div class="eyebrow rise">에이전트의 진짜 정의</div>
+  <h1 class="rise d1">목표를 향해, 스스로 반복하는 것</h1>
+  <div class="loop rise d2">
     <div class="node">행동</div><div class="arr">→</div>
     <div class="node">관찰</div><div class="arr">→</div>
     <div class="node">사고</div><div class="arr">→</div>
     <div class="node">재행동</div>
   </div>
-  <div class="body" style="margin-top:26px">
-    <p>신입사원에게 "경쟁사 조사해 와"라고 시키면 — 검색하고, 결과를 보고, 부족하다 판단하고, 다시 찾습니다. <span class="gold">이 루프가 에이전트입니다.</span></p>
+  <div class="body fr" style="margin-top:28px">
+    <p>신입사원에게 "경쟁사 조사해 와"라고 하면 — 검색하고, 보고, 부족하면 다시 찾습니다.<br><span class="seal-c">이 루프가 에이전트입니다.</span></p>
   </div>
-  <p class="fn">구현 기법의 이름들(ReAct, Plan &amp; Execute 등)은 몰라도 됩니다 — 즉흥형·계획형·분업형 일하기 방식 정도로 충분합니다.</p>
+  <p class="fn">ReAct, Plan &amp; Execute 같은 기법 이름은 몰라도 됩니다 — 즉흥형·계획형·분업형 일하기 방식 정도면 충분합니다.</p>
 </section>
 
-<section class="slide statement" data-part="1교시 · 진실">
-  <h1>핵심 반전 — 에이전트는<br>여러분이 만드는 게 아니라 <em>이미 있습니다.</em></h1>
-  <p class="sub">Claude Desktop, Claude Code. 이것들이 에이전트입니다. 여러분 노트북에 오늘 설치할 수 있습니다.</p>
+<section class="slide statement" data-part="1교시 · 언어">
+  <div class="eyebrow rise">좋은 소식</div>
+  <h1 class="rise d1">에이전트는<br><em>이미 만들어져 있습니다.</em></h1>
+  <p class="sub rise d2">Claude Desktop, Claude Code —<br>오늘 노트북에 설치할 수 있는 완성품입니다.</p>
+  <aside class="note">반전이 아니라 안도의 뉘앙스로: "여러분이 밑바닥부터 만들 필요가 없다는 뜻입니다."</aside>
 </section>
 
-<section class="slide" data-part="1교시 · 진실">
-  <div class="eyebrow">모델만큼 중요한 것</div>
-  <h1>에이전트의 품질 = 모델 × 설계</h1>
-  <div class="body">
-    <p>설계란: 지시를 얼마나 넣고 얼마나 <span class="gold">덜어낼지</span>, 관찰을 몇 번 시킬지, 얼마나 믿고 맡길지가 맞물린 것.</p>
-    <p>증거 — Claude Code에 Gemini 모델을 끼우면 <span class="gold">원래 성능이 안 나옵니다.</span> 같은 엔진도 차체가 다르면 그 차가 아닙니다.</p>
+<section class="slide" data-part="1교시 · 언어">
+  <div class="eyebrow rise">모델만큼 중요한 것</div>
+  <h1 class="rise d1">에이전트의 품질 = 모델 × 설계</h1>
+  <div class="body rise d2">
+    <p>설계란 — 지시를 얼마나 넣고 얼마나 <span class="seal-c">덜어낼지</span>,<br>관찰을 몇 번 시킬지, 얼마나 믿고 맡길지.</p>
+    <p class="fr">Claude Code에 다른 회사 모델을 끼우면 원래 성능이 안 나옵니다.<br><span class="muted">같은 엔진도 차체가 다르면, 그 차가 아닙니다.</span></p>
   </div>
   <p class="fn">이 이야기는 2교시에서 "하네스"라는 이름으로 다시 만납니다.</p>
   <aside class="note">비유: 유능한 직원(모델)도 팀장이 일을 어떻게 나눠주고 언제 중간보고를 받느냐(설계)에 따라 성과가 갈린다.</aside>
 </section>
 
-<section class="slide" data-part="1교시 · 진실">
-  <div class="eyebrow">"1인 1에이전트"의 해부</div>
-  <h1>노코드 빌더에서 여러분이<br>실제로 하는 일은 무엇인가</h1>
+<section class="slide" data-part="1교시 · 언어">
+  <div class="eyebrow rise">"1인 1에이전트"를 열어보면</div>
+  <h1 class="rise d1">빌더 안에서 우리가 하는 일은,<br>이미 <em>Skill을 쓰는 일</em>입니다</h1>
   <div class="cols c2">
-    <div class="card"><div class="k">여러분이 하는 일</div><div class="v">지시문을 쓰고, 어떤 도구를 쓸지 고른다<small>= 프롬프트 + 도구 선택. 그건 에이전트를 만드는 게 아니라 <b>Skill을 쓰는 것</b></small></div></div>
-    <div class="card"><div class="k">플랫폼이 하는 일</div><div class="v">관찰·재행동·오류 시 대처 — 루프 전체<small>여러분이 만든 게 아니다. 플랫폼을 떠나는 순간 "내 에이전트"는 없다</small></div></div>
+    <div class="card fr"><div class="k">우리가 하는 일</div><div class="v">지시문을 쓰고, 도구를 고른다<small>절차와 기준을 글로 적는 일 — 오늘 배울 Skill과 정확히 같은 일입니다</small></div></div>
+    <div class="card fr"><div class="k">플랫폼이 하는 일</div><div class="v">관찰 · 재시도 · 오류 대처 — 루프 전체<small>이 부분은 빌려 쓰는 것이라, 플랫폼을 떠나면 함께 반납됩니다</small></div></div>
   </div>
-  <aside class="note">공격이 아니라 해부. "빌더가 나쁘다"가 아니라 "그 안에서 내가 만드는 자산이 무엇인지 알자"로.</aside>
+  <aside class="note">공격이 아니라 발견으로: "빌더가 나쁘다"가 아니라 "그 안에서 여러분이 만든 자산이 이미 Skill이었다"로. 청중의 기존 경험을 인정해주는 슬라이드.</aside>
 </section>
 
-<section class="slide" data-part="1교시 · 진실">
-  <div class="eyebrow">Skill과 에이전트의 관계</div>
-  <h1>일하는 에이전트는 곱셈의 결과입니다</h1>
-  <div class="equation">
+<section class="slide" data-part="1교시 · 언어">
+  <div class="eyebrow rise">Skill과 에이전트의 관계</div>
+  <h1 class="rise d1">일하는 에이전트는 곱셈의 결과입니다</h1>
+  <div class="equation rise d2">
     <div class="eq-box mine">
       <div class="eq-title">내가 쓴 문서</div>
       <div class="eq-sub">Skill · 역할 정의<br>절차 · 판단 기준 · 도구 목록</div>
-      <div class="eq-tag gold">내 것 — 이식 · 상속</div>
+      <div class="eq-tag">내 것 — 이식 · 상속</div>
     </div>
     <div class="eq-op">×</div>
-    <div class="eq-box">
+    <div class="eq-box rent">
       <div class="eq-title">빌린 실행력</div>
       <div class="eq-sub">루프 · 재시도 · 위임<br>(플랫폼의 하네스)</div>
-      <div class="eq-tag muted">구독 — 계약 종료 시 반납</div>
+      <div class="eq-tag">구독 — 계약 종료 시 반납</div>
     </div>
     <div class="eq-op">=</div>
-    <div class="eq-box result">
+    <div class="eq-box">
       <div class="eq-title">일하는 에이전트</div>
       <div class="eq-sub">목표를 향해 관찰하고<br>재시도하는 실행 인스턴스</div>
-      <div class="eq-tag blue">둘이 결합된 순간에만 존재</div>
+      <div class="eq-tag muted">둘이 결합된 순간에만 존재</div>
     </div>
   </div>
   <div class="verdicts">
-    <div class="verdict"><span class="stamp t">참</span><span>"그것은 에이전트다" <small>— 결과물에 대한 분류의 문장</small></span></div>
-    <div class="verdict"><span class="stamp f">부정확</span><span>"내가 에이전트를 만들었다" <small>— 왼쪽 항 하나로 곱셈 전체를 주장</small></span></div>
+    <div class="verdict fr"><span class="stamp t">참</span><span>"그것은 에이전트다" <small>— 결과물을 가리키는 말</small></span></div>
+    <div class="verdict fr"><span class="stamp f">절반의 참</span><span>"내가 에이전트를 만들었다" <small>— 곱셈의 왼쪽 항만 말한 문장</small></span></div>
   </div>
-  <aside class="note">닭·달걀 멘트: "문서가 서브에이전트를 '낳는' 순간조차, 품어서 부화시키는 건 언제나 플랫폼입니다. 달걀은 스스로 부화하지 못합니다." — 에이전트다움의 공급원은 항상 한쪽이라 순환이 없다.</aside>
+  <aside class="note">닭·달걀 멘트: "문서가 서브에이전트를 '낳는' 순간조차, 품어서 부화시키는 건 언제나 플랫폼입니다. 달걀은 스스로 부화하지 못합니다." 두 판정은 →키로 도장 찍히듯 등장.</aside>
 </section>
 
-<section class="slide" data-part="1교시 · 진실">
-  <div class="eyebrow">그래서 "1인 1에이전트"는</div>
-  <h1>한 문장이 아니라, 두 문장의 겹침입니다</h1>
-  <div class="fork">
+<section class="slide" data-part="1교시 · 언어">
+  <div class="eyebrow rise">그래서 "1인 1에이전트"는</div>
+  <h1 class="rise d1">한 문장이 아니라, 두 문장의 겹침입니다</h1>
+  <div class="fork rise d2">
     <div class="fork-root">"1인 1에이전트"</div>
-    <svg viewBox="0 0 920 64" aria-hidden="true"><line x1="460" y1="4" x2="235" y2="60"></line><line x1="460" y1="4" x2="685" y2="60"></line></svg>
+    <svg viewBox="0 0 920 58" aria-hidden="true"><line x1="460" y1="4" x2="235" y2="54"></line><line x1="460" y1="4" x2="685" y2="54"></line></svg>
     <div class="fork-branches">
-      <div class="branch true">
+      <div class="branch true fr">
         <div class="b-head"><span class="b-name">사용의 독해</span><span class="stamp t">참</span></div>
         <div class="b-quote">"1인당 에이전트 하나씩을 부린다"</div>
-        <div class="b-why">1인 1PC와 같은 문장. 이미 실현 가능하고, 심지어 바람직한 미래입니다.</div>
+        <div class="b-why">1인 1PC와 같은 문장. 이미 실현 가능하고, 바람직한 미래입니다.</div>
       </div>
-      <div class="branch false">
-        <div class="b-head"><span class="b-name">소유의 독해</span><span class="stamp f">거짓</span></div>
+      <div class="branch hold fr">
+        <div class="b-head"><span class="b-name">소유의 독해</span><span class="stamp f">확인 필요</span></div>
         <div class="b-quote">"1인당 에이전트 하나씩을 만들어 소유한다"</div>
-        <div class="b-why">계약이 끝나면 함께 사라지는 것은 소유가 아닙니다. 남는 것은 문서뿐입니다.</div>
+        <div class="b-why">계약이 끝나면 함께 사라지는 것을 소유라 부르긴 어렵습니다. 남는 것은 문서입니다.</div>
       </div>
     </div>
-    <div class="fork-trick">마케팅의 화법: <b>왼쪽으로 증명하고, 오른쪽으로 판매합니다</b> — 같은 단어의 두 뜻 사이를 오가는 것</div>
+    <div class="fork-note fr">같은 말이 두 뜻을 오갈 때 — <b>왼쪽을 보고, 오른쪽에 서명</b>하게 되기 쉽습니다</div>
   </div>
-  <aside class="note">"애매어의 오류(equivocation)"라는 용어는 입으로만, 슬라이드엔 없음. "누구나 에이전트를 부릴 수 있다(참)를 보여주고 → 당신만의 에이전트를 만드세요(소유)로 계약서를 내민다."</aside>
+  <aside class="note">"애매어의 오류(equivocation)"라는 용어는 입으로만. 누구를 탓하는 화법 금지 — "속이려는 게 아니라, 단어가 원래 이렇게 미끄럽습니다" 톤 유지.</aside>
 </section>
 
-<section class="slide" data-part="1교시 · 진실">
-  <div class="eyebrow">틀린 말인가?</div>
-  <h1>"내 사무실"은 틀린 말입니까</h1>
-  <div class="ctx-pair">
+<section class="slide" data-part="1교시 · 언어">
+  <div class="eyebrow rise">틀린 말일까요?</div>
+  <h1 class="rise d1">"내 사무실"은 틀린 말이 아닙니다</h1>
+  <div class="ctx-pair rise d2">
     <div class="ctx ok">
       <div class="c-where">대화에서</div>
       <div class="c-say">"내 사무실로 오세요"</div>
-      <div class="c-note">임대 사무실이어도 다들 이렇게 말합니다. 맞는 말입니다.</div>
+      <div class="c-note">임대 사무실이어도 다들 이렇게 말합니다. 자연스러운 말입니다.</div>
     </div>
     <div class="ctx no">
       <div class="c-where">등기부등본에서</div>
       <div class="c-say">"내 소유의 사무실"</div>
-      <div class="c-note">적는 순간 틀린 말이 됩니다. 건물주는 따로 있습니다.</div>
+      <div class="c-note">문서에 적는 순간 이야기가 달라집니다. 건물주는 따로 있습니다.</div>
     </div>
   </div>
-  <div class="body" style="margin-top:30px">
-    <p>"1인 1에이전트"도 같습니다 — 구호로는 통용되지만, <span class="gold">예산·자산·인수인계 계획서에 적히는 순간</span> 소유의 문장이 되고, 그때 틀립니다.</p>
+  <div class="body fr" style="margin-top:32px">
+    <p>"1인 1에이전트"도 같습니다 — 구호로는 자연스럽지만,<br><span class="seal-c">예산·자산·인수인계 계획서에 적히는 순간</span> 소유의 문장이 됩니다.</p>
   </div>
-  <aside class="note">청중 질문 "그래서 하지 말라는 건가요?" 대비 → 다음 슬라이드가 답. 판정하지 말고 장부를 물어라: "어느 장부에 적으실 겁니까?"</aside>
+  <aside class="note">판정하지 말고 장부를 물어라: "어느 장부에 적으실 겁니까?" — 청중 질문 "그래서 하지 말라는 건가요?" 대비, 다음 슬라이드가 답.</aside>
 </section>
 
-<section class="slide statement" data-part="1교시 · 진실">
-  <div class="eyebrow">상향 재정의</div>
-  <h1>1인 1에이전트 <em>(사용)</em><br>1인 N Skill <em>(소유)</em></h1>
-  <p class="sub">이 구호는 틀린 게 아니라 절반만 적혀 있었습니다.<br>나머지 절반 — 소유할 자산 — 을 오늘 채웁니다.</p>
+<section class="slide statement" data-part="1교시 · 언어">
+  <div class="eyebrow rise">구호 완성하기</div>
+  <h1 class="rise d1">1인 1에이전트 <em>(사용)</em><br>1인 N Skill <em>(소유)</em></h1>
+  <p class="sub rise d2">이 구호는 틀린 게 아니라 절반만 적혀 있었습니다.<br>나머지 절반 — 소유할 자산 — 을 오늘 채웁니다.</p>
   <aside class="note">발주부서가 산 구호를 버리지 않고 회수해서 완성하는 슬라이드. 여기서 1교시의 긴장이 풀린다.</aside>
 </section>
 
-<section class="slide" data-part="1교시 · 진실">
-  <div class="eyebrow">금융사라면 반드시</div>
-  <h1>온프렘 도입의 구조적 함정</h1>
-  <ul class="plain">
-    <li>시연은 <span class="gold">파워 좋은 프론티어 모델 + 거기에 맞춘 설계</span>로 이뤄집니다.</li>
-    <li>도입되는 사내 모델로 같은 수준의 안정화가 되어 있을 가능성은 낮습니다.</li>
-    <li>그런데 내부는 블랙박스라 확인할 수 없습니다.</li>
+<section class="slide" data-part="1교시 · 언어">
+  <div class="eyebrow rise">금융사라면 미리 알아둘 것</div>
+  <h1 class="rise d1">시연과 도입 사이에는 간격이 있습니다</h1>
+  <ul class="plain rise d2">
+    <li>시연은 <span class="seal-c">가장 좋은 모델 + 거기에 맞춘 설계</span>로 이뤄집니다.</li>
+    <li class="fr">실제 도입되는 사내 모델이 같은 수준이라는 보장은 없습니다.</li>
+    <li class="fr">그런데 내부는 블랙박스라, 도입 후에야 알게 됩니다.</li>
   </ul>
-  <div class="body"><p class="muted">속는 게 아니라, 속을 수밖에 없는 구조입니다.</p></div>
+  <div class="body fr"><p class="muted">누구의 잘못도 아닌 구조의 문제입니다 — 그래서 질문을 준비해 가는 겁니다.</p></div>
 </section>
 
-<section class="slide" data-part="1교시 · 진실">
-  <div class="eyebrow">가져가실 것</div>
-  <h1>벤더에게 던질 세 가지 질문</h1>
+<section class="slide" data-part="1교시 · 언어">
+  <div class="eyebrow rise">가져가실 것</div>
+  <h1 class="rise d1">벤더에게 드릴 세 가지 질문</h1>
   <div class="cols c3">
-    <div class="card"><div class="k">질문 ①</div><div class="v">시연에 쓴 모델과 우리가 도입할 모델이 같습니까?</div></div>
-    <div class="card"><div class="k">질문 ②</div><div class="v">우리 모델 기준으로 최적화됐다는 근거는 무엇입니까?</div></div>
-    <div class="card"><div class="k">질문 ③</div><div class="v">이 플랫폼을 떠나면, 우리가 만든 것 중 무엇이 남습니까?</div></div>
+    <div class="card fr"><div class="k">질문 ①</div><div class="v">시연에 쓴 모델과 우리가 도입할 모델이 같습니까?</div></div>
+    <div class="card fr"><div class="k">질문 ②</div><div class="v">우리 모델 기준으로 최적화됐다는 근거는 무엇입니까?</div></div>
+    <div class="card fr"><div class="k">질문 ③</div><div class="v">이 플랫폼을 떠나면, 우리가 만든 것 중 무엇이 남습니까?</div></div>
   </div>
-  <div class="body" style="margin-top:28px"><p>세 번째 질문의 답이 오늘 강의의 전부입니다.</p></div>
+  <div class="body fr" style="margin-top:30px"><p>세 번째 질문의 답이 — 오늘 강의의 전부입니다.</p></div>
 </section>
 
-<section class="slide statement" data-part="1교시 · 진실">
-  <h1>플랫폼을 떠나도 남는 것 —<br>어디로든 이식 가능한 <em>문서 형태의 Skill</em></h1>
-  <p class="sub">Skill = 내 업무 노하우를 AI가 읽을 수 있는 표준업무절차서로 쓴 것.<br>파일이니까 내 것이고, 옮길 수 있고, 물려줄 수 있습니다.</p>
+<section class="slide statement" data-part="1교시 · 언어">
+  <h1 class="rise">플랫폼을 떠나도 남는 것,<br>어디로든 이식 가능한 <em>문서 — Skill</em></h1>
+  <p class="sub rise d2">내 업무 노하우를 AI가 읽을 수 있는 표준업무절차서로 쓴 것.<br>파일이니까 내 것이고, 옮길 수 있고, 물려줄 수 있습니다.</p>
 </section>
 
-<section class="slide" data-part="1교시 · 진실">
-  <div class="eyebrow">Skill의 실체</div>
-  <h1>특별한 기술이 아니라는 것,<br>그 자체가 설계입니다</h1>
-  <div class="body">
-    <p>실체는 문서 파일 하나. 맨 위에 <span class="gold">"언제 꺼내 읽어야 하는지"</span> 한 줄, 아래에 업무 절차.</p>
-    <p>AI는 평소엔 그 한 줄만 기억하다가, 해당 업무가 오면 본문을 펼쳐 읽습니다. 규정집을 통째로 외우는 직원은 없습니다 — <span class="gold">필요할 때 해당 페이지를 펴는 직원이 유능한 겁니다.</span></p>
+<section class="slide" data-part="1교시 · 언어">
+  <div class="eyebrow rise">Skill의 실체</div>
+  <h1 class="rise d1">특별한 기술이 아니라는 것,<br>그 자체가 설계입니다</h1>
+  <div class="body rise d2">
+    <p>실체는 문서 파일 하나. 맨 위에 <span class="seal-c">"언제 꺼내 읽을지"</span> 한 줄,<br>그 아래에 업무 절차.</p>
+    <p class="fr">규정집을 통째로 외우는 직원은 없습니다 —<br><span class="seal-c">필요할 때 해당 페이지를 펴는 직원이 유능한 겁니다.</span></p>
   </div>
   <p class="fn">기술 용어로는 progressive disclosure — AI의 주의력(토큰)을 아끼는 구조입니다.</p>
 </section>
 
-<section class="slide" data-part="1교시 · 진실">
-  <div class="eyebrow">역사적 검증</div>
-  <h1>조롱에서 표준까지, 5개월</h1>
-  <div class="timeline">
-    <div class="tl"><div class="when">2025.10.16</div><div class="what">Anthropic, Skill 발표. 반응은 갈렸다 — <small>"프롬프트에 텍스트 붙이는 트릭에 왜 흥분하나" vs "MCP보다 큰 물건일지도"(사이먼 윌리슨)</small></div></div>
-    <div class="tl"><div class="when">2025.12.18</div><div class="what">오픈 표준으로 공개</div></div>
-    <div class="tl"><div class="when">+48시간</div><div class="what"><b>Microsoft·OpenAI가 채택</b> — <small>최대 경쟁사가 경쟁사의 형식을 그대로 읽기 시작</small></div></div>
-    <div class="tl"><div class="when">2026.03</div><div class="what">Google 포함 <b>32개 이상의 도구</b>가 같은 파일을 읽는다 — 사실상의 산업 표준</div></div>
+<section class="slide" data-part="1교시 · 언어">
+  <div class="eyebrow rise">역사적 검증</div>
+  <h1 class="rise d1">엇갈린 반응에서 표준까지, 5개월</h1>
+  <div class="timeline rise d2">
+    <div class="tl fr"><div class="when">2025.10.16</div><div class="what">Anthropic, Skill 발표. 반응은 갈렸다 <small>— "그냥 텍스트 아니냐" vs "MCP보다 큰 물건"(사이먼 윌리슨)</small></div></div>
+    <div class="tl fr"><div class="when">2025.12.18</div><div class="what">오픈 표준으로 공개</div></div>
+    <div class="tl fr"><div class="when">+48시간</div><div class="what"><b>Microsoft · OpenAI가 채택</b> <small>— 경쟁사들이 서로의 형식을 그대로 읽기 시작</small></div></div>
+    <div class="tl fr"><div class="when">2026.03</div><div class="what">Google 포함 <b>32개 이상의 도구</b>가 같은 파일을 읽는다 — 사실상의 산업 표준</div></div>
   </div>
-  <aside class="note"><b>ChatGPT 첫날과 수미상응:</b> "단순해 보인다는 조롱은 종종 표준이 되기 직전의 신호입니다." 왜 5개월 만에 표준이 됐나 — 그냥 파일이라서. 채택에 SDK도 서버도 계약도 필요 없었다.</aside>
+  <aside class="note"><b>ChatGPT 첫날과 수미상응:</b> "단순해 보인다는 평가는 종종 표준이 되기 직전의 신호입니다." 왜 5개월 만에 표준이 됐나 — 그냥 파일이라서. 채택에 SDK도 서버도 계약도 필요 없었다.</aside>
 </section>
 
-<section class="slide" data-part="1교시 · 진실">
-  <div class="eyebrow">왜 "여러분의" 자산인가</div>
-  <h1>빌더 안의 설정 vs 내 문서</h1>
-  <table>
-    <thead><tr><th></th><th>노코드 빌더 안의 "내 에이전트"</th><th>문서로 관리하는 Skill</th></tr></thead>
+<section class="slide" data-part="1교시 · 언어">
+  <div class="eyebrow rise">왜 "여러분의" 자산인가</div>
+  <h1 class="rise d1">빌더 안의 설정 vs 내 문서</h1>
+  <table class="rise d2">
+    <thead><tr><th></th><th>노코드 빌더 안의 설정</th><th>문서로 관리하는 Skill</th></tr></thead>
     <tbody>
-      <tr><td class="muted">소유</td><td>플랫폼 계약 종료 시 소멸</td><td class="gold">내 파일. 영구 소유</td></tr>
-      <tr><td class="muted">이동</td><td>불가 — 플랫폼 종속</td><td class="gold">경쟁사 AI들도 같은 파일을 읽음</td></tr>
-      <tr><td class="muted">인수인계</td><td>계정 이관 문제</td><td class="gold">파일 전달 = 노하우 전달</td></tr>
+      <tr><td class="muted">소유</td><td class="slate-c">플랫폼 계약과 함께 종료</td><td class="seal-c">내 파일 — 영구 소유</td></tr>
+      <tr><td class="muted">이동</td><td class="slate-c">플랫폼 안에서만</td><td class="seal-c">경쟁사 AI들도 같은 파일을 읽음</td></tr>
+      <tr><td class="muted">인수인계</td><td class="slate-c">계정 이관 문제</td><td class="seal-c">파일 전달 = 노하우 전달</td></tr>
     </tbody>
   </table>
-  <div class="body" style="margin-top:30px"><p>1년 전엔 "한 회사에서만 되는 기능 아니냐"는 반박이 가능했습니다. <span class="gold">지금은 아닙니다.</span></p></div>
+  <div class="body fr" style="margin-top:32px"><p>1년 전엔 "한 회사에서만 되는 기능 아니냐"고 할 수 있었습니다. <span class="seal-c">지금은 아닙니다.</span></p></div>
 </section>
 
-<section class="slide" data-part="1교시 · 진실">
-  <div class="eyebrow">용어 정리 · 유인물과 동일</div>
-  <h1>오늘 나오는 말은 네 개뿐입니다</h1>
-  <table>
+<section class="slide" data-part="1교시 · 언어">
+  <div class="eyebrow rise">용어 정리 · 유인물과 동일</div>
+  <h1 class="rise d1">오늘 나오는 말은 네 개뿐입니다</h1>
+  <table class="rise d2">
     <thead><tr><th>용어</th><th>한 줄 정의</th><th>회사 비유</th><th>오늘</th></tr></thead>
     <tbody>
-      <tr class="hl"><td><b>Skill</b></td><td>AI에게 주는 재사용 가능한 업무 지침서 (문서)</td><td>표준업무절차서</td><td class="gold"><b>직접 만든다</b></td></tr>
-      <tr><td><b>Connector</b></td><td>AI가 외부 시스템에 접근하는 표준 연결 통로</td><td>시스템 권한 있는 창구</td><td class="gold"><b>직접 연결한다</b></td></tr>
+      <tr class="hl"><td><b>Skill</b></td><td>AI에게 주는 재사용 가능한 업무 지침서 (문서)</td><td>표준업무절차서</td><td class="seal-c"><b>직접 만든다</b></td></tr>
+      <tr><td><b>Connector</b></td><td>AI가 외부 시스템에 접근하는 표준 연결 통로</td><td>시스템 권한 있는 창구</td><td class="seal-c"><b>직접 연결한다</b></td></tr>
       <tr><td><b>Plugin</b></td><td>Skill·설정·연결을 묶어 배포하는 패키지</td><td>팀 표준 업무 키트</td><td>개념만</td></tr>
-      <tr><td><b>Agent</b></td><td>위 재료로 루프를 도는 실행 주체</td><td>일 위임받은 주니어</td><td>만들지 않는다. 이미 있다</td></tr>
+      <tr><td><b>Agent</b></td><td>위 재료로 루프를 도는 실행 주체</td><td>일 위임받은 주니어</td><td>이미 준비되어 있다</td></tr>
     </tbody>
   </table>
   <p class="tbl-note">Connector는 MCP라는 기술 규격의 소비자용 이름입니다 — 외우실 필요 없습니다, 유인물에 있습니다.</p>
 </section>
 
-<section class="slide" data-part="1교시 · 진실">
-  <div class="eyebrow live">LIVE DEMO</div>
-  <h1>에이전트가 루프를 도는 모습을<br>지금 보여드리겠습니다</h1>
-  <div class="body">
+<section class="slide" data-part="1교시 · 언어">
+  <div class="eyebrow live rise">LIVE DEMO</div>
+  <h1 class="rise d1">에이전트가 루프를 도는 모습을<br>지금 보여드리겠습니다</h1>
+  <div class="body rise d2">
     <p class="muted">과제: 보도자료 3건을 읽고 경영진용 1페이지 비교 메모 작성</p>
     <p>화면에서 중계합니다 — "지금 관찰했죠. 부족하다고 판단했죠. 다시 행동하죠."</p>
   </div>
   <aside class="note">마무리 멘트: <b>"여러분은 방금 에이전트를 쓰신 겁니다."</b></aside>
 </section>
 
-<section class="slide statement" data-part="1교시 · 진실">
-  <div class="eyebrow">1교시 요약</div>
-  <h1>"에이전트는 이미 있다.<br>내가 만들 것은 에이전트가 아니라,<br>에이전트에게 줄 일하는 법 — <em>Skill</em>이다."</h1>
+<section class="slide statement" data-part="1교시 · 언어">
+  <div class="eyebrow rise">1교시 요약</div>
+  <h1 class="rise d1">"에이전트는 이미 준비되어 있다.<br>우리가 만들 것은,<br>에이전트에게 줄 일하는 법 — <em>Skill</em>이다."</h1>
 </section>
 
-<!-- ═══════════════ 2교시 ═══════════════ -->
+<section class="slide break-slide" data-part="쉬는 시간" data-sec="600">
+  <div class="eyebrow rise">쉬는 시간 · 10분</div>
+  <div class="clock rise d1">10:00</div>
+  <p class="next-up rise d2">다음 · 2교시 엔진 — 일을 맡길 모델은 어떻게 고르는가</p>
+  <p class="hint rise d3">R 키 — 카운트다운 다시 시작</p>
+  <aside class="note">슬라이드가 열리는 순간 자동으로 카운트다운 시작. 0이 되면 "시작합니다"로 바뀜.</aside>
+</section>
+
+<!-- ═══════════════ 2교시 · 엔진 ═══════════════ -->
 
 <section class="slide divider" data-part="2교시 · 엔진">
-  <div class="big-n">2</div>
-  <div class="word">엔진</div>
-  <p class="desc">벤치마크 표 대신, 내 업무 문제 3개로 모델을 고르는 절차를 가져갑니다.</p>
-</section>
-
-<section class="slide" data-part="2교시 · 엔진">
-  <div class="eyebrow">벤치마크의 함정</div>
-  <h1>수능 만점자가 우리 팀 보고서를<br>제일 잘 쓸까요?</h1>
-  <div class="body">
-    <p>모델 발표마다 점수표가 나옵니다. 그런데 그 시험 문제는 <span class="gold">여러분의 업무가 아닙니다.</span></p>
-    <p>벤치마크는 수능 점수. 여러분에게 필요한 건 우리 팀 실무 면접입니다.</p>
+  <div class="divider-row">
+    <div class="seal-block"><span class="n">2</span></div>
+    <div>
+      <div class="word rise d1">엔진</div>
+      <p class="desc rise d2">벤치마크 표 대신 — 내 업무 문제 3개로<br>모델을 고르는 절차를 가져갑니다.</p>
+    </div>
   </div>
 </section>
 
 <section class="slide" data-part="2교시 · 엔진">
-  <div class="eyebrow">보이지 않는 절반</div>
-  <h1>하네스 — 모델을 일에 매는 장비</h1>
-  <div class="body">
-    <p>하네스(harness)는 원래 <span class="gold">말에 채우는 마구(馬具)</span>입니다. 아무리 좋은 말도 마구 없이는 수레를 못 끕니다.</p>
-    <p>AI에서 하네스 = 모델을 실제 업무에 매어주는 실행 환경 일체.</p>
+  <div class="eyebrow rise">벤치마크의 함정</div>
+  <h1 class="rise d1">수능 만점자가 우리 팀 보고서를<br>제일 잘 쓸까요?</h1>
+  <div class="body rise d2">
+    <p>모델 발표마다 점수표가 나옵니다.<br>그런데 그 시험 문제는 <span class="seal-c">여러분의 업무가 아닙니다.</span></p>
+    <p class="fr">벤치마크는 수능 점수 — 필요한 건 우리 팀 실무 면접입니다.</p>
+  </div>
+</section>
+
+<section class="slide" data-part="2교시 · 엔진">
+  <div class="eyebrow rise">보이지 않는 절반</div>
+  <h1 class="rise d1">하네스 — 모델을 일에 매는 장비</h1>
+  <div class="body rise d2">
+    <p>하네스(harness)는 원래 <span class="seal-c">말에 채우는 마구(馬具)</span>입니다.<br>아무리 좋은 말도 마구 없이는 수레를 못 끕니다.</p>
+    <p class="fr">AI에서 하네스 = 모델을 실제 업무에 매어주는 실행 환경 일체.</p>
   </div>
   <aside class="note">1교시 "모델 × 설계"의 설계에 이름을 붙여주는 슬라이드.</aside>
 </section>
 
 <section class="slide" data-part="2교시 · 엔진">
-  <div class="eyebrow">하네스가 하는 일</div>
-  <h1>여섯 가지 보이지 않는 일</h1>
+  <div class="eyebrow rise">하네스가 하는 일</div>
+  <h1 class="rise d1">여섯 가지 보이지 않는 일</h1>
   <div class="cols c3">
-    <div class="card"><div class="k">① 업무 지침</div><div class="v">여러분 글 이전에 이미 들어가 있는 수천 단어의 기본 지시</div></div>
-    <div class="card"><div class="k">② 도구 상자</div><div class="v">파일·검색·실행 — 무엇을 쥐여줄지</div></div>
-    <div class="card"><div class="k">③ 권한 체계</div><div class="v">뭘 그냥 하게 하고, 뭘 물어보게 할지</div></div>
-    <div class="card"><div class="k">④ 기억 관리</div><div class="v">대화가 길어지면 중간 정리를 해주는 서기</div></div>
-    <div class="card"><div class="k">⑤ 반복 제어</div><div class="v">몇 번 재시도, 언제 멈추고 보고할지</div></div>
-    <div class="card"><div class="k">⑥ 분업</div><div class="v">큰 일을 쪼개 보조 일꾼에게 위임</div></div>
+    <div class="card fr"><div class="k">① 업무 지침</div><div class="v">여러분 글 앞에 이미 들어가 있는 수천 단어의 기본 지시</div></div>
+    <div class="card fr"><div class="k">② 도구 상자</div><div class="v">파일 · 검색 · 실행 — 무엇을 쥐여줄지</div></div>
+    <div class="card fr"><div class="k">③ 권한 체계</div><div class="v">뭘 그냥 하게 하고, 뭘 물어보게 할지</div></div>
+    <div class="card fr"><div class="k">④ 기억 관리</div><div class="v">대화가 길어지면 중간 정리를 해주는 서기</div></div>
+    <div class="card fr"><div class="k">⑤ 반복 제어</div><div class="v">몇 번 재시도, 언제 멈추고 보고할지</div></div>
+    <div class="card fr"><div class="k">⑥ 분업</div><div class="v">큰 일을 쪼개 보조 일꾼에게 위임</div></div>
   </div>
-  <aside class="note">묶는 비유: 유능한 경력직을 뽑아도 온보딩 문서·접근 권한·결재선·보고 체계가 없으면 성과가 안 난다. 하네스는 회사가 깔아주는 <b>업무 환경 일체</b>.</aside>
+  <aside class="note">묶는 비유: 유능한 경력직도 온보딩 문서·접근 권한·결재선·보고 체계가 없으면 성과가 안 난다. 하네스는 회사가 깔아주는 <b>업무 환경 일체</b>. 6장 카드는 →키로 하나씩.</aside>
 </section>
 
 <section class="slide" data-part="2교시 · 엔진">
-  <div class="eyebrow">강의 전체의 지도</div>
-  <h1>세 개의 층 — 여러분이 만드는 층은 하나</h1>
-  <div class="layers">
-    <div class="layer top"><div class="name">Skill</div><div class="what">내 업무의 절차와 기준</div><div class="who">여러분 (4교시)</div></div>
-    <div class="layer"><div class="name">하네스</div><div class="what">모델을 업무에 매는 실행 환경</div><div class="who muted">제조사</div></div>
-    <div class="layer"><div class="name">모델</div><div class="what">지능 그 자체</div><div class="who muted">제조사</div></div>
+  <div class="eyebrow rise">강의 전체의 지도</div>
+  <h1 class="rise d1">세 개의 층 — 우리가 만드는 층은 하나</h1>
+  <div class="layers rise d2">
+    <div class="layer fr"><div class="name">모델</div><div class="what">지능 그 자체</div><div class="who">제조사</div></div>
+    <div class="layer fr"><div class="name">하네스</div><div class="what">모델을 업무에 매는 실행 환경</div><div class="who">제조사</div></div>
+    <div class="layer top fr"><div class="name">Skill</div><div class="what">내 업무의 절차와 기준</div><div class="who">여러분 (4교시)</div></div>
   </div>
-  <div class="body" style="margin-top:26px"><p>"어느 모델이 최고냐"는 반쪽짜리 질문입니다. <span class="gold">"어느 묶음(모델+하네스)이 내 업무에 맞냐"</span>가 온전한 질문입니다.</p></div>
+  <div class="body fr" style="margin-top:28px"><p>"어느 모델이 최고냐"는 반쪽 질문 —<br><span class="seal-c">"어느 묶음(모델+하네스)이 내 업무에 맞냐"</span>가 온전한 질문입니다.</p></div>
 </section>
 
 <section class="slide" data-part="2교시 · 엔진">
-  <div class="eyebrow">프론티어 모델 지형도</div>
-  <h1>스펙이 아니라 성격으로 소개합니다</h1>
-  <div class="cols c2">
+  <div class="eyebrow rise">프론티어 모델 지형도</div>
+  <h1 class="rise d1">스펙이 아니라 성격으로 소개합니다</h1>
+  <div class="cols c2 rise d2">
     <div class="card"><div class="k">축 ①</div><div class="v">깊이 생각하는가, 빠르게 처리하는가</div></div>
     <div class="card"><div class="k">축 ②</div><div class="v">대화 상대인가, 일을 통째로 맡기는 상대인가</div></div>
   </div>
-  <div class="body" style="margin-top:28px">
-    <p>깊게 생각하는 최상급 시니어 · 균형 잡힌 일상 기본값 · 빠르고 싼 대량 처리 담당 — <span class="gold">사람 소개하듯</span> 보시면 됩니다.</p>
+  <div class="body fr" style="margin-top:30px">
+    <p>깊게 생각하는 시니어 · 균형 잡힌 기본값 · 빠르고 싼 대량 처리 담당 —<br><span class="seal-c">사람 소개하듯</span> 보시면 됩니다.</p>
   </div>
   <p class="fn">비용 감각: 대량 분류 작업을 최상급 모델에 시키는 건, 임원에게 우편물 분류를 시키는 것.</p>
 </section>
 
-<section class="slide" data-part="2교시 · 엔진">
-  <div class="eyebrow">실측 지표 · DeepSWE v1.1</div>
-  <h1>성격은 숫자에서도 보입니다</h1>
-  <table>
+<section class="slide dense" data-part="2교시 · 엔진">
+  <div class="eyebrow rise">실측 지표 · DeepSWE v1.1</div>
+  <h1 class="rise d1">성격은 숫자에서도 보입니다</h1>
+  <table class="rise d2">
     <thead><tr><th>모델 [생각 강도]</th><th>성공률</th><th>평균 비용</th><th>스텝 수</th></tr></thead>
     <tbody>
-      <tr><td>gpt-5.6-sol [max]</td><td class="num">73%</td><td class="num">$8.39</td><td class="num">61</td></tr>
-      <tr class="hl"><td>claude-fable-5 [max]</td><td class="num">70%</td><td class="num">$21.63</td><td class="num">88</td></tr>
-      <tr class="hl"><td>gpt-5.6-terra [max]</td><td class="num">70%</td><td class="num">$4.95</td><td class="num">76</td></tr>
-      <tr><td>claude-opus-4.8 [max]</td><td class="num">59%</td><td class="num">$13.22</td><td class="num">120</td></tr>
-      <tr><td>claude-sonnet-5 [max]</td><td class="num">54%</td><td class="num">$26.40</td><td class="num">268</td></tr>
-      <tr><td>gemini-3.1-pro [high]</td><td class="num">12%</td><td class="num">$9.48</td><td class="num">81</td></tr>
+      <tr><td>gpt-5.6-sol [max]</td><td class="num">73%</td><td class="num">$8.39<span class="cbar" style="width:64px"></span></td><td class="num">61</td></tr>
+      <tr class="hl"><td>claude-fable-5 [max]</td><td class="num">70%</td><td class="num">$21.63<span class="cbar" style="width:164px"></span></td><td class="num">88</td></tr>
+      <tr class="hl"><td>gpt-5.6-terra [max]</td><td class="num">70%</td><td class="num">$4.95<span class="cbar" style="width:38px"></span></td><td class="num">76</td></tr>
+      <tr><td>claude-opus-4.8 [max]</td><td class="num">59%</td><td class="num">$13.22<span class="cbar" style="width:100px"></span></td><td class="num">120</td></tr>
+      <tr><td>claude-sonnet-5 [max]</td><td class="num">54%</td><td class="num">$26.40<span class="cbar" style="width:200px"></span></td><td class="num">268</td></tr>
+      <tr><td>gemini-3.1-pro [high]</td><td class="num">12%</td><td class="num">$9.48<span class="cbar" style="width:72px"></span></td><td class="num">81</td></tr>
     </tbody>
   </table>
-  <p class="tbl-note">실제 저장소 91곳에서 새로 만든 113개 과제 · 전 모델을 동일한 표준 하네스로 측정 (deepswe.datacurve.ai, 2026-07 확인)</p>
+  <p class="tbl-note">실제 저장소 91곳 · 신규 과제 113개 · 전 모델 동일한 표준 하네스로 측정 (deepswe.datacurve.ai, 2026-07 확인)</p>
   <aside class="note">표를 띄우고 바로 다음 슬라이드로 — 읽는 법은 다음 장에서. <b>강의 전날 수치 재확인.</b></aside>
 </section>
 
 <section class="slide" data-part="2교시 · 엔진">
-  <div class="eyebrow">표 읽는 법</div>
-  <h1>같은 70%, 전혀 다른 성격</h1>
-  <div class="cols c2">
+  <div class="eyebrow rise">표 읽는 법</div>
+  <h1 class="rise d1">같은 70%, 전혀 다른 성격</h1>
+  <div class="cols c2 rise d2">
     <div class="card"><div class="k">심사숙고형</div><div class="v">claude-fable-5<small>119k 토큰 · 88스텝 · $21.63 — 깊게 파고들어 도달</small></div></div>
     <div class="card"><div class="k">속전속결형</div><div class="v">gpt-5.6-terra<small>72k 토큰 · 76스텝 · $4.95 — 효율적으로 도달</small></div></div>
   </div>
-  <div class="body" style="margin-top:28px">
-    <p>점수 열만 보지 마시고 <span class="gold">비용·스텝 열</span>을 보십시오. "누가 낫냐"가 아니라 "누가 우리 일에 맞냐"가 보입니다.</p>
-    <p class="muted">12%짜리 모델도 나쁜 모델이 아닐 수 있습니다 — 측정에 쓰인 하네스와의 궁합, 측정 조건이 달랐습니다. 표 하나로 사형선고하지 마십시오.</p>
+  <div class="body fr" style="margin-top:30px">
+    <p>점수 열만 보지 말고 <span class="seal-c">비용·스텝 열</span>을 보십시오.<br>"누가 낫냐"가 아니라 "누가 우리 일에 맞냐"가 보입니다.</p>
+    <p class="muted fr">12%짜리 모델도 나쁜 모델이 아닐 수 있습니다 — 하네스와의 궁합, 측정 조건이 달랐습니다. 표 하나로 결론 내리지 않습니다.</p>
   </div>
 </section>
 
 <section class="slide" data-part="2교시 · 엔진">
-  <div class="eyebrow">[max]가 뭔가요</div>
-  <h1>생각 강도 다이얼</h1>
-  <div class="body">
-    <p>요즘 모델에는 "얼마나 오래 생각하고 답할지" 다이얼이 있습니다. 표의 [max], [high]가 그 설정값입니다.</p>
-    <p><span class="gold">다이얼 최대 = 항상 최선이 아닙니다.</span> 강도를 올려도 성능이 그대로거나 오히려 내려가는 경우가 보고됩니다.</p>
-    <p class="muted">모든 결재 서류를 이사회 안건처럼 검토하면 회사가 멈춥니다 — 과제 난이도에 맞는 강도가 정답입니다.</p>
+  <div class="eyebrow rise">[max]가 뭔가요</div>
+  <h1 class="rise d1">생각 강도 다이얼</h1>
+  <div class="body rise d2">
+    <p>요즘 모델에는 "얼마나 오래 생각할지" 다이얼이 있습니다.<br>표의 [max], [high]가 그 설정값입니다.</p>
+    <p class="fr"><span class="seal-c">다이얼 최대 = 항상 최선이 아닙니다.</span> 올려도 그대로거나, 오히려 내려가기도 합니다.</p>
+    <p class="muted fr">모든 결재 서류를 이사회 안건처럼 검토하면 회사가 멈춥니다 — 과제 난이도에 맞는 강도가 정답입니다.</p>
   </div>
   <aside class="note">Q&amp;A 대비 — "Max로 가면 적대 에이전트가 리뷰한다던데?": 다이얼 자체는 공식적으로 생각 예산 조절이고 그런 확인은 없다. 다만 <b>별도 최상위 제품군</b>(병렬로 여러 답을 만들어 교차검증·합성)은 실재 — "중요한 보고서를 두 명에게 쓰게 하고 상호 검토시키는 원리"까지가 사실에 부합하는 화법.</aside>
 </section>
 
 <section class="slide" data-part="2교시 · 엔진">
-  <div class="eyebrow live">LIVE DEMO</div>
-  <h1>리더보드를 직접 읽어봅니다</h1>
-  <div class="body">
+  <div class="eyebrow live rise">LIVE DEMO</div>
+  <h1 class="rise d1">리더보드를 직접 읽어봅니다</h1>
+  <div class="body rise d2">
     <p class="muted">deepswe.datacurve.ai — 정렬 기준을 점수에서 비용으로 바꿔보면</p>
-    <p>"점수 1등"과 "비용 대비 1등"은 <span class="gold">다른 모델</span>입니다.</p>
-    <p>벤치마크를 버리라는 게 아닙니다. 점수 열만 보지 말고 성격 열을 읽으라는 겁니다.</p>
+    <p>"점수 1등"과 "비용 대비 1등"은 <span class="seal-c">다른 모델</span>입니다.</p>
+    <p class="fr">벤치마크를 버리라는 게 아닙니다 — 점수 열만 보지 말고 성격 열을 읽자는 겁니다.</p>
   </div>
   <aside class="note">망 차단 시 캡처본으로 동일 진행. 마무리: "최종 시험관은 이 사이트가 아니라 여러분 업무입니다."</aside>
 </section>
 
 <section class="slide" data-part="2교시 · 엔진">
-  <div class="eyebrow">가져가실 절차</div>
-  <h1>내 업무 3문제 테스트법</h1>
-  <ul class="plain">
+  <div class="eyebrow rise">가져가실 절차</div>
+  <h1 class="rise d1">내 업무 3문제 테스트법</h1>
+  <ul class="plain rise d2">
     <li>자주 하는 과제 3개를 고른다 — <span class="muted">요약 1 · 판단 1 · 작성 1</span></li>
-    <li>모델을 보기 전에, 각 과제의 <span class="gold">"좋은 결과의 기준"</span>을 먼저 적는다</li>
-    <li>후보 모델들에 동일하게 시키고, 기준표로 채점한다</li>
-    <li>점수 + 속도 + 비용으로 결정하고 — <span class="gold">분기마다 재평가한다</span></li>
+    <li class="fr">모델을 보기 전에, 각 과제의 <span class="seal-c">"좋은 결과의 기준"</span>을 먼저 적는다</li>
+    <li class="fr">후보 모델들에 동일하게 시키고, 기준표로 채점한다</li>
+    <li class="fr">점수 + 속도 + 비용으로 결정하고 — <span class="seal-c">분기마다 재평가한다</span></li>
   </ul>
   <p class="fn">모델은 계속 바뀝니다. 한 번의 선택이 아니라 절차를 가져가십시오.</p>
 </section>
 
 <section class="slide" data-part="2교시 · 엔진">
-  <div class="eyebrow">확장</div>
-  <h1>레버리지가 개인에게 왔다</h1>
-  <div class="body">
-    <p>컴퓨터 한 대 + 로컬 모델 + 프론티어 모델의 감독 = 개인이 굴리는 콘텐츠 생산 라인.</p>
-    <p>2인 개발팀의 게임이 수백억 원대 수익을 내는 시대입니다. <span class="verify">강의 전 수치 검증</span></p>
-    <p class="muted">겁드리려는 게 아닙니다 — 그 레버리지의 손잡이가 오늘 배우는 Skill이라는 이야기입니다.</p>
+  <div class="eyebrow rise">확장</div>
+  <h1 class="rise d1">레버리지가 개인에게 왔다</h1>
+  <div class="body rise d2">
+    <p>컴퓨터 한 대 + 로컬 모델 + 프론티어 모델의 감독<br>= 개인이 굴리는 콘텐츠 생산 라인.</p>
+    <p class="fr">2인 개발팀의 게임이 수백억 원대 수익을 내는 시대입니다. <span class="verify">강의 전 수치 검증</span></p>
+    <p class="muted fr">그 레버리지의 손잡이가 — 오늘 배우는 Skill이라는 이야기입니다.</p>
   </div>
   <aside class="note">검증 체크리스트: 스팀 게임(게임명·2인·690억) 수치와 출처, 올트먼 "1인 1조 기업" 인용, 카파시 인용 원문. <b>확정 전엔 구체 숫자를 입에 올리지 말 것.</b></aside>
 </section>
 
 <section class="slide statement" data-part="2교시 · 엔진">
-  <div class="eyebrow">2교시 요약</div>
-  <h1>"모델은 점수표가 아니라 내 업무 3문제로 고른다.<br>그리고 언제나 <em>하네스와의 묶음</em>으로 고른다."</h1>
+  <div class="eyebrow rise">2교시 요약</div>
+  <h1 class="rise d1">"모델은 점수표가 아니라 내 업무 3문제로 고른다.<br>그리고 언제나 <em>하네스와의 묶음</em>으로 고른다."</h1>
 </section>
 
-<!-- ═══════════════ 3교시 ═══════════════ -->
+<section class="slide break-slide" data-part="쉬는 시간" data-sec="600">
+  <div class="eyebrow rise">쉬는 시간 · 10분</div>
+  <div class="clock rise d1">10:00</div>
+  <p class="next-up rise d2">다음 · 3교시 작업대 — Claude Desktop vs Claude Code</p>
+  <p class="hint rise d3">R 키 — 카운트다운 다시 시작</p>
+</section>
+
+<!-- ═══════════════ 3교시 · 작업대 ═══════════════ -->
 
 <section class="slide divider" data-part="3교시 · 작업대">
-  <div class="big-n">3</div>
-  <div class="word">작업대</div>
-  <p class="desc">월요일 아침, 두 도구 중 무엇을 열지 3초 안에 판단하게 됩니다.</p>
+  <div class="divider-row">
+    <div class="seal-block"><span class="n">3</span></div>
+    <div>
+      <div class="word rise d1">작업대</div>
+      <p class="desc rise d2">월요일 아침, 두 도구 중 무엇을 열지<br>3초 안에 판단하게 됩니다.</p>
+    </div>
+  </div>
 </section>
 
 <section class="slide" data-part="3교시 · 작업대">
-  <div class="eyebrow">본질적 차이</div>
-  <h1>회의실에서 같이 일하기 vs<br>자리 내주고 위임하기</h1>
+  <div class="eyebrow rise">본질적 차이</div>
+  <h1 class="rise d1">회의실에서 같이 일하기 vs<br>자리 내주고 위임하기</h1>
   <div class="cols c2">
-    <div class="card"><div class="k">Claude Desktop</div><div class="v">대화 상대<small>내가 자료를 가져가 보여주며 함께 일한다 — 화면 중심, 왕복 중심</small></div></div>
-    <div class="card"><div class="k">Claude Code</div><div class="v">내 컴퓨터에 앉힌 동료<small>폴더를 통째로 주고 "이 안에서 일해" — 파일 중심, 결과물 중심</small></div></div>
+    <div class="card fr"><div class="k">Claude Desktop</div><div class="v">대화 상대<small>내가 자료를 가져가 보여주며 함께 일한다 — 화면 중심, 왕복 중심</small></div></div>
+    <div class="card fr"><div class="k">Claude Code</div><div class="v">내 컴퓨터에 앉힌 동료<small>폴더를 통째로 주고 "이 안에서 일해" — 파일 중심, 결과물 중심</small></div></div>
   </div>
   <p class="fn">이름에 Code가 있지만 코드 전용이 아닙니다 — 문서 40개 일괄 정리 같은 일에 강합니다.</p>
 </section>
 
 <section class="slide" data-part="3교시 · 작업대">
-  <div class="eyebrow">3초 판별법</div>
-  <h1>결과물이 <em>대화</em>인가, <em>파일들</em>인가</h1>
-  <table>
+  <div class="eyebrow rise">3초 판별법</div>
+  <h1 class="rise d1">결과물이 <em>대화</em>인가, <em>파일들</em>인가</h1>
+  <table class="rise d2">
     <thead><tr><th>상황</th><th>도구</th><th>이유</th></tr></thead>
     <tbody>
       <tr><td>아이디어 탐색 · 문서 1~3개 요약</td><td><b>Desktop</b></td><td>왕복 대화가 빠르다</td></tr>
       <tr><td>보고서 20건 → 비교표 1개</td><td><b>Code</b></td><td>폴더 단위 위임</td></tr>
-      <tr class="hl"><td>매주 반복하는 정형 산출물</td><td class="gold"><b>Code + Skill</b></td><td>절차의 자산화</td></tr>
+      <tr class="hl"><td>매주 반복하는 정형 산출물</td><td class="seal-c"><b>Code + Skill</b></td><td>절차의 자산화</td></tr>
       <tr><td>결과를 화면에서 보며 다듬기</td><td><b>Desktop</b></td><td>즉시 피드백</td></tr>
     </tbody>
   </table>
@@ -649,109 +782,135 @@
 </section>
 
 <section class="slide" data-part="3교시 · 작업대">
-  <div class="eyebrow live">LIVE DEMO</div>
-  <h1>같은 과제, 두 도구</h1>
-  <div class="body">
+  <div class="eyebrow live rise">LIVE DEMO</div>
+  <h1 class="rise d1">같은 과제, 두 도구</h1>
+  <div class="body rise d2">
     <p class="muted">과제: 샘플 문서 묶음으로 비교표 만들기</p>
-    <p>Desktop — 파일을 끌어 넣고 대화로. 즉각적입니다. 그런데 문서가 30개라면?</p>
-    <p>Code — 폴더를 주고 "전부 읽고 비교표 파일로 저장해줘". <span class="gold">파일이 생겨나는 순간</span>을 보십시오.</p>
+    <p>Desktop — 파일을 끌어 넣고 대화로. 즉각적입니다. <span class="muted">그런데 문서가 30개라면?</span></p>
+    <p class="fr">Code — 폴더를 주고 "전부 읽고 비교표 파일로 저장해줘".<br><span class="seal-c">파일이 생겨나는 순간</span>을 보십시오.</p>
   </div>
   <aside class="note">파일이 생겨나는 장면이 비개발자에게 가장 임팩트 큰 장면. 여기에 시간을 아끼지 말 것.</aside>
 </section>
 
 <section class="slide statement" data-part="3교시 · 작업대">
-  <div class="eyebrow">떡밥 회수</div>
-  <h1>오프닝의 그 화면,<br>이렇게 만들었습니다</h1>
-  <p class="sub">Before / After — 그리고 실제 사용한 프롬프트 전부 공개</p>
+  <div class="eyebrow rise">떡밥 회수</div>
+  <h1 class="rise d1">오프닝의 그 화면,<br>이렇게 만들었습니다</h1>
+  <p class="sub rise d2">Before / After — 그리고 실제 사용한 프롬프트 전부 공개</p>
 </section>
 
 <section class="slide" data-part="3교시 · 작업대">
-  <div class="eyebrow">프롬프트의 변화</div>
-  <h1>구현은 AI의 몫, 연출은 나의 몫</h1>
-  <div class="quote"><div class="q">"멋있게 만들어줘"</div><div class="who">실패 — AI도 무엇이 멋있는지 모른다</div></div>
-  <div class="quote"><div class="q">"카메라가 아래에서 위로 돌며, 스크롤에 따라 장면이 전환되고…"</div><div class="who">성공 — 장면 · 연출 · 카메라 모션 · 스크롤 이벤트, 감독의 언어</div></div>
+  <div class="eyebrow rise">프롬프트의 변화</div>
+  <h1 class="rise d1">구현은 AI의 몫, 연출은 나의 몫</h1>
+  <div class="quote rise d2"><div class="q">"멋있게 만들어줘"</div><div class="who">아쉬운 결과 — AI도 무엇이 멋있는지는 모릅니다</div></div>
+  <div class="quote fr"><div class="q">"카메라가 아래에서 위로 돌며,<br>스크롤에 따라 장면이 전환되고…"</div><div class="who">성공 — 장면 · 연출 · 카메라 모션 · 스크롤 이벤트, 감독의 언어</div></div>
   <aside class="note">핵심 고백: "저는 3D 기술을 배우지 않았습니다. 제가 배운 것은 감독의 언어였습니다."</aside>
 </section>
 
 <section class="slide" data-part="3교시 · 작업대">
-  <div class="eyebrow">일반화</div>
-  <h1>여러분의 "연출 언어"는<br>여러분 업무 안에 이미 있습니다</h1>
-  <div class="body">
-    <p>보험 실무자가 배워야 할 것은 프로그래밍이 아니라 —</p>
-    <p>좋은 심사보고서의 <span class="gold">구조</span>, 좋은 비교표의 <span class="gold">기준</span>, 좋은 요약의 <span class="gold">조건</span>.</p>
-    <p><span class="gold">그것을 문서로 쓰면, 그게 Skill입니다.</span> 다음 시간에 직접 만듭니다.</p>
+  <div class="eyebrow rise">일반화</div>
+  <h1 class="rise d1">여러분의 "연출 언어"는<br>여러분 업무 안에 이미 있습니다</h1>
+  <div class="body rise d2">
+    <p>보험 실무자가 배울 것은 프로그래밍이 아니라 —</p>
+    <p class="fr">좋은 심사보고서의 <span class="seal-c">구조</span> · 좋은 비교표의 <span class="seal-c">기준</span> · 좋은 요약의 <span class="seal-c">조건</span>.</p>
+    <p class="fr"><span class="seal-c">그것을 문서로 쓰면, 그게 Skill입니다.</span> 다음 시간에 직접 만듭니다.</p>
   </div>
 </section>
 
 <section class="slide statement" data-part="3교시 · 작업대">
-  <div class="eyebrow">3교시 요약</div>
-  <h1>"대화면 Desktop, 파일 작업이면 Code.<br>배워야 할 것은 구현 기술이 아니라<br>내 업무의 <em>연출 언어</em>다."</h1>
+  <div class="eyebrow rise">3교시 요약</div>
+  <h1 class="rise d1">"대화면 Desktop, 파일 작업이면 Code.<br>배워야 할 것은 구현 기술이 아니라<br>내 업무의 <em>연출 언어</em>다."</h1>
 </section>
 
-<!-- ═══════════════ 4교시 ═══════════════ -->
+<section class="slide break-slide" data-part="쉬는 시간" data-sec="600">
+  <div class="eyebrow rise">쉬는 시간 · 10분</div>
+  <div class="clock rise d1">10:00</div>
+  <p class="next-up rise d2">다음 · 4교시 손 — 직접 만들어보는 시간 (노트북을 준비해주세요)</p>
+  <p class="hint rise d3">R 키 — 카운트다운 다시 시작</p>
+  <aside class="note">실습 준비 안내를 쉬는 시간에 미리: Claude 계정 로그인, 최근 반복 업무 하나 떠올려두기.</aside>
+</section>
+
+<!-- ═══════════════ 4교시 · 손 ═══════════════ -->
 
 <section class="slide divider" data-part="4교시 · 손">
-  <div class="big-n">4</div>
-  <div class="word">손</div>
-  <p class="desc">전원이 자기 업무 Skill 1개를 만들고, Connector 1개를 연결해본 상태로 퇴근합니다.</p>
+  <div class="divider-row">
+    <div class="seal-block"><span class="n">4</span></div>
+    <div>
+      <div class="word rise d1">손</div>
+      <p class="desc rise d2">전원이 자기 업무 Skill 1개를 만들고,<br>Connector 1개를 연결해본 상태로 퇴근합니다.</p>
+    </div>
+  </div>
 </section>
 
 <section class="slide" data-part="4교시 · 손">
-  <div class="eyebrow">실습 ① · 25분</div>
-  <h1>내 업무 Skill 만들기</h1>
-  <ul class="plain">
-    <li>최근 한 달간 <span class="gold">2번 이상 반복한 업무</span> 하나를 고른다</li>
-    <li>메모장에 3가지만 적는다 — ① 언제 하는 일인가 ② 일하는 순서 ③ 결과물의 형식</li>
-    <li>Claude에게 붙여넣고 요청한다 (다음 장의 문장 그대로)</li>
-    <li>질문에 답하며 완성 → 등록 → 샘플로 실행</li>
-    <li>아쉬운 점 1가지를 지침에 추가한다 — <span class="gold">Skill은 한 번에 완성되지 않고 기릅니다</span></li>
+  <div class="eyebrow rise">실습 ① · 25분</div>
+  <h1 class="rise d1">내 업무 Skill 만들기</h1>
+  <ul class="plain rise d2">
+    <li>최근 한 달간 <span class="seal-c">2번 이상 반복한 업무</span> 하나를 고른다</li>
+    <li class="fr">메모장에 3가지만 적는다 — ① 언제 하는 일 ② 일하는 순서 ③ 결과물의 형식</li>
+    <li class="fr">Claude에게 붙여넣고 요청한다 <span class="muted">(다음 장의 문장 그대로)</span></li>
+    <li class="fr">질문에 답하며 완성 → 등록 → 샘플로 실행</li>
+    <li class="fr">아쉬운 점 1가지를 지침에 추가한다 — <span class="seal-c">Skill은 한 번에 완성되지 않고 기릅니다</span></li>
   </ul>
 </section>
 
 <section class="slide" data-part="4교시 · 손">
-  <div class="eyebrow">복사해서 쓰세요</div>
-  <h1>요청 문장</h1>
-  <div class="quote"><div class="q">"이걸 재사용 가능한 Skill(업무 지침서)로 만들어줘.<br>빠진 정보가 있으면 질문 5개까지만 해줘."</div></div>
-  <div class="body" style="margin-top:24px"><p class="muted">성공 기준은 화려함이 아닙니다 — <span class="gold">내 지침대로 결과 형식이 바뀌는 것</span>을 눈으로 확인하는 것.</p></div>
+  <div class="eyebrow rise">복사해서 쓰세요</div>
+  <h1 class="rise d1">요청 문장</h1>
+  <div class="quote rise d2"><div class="q">"이걸 재사용 가능한 Skill(업무 지침서)로 만들어줘.<br>빠진 정보가 있으면 질문 5개까지만 해줘."</div></div>
+  <div class="body fr" style="margin-top:26px"><p class="muted">성공 기준은 화려함이 아닙니다 — <span class="seal-c">내 지침대로 결과 형식이 바뀌는 것</span>을 눈으로 확인하는 것.</p></div>
   <aside class="note">막히는 참가자에게 공통 예제("경영진 보고용 1페이지 메모" Skill) 완성본 배포.</aside>
 </section>
 
 <section class="slide" data-part="4교시 · 손">
-  <div class="eyebrow">실습 ② · 20분</div>
-  <h1>Connector — AI에게 시스템 출입증 주기</h1>
-  <ul class="plain">
-    <li>설정 → Connectors → <span class="gold">Gmail</span> 연결 → 구글 로그인 승인</li>
-    <li>과제: "지난 2주 메일 중 아직 회신 안 한 것 같은 메일을 찾아 3줄씩 요약해줘"</li>
-    <li>그리고 반드시 — <span class="gold">연결 해제하는 법</span>, 권한 확인하는 법</li>
+  <div class="eyebrow rise">실습 ② · 20분</div>
+  <h1 class="rise d1">Connector — AI에게 시스템 출입증 주기</h1>
+  <ul class="plain rise d2">
+    <li>설정 → Connectors → <span class="seal-c">Gmail</span> 연결 → 구글 로그인 승인</li>
+    <li class="fr">과제: "지난 2주 메일 중 아직 회신 안 한 것 같은 메일을 찾아 3줄씩 요약해줘"</li>
+    <li class="fr">그리고 반드시 — <span class="seal-c">연결 해제하는 법</span>, 권한 확인하는 법</li>
   </ul>
   <p class="fn">AI는 내 권한 이상은 절대 못 봅니다. 금융사에서는 붙이는 법보다 끊는 법을 아는 게 신뢰를 삽니다.</p>
 </section>
 
 <section class="slide" data-part="4교시 · 손">
-  <div class="eyebrow live">강사 시연</div>
-  <h1>공식 커넥터가 없는 시스템은?<br>창구를 직접 만듭니다</h1>
-  <div class="body">
+  <div class="eyebrow live rise">강사 시연</div>
+  <h1 class="rise d1">공식 커넥터가 없는 시스템은?<br>창구를 직접 만듭니다</h1>
+  <div class="body rise d2">
     <p class="muted">시연: "맥 비서" — 이 컴퓨터에서만 도는 창구(로컬 MCP)</p>
-    <p>상품 DB를 조회하고 → 결론을 <span class="gold">소리 내어 읽고</span> → 완료 알림을 띄우고 → 후속 일정을 등록합니다.</p>
+    <p class="fr">상품 DB를 조회하고 → 결론을 <span class="seal-c">소리 내어 읽고</span> → 완료 알림을 띄우고 → 후속 일정을 등록합니다.</p>
   </div>
   <aside class="note">콤보 프롬프트는 local_mcp/README.md. 마무리: "방금 AI가 사내 DB를 조회하고, 보고하고, 일정까지 잡았습니다. 여러분 회사 시스템에도 이런 창구를 만들 수 있습니다."</aside>
 </section>
 
 <section class="slide" data-part="4교시 · 손">
-  <div class="eyebrow">오늘의 네 문장</div>
-  <h1>가지고 가실 것</h1>
-  <ul class="plain">
-    <li>에이전트는 이미 있다. 내가 만들 것은 <span class="gold">Skill</span>이다</li>
-    <li>모델은 점수표가 아니라 <span class="gold">내 업무 3문제</span>로, 하네스와의 묶음으로 고른다</li>
-    <li>대화면 Desktop, 파일 작업이면 Code</li>
-    <li>배워야 할 것은 구현 기술이 아니라 <span class="gold">내 업무의 연출 언어</span>다</li>
+  <div class="eyebrow rise">특별 코너 · 10분</div>
+  <h1 class="rise d1">실제 설계도 하나를,<br>오늘 배운 눈으로 같이 봅니다</h1>
+  <div class="body rise d2">
+    <p class="muted">신사업추진파트 — "Agent 활용 신사업 발굴 방법론" 도식</p>
+  </div>
+  <ul class="plain" style="margin-top:22px">
+    <li class="fr">역할별 에이전트 12개의 <span class="seal-c">역할 정의서</span> — 문서로 남는 자산, 오늘 말한 Skill</li>
+    <li class="fr">오케스트레이터와 루프 — <span class="slate-c">빌려 쓰는 층</span>, 플랫폼이 가장 잘하는 부분</li>
+    <li class="fr">단계별 사람 게이트 4개 — <span class="seal-c">이 설계의 백미</span>, 판단과 책임은 사람에게</li>
+  </ul>
+  <aside class="note">발주부서 요청 피드백 코너. 화법: 도식을 평가하지 말고 "이 설계에서 문서로 남는 자산이 어디인지"를 함께 표시하는 방식으로. 상세 논거는 삼성생명_Skill논증_방어노트.md — 직무기술서 12장 비유. 도식 원본은 레포의 noname.png.</aside>
+</section>
+
+<section class="slide" data-part="4교시 · 손">
+  <div class="eyebrow rise">오늘의 네 문장</div>
+  <h1 class="rise d1">가지고 가실 것</h1>
+  <ul class="plain rise d2">
+    <li class="fr">에이전트는 이미 준비되어 있다 — 내가 만들 것은 <span class="seal-c">Skill</span>이다</li>
+    <li class="fr">모델은 점수표가 아니라 <span class="seal-c">내 업무 3문제</span>로, 하네스와의 묶음으로 고른다</li>
+    <li class="fr">대화면 Desktop, 파일 작업이면 Code</li>
+    <li class="fr">배워야 할 것은 구현 기술이 아니라 <span class="seal-c">내 업무의 연출 언어</span>다</li>
   </ul>
 </section>
 
 <section class="slide statement" data-part="마무리">
-  <div class="eyebrow">Next Action</div>
-  <h1>다음 주에 Skill을 <em>딱 하나만</em> 더 만들어보세요.</h1>
-  <p class="sub">그 문서 파일이, 여러분이 어느 플랫폼을 쓰든 들고 다닐 자산입니다.<br><br>오프닝의 그 화면을 만든 건 기술이 아니라 연출 언어였습니다.<br>여러분의 연출 언어는 — 여러분 업무 안에 이미 있습니다.</p>
+  <div class="eyebrow rise">Next Action</div>
+  <h1 class="rise d1">다음 주에 Skill을 <em>딱 하나만</em> 더 만들어보세요.</h1>
+  <p class="sub rise d2">그 문서 파일이, 어느 플랫폼을 쓰든 들고 다닐 여러분의 자산입니다.<br><br>오프닝의 그 화면을 만든 건 기술이 아니라 연출 언어였습니다.<br>여러분의 연출 언어는 — 여러분 업무 안에 이미 있습니다.</p>
 </section>
 
 </div></div>
@@ -759,49 +918,121 @@
 <div id="bar"></div>
 <div id="part"></div>
 <div id="meta"></div>
-<div id="help">← → 이동 · N 발표자 노트 · T 테마</div>
+<div id="help">← → 넘기기 · N 노트 · O 목차 · B 암전 · T 밝기 · C 시계 · 숫자+Enter 이동</div>
+<div id="blk"></div>
+<div id="hud"><span class="cl"></span><span class="el"></span></div>
+<div id="toc"><div class="toc-inner" id="toc-list" role="menu" aria-label="슬라이드 목차"></div></div>
 
 <script>
 (function(){
   var slides=[].slice.call(document.querySelectorAll('.slide'));
   var i=Math.min(Math.max(parseInt(location.hash.slice(1),10)||0,0),slides.length-1);
   var bar=document.getElementById('bar'),meta=document.getElementById('meta'),part=document.getElementById('part');
+  var t0=Date.now(), numBuf='', numTimer=null;
 
-  function show(n){
+  function frags(s){return [].slice.call(s.querySelectorAll('.fr'))}
+  function show(n,revealAll){
     i=Math.min(Math.max(n,0),slides.length-1);
     slides.forEach(function(s,k){s.classList.toggle('active',k===i)});
+    frags(slides[i]).forEach(function(el){el.classList.toggle('on',!!revealAll)});
+    if(slides[i].dataset.sec)slides[i].dataset.start=Date.now();
     bar.style.width=((i+1)/slides.length*100)+'%';
     meta.textContent=(i+1)+' / '+slides.length;
     part.textContent=slides[i].dataset.part||'';
     location.replace('#'+i);
   }
+  function next(){
+    var left=frags(slides[i]).filter(function(el){return !el.classList.contains('on')});
+    if(left.length){left[0].classList.add('on');return}
+    if(i<slides.length-1)show(i+1,false);
+  }
+  function prev(){if(i>0)show(i-1,true)}
   function fit(){
     var s=Math.min(innerWidth/1280,innerHeight/720);
     document.getElementById('stage').style.setProperty('--s',s);
   }
-  addEventListener('resize',fit); fit(); show(i);
+  /* ----- 목차 오버레이 빌드 ----- */
+  var tocList=document.getElementById('toc-list'), lastPart='';
+  slides.forEach(function(s,k){
+    var p=s.dataset.part||'';
+    if(p!==lastPart){
+      lastPart=p;
+      var h=document.createElement('div'); h.className='toc-part'; h.textContent=p;
+      tocList.appendChild(h);
+    }
+    var src=s.querySelector('h1')||s.querySelector('.word')||s.querySelector('.eyebrow');
+    var t=(src?src.textContent:'').replace(/\s+/g,' ').trim()||'—';
+    if(t.length>32)t=t.slice(0,32)+'…';
+    var b=document.createElement('button'); b.className='toc-item'; b.setAttribute('role','menuitem');
+    var n=document.createElement('span'); n.className='n'; n.textContent=k+1;
+    b.appendChild(n); b.appendChild(document.createTextNode(t));
+    b.addEventListener('click',function(e){
+      e.stopPropagation();
+      document.body.classList.remove('toc');
+      show(k,false);
+    });
+    tocList.appendChild(b);
+  });
+
+  /* ----- 발표자 시계 · 쉬는시간 카운트다운 ----- */
+  var hudCl=document.querySelector('#hud .cl'), hudEl=document.querySelector('#hud .el');
+  function pad(n){return (n<10?'0':'')+n}
+  setInterval(function(){
+    var now=new Date();
+    hudCl.textContent=pad(now.getHours())+':'+pad(now.getMinutes());
+    var el=Math.floor((Date.now()-t0)/60000);
+    hudEl.textContent='경과 +'+Math.floor(el/60)+':'+pad(el%60);
+    var s=slides[i];
+    if(s&&s.dataset.sec&&s.classList.contains('active')){
+      var clock=s.querySelector('.clock'); if(!clock)return;
+      var rem=Math.round(+s.dataset.sec-(Date.now()-(+s.dataset.start||Date.now()))/1000);
+      if(rem>0){clock.textContent=pad(Math.floor(rem/60))+':'+pad(rem%60); clock.classList.remove('done')}
+      else{clock.textContent='시작합니다'; clock.classList.add('done')}
+    }
+  },500);
+
+  addEventListener('resize',fit); fit(); show(i,i>0);
 
   addEventListener('keydown',function(e){
-    if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' '||e.key==='PageDown'){e.preventDefault();show(i+1)}
-    else if(e.key==='ArrowLeft'||e.key==='ArrowUp'||e.key==='PageUp'){e.preventDefault();show(i-1)}
-    else if(e.key==='Home'){show(0)}
-    else if(e.key==='End'){show(slides.length-1)}
+    if(e.key==='Escape'){document.body.classList.remove('toc','black');return}
+    if(/^[0-9]$/.test(e.key)){
+      numBuf+=e.key; meta.textContent='이동 → '+numBuf;
+      clearTimeout(numTimer); numTimer=setTimeout(function(){numBuf=''; meta.textContent=(i+1)+' / '+slides.length},2500);
+      return;
+    }
+    if(e.key==='Enter'&&numBuf){var g=parseInt(numBuf,10); numBuf=''; show(g-1,false); return}
+    if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' '||e.key==='PageDown'){e.preventDefault();next()}
+    else if(e.key==='ArrowLeft'||e.key==='ArrowUp'||e.key==='PageUp'){e.preventDefault();prev()}
+    else if(e.key==='Home'){show(0,false)}
+    else if(e.key==='End'){show(slides.length-1,true)}
     else if(e.key==='n'||e.key==='N'){document.body.classList.toggle('notes')}
+    else if(e.key==='o'||e.key==='O'){document.body.classList.toggle('toc')}
+    else if(e.key==='b'||e.key==='B'){document.body.classList.toggle('black')}
+    else if(e.key==='c'||e.key==='C'){document.body.classList.toggle('hud')}
+    else if(e.key==='r'||e.key==='R'){
+      t0=Date.now();
+      if(slides[i].dataset.sec)slides[i].dataset.start=Date.now();
+    }
     else if(e.key==='t'||e.key==='T'){
       var r=document.documentElement;
-      r.dataset.theme=(r.dataset.theme==='light')?'':'light';
+      if(r.dataset.theme==='light'){r.removeAttribute('data-theme')}else{r.dataset.theme='light'}
     }
   });
   addEventListener('click',function(e){
+    if(document.body.classList.contains('black')){document.body.classList.remove('black');return}
+    if(document.body.classList.contains('toc')){
+      if(!e.target.closest('.toc-inner'))document.body.classList.remove('toc');
+      return;
+    }
     if(e.target.closest('a'))return;
-    show(e.clientX>innerWidth/2?i+1:i-1);
+    e.clientX>innerWidth/2?next():prev();
   });
   var x0=null;
   addEventListener('touchstart',function(e){x0=e.touches[0].clientX});
   addEventListener('touchend',function(e){
     if(x0===null)return;
     var dx=e.changedTouches[0].clientX-x0;
-    if(Math.abs(dx)>40)show(dx<0?i+1:i-1);
+    if(Math.abs(dx)>40)(dx<0?next:prev)();
     x0=null;
   });
 })();
