@@ -137,6 +137,51 @@
     padding:3px 8px; vertical-align:middle; margin-left:10px;
   }
 
+  /* equation diagram (Skill × 실행력 = 에이전트) */
+  .equation{display:grid; grid-template-columns:1fr 56px 1fr 56px 1fr; align-items:stretch; gap:0; margin-top:10px}
+  .eq-box{border-radius:12px; padding:26px 24px; display:flex; flex-direction:column; gap:10px;
+    background:var(--panel); border:1.5px solid var(--line); text-align:center}
+  .eq-box.mine{border-color:var(--gold); background:var(--gold-soft)}
+  .eq-box.result{border-color:var(--blue)}
+  .eq-title{font-size:26px; font-weight:800}
+  .eq-sub{font-size:19px; color:var(--muted); line-height:1.5; flex:1}
+  .eq-tag{font-size:16px; font-weight:700; letter-spacing:.04em; border-top:1px solid var(--line); padding-top:12px}
+  .eq-op{font-size:44px; font-weight:300; color:var(--faint); display:flex; align-items:center; justify-content:center}
+  .verdicts{display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:26px}
+  .verdict{display:flex; align-items:center; gap:16px; font-size:22px;
+    border:1px solid var(--line); border-radius:10px; padding:16px 22px; background:var(--panel2)}
+  .verdict small{color:var(--muted); font-size:17px}
+  .stamp{flex:none; font-size:18px; font-weight:800; letter-spacing:.06em;
+    border:2px solid; border-radius:8px; padding:6px 14px}
+  .stamp.t{color:var(--gold); border-color:var(--gold)}
+  .stamp.f{color:var(--warn); border-color:var(--warn)}
+
+  /* fork diagram (한 문장 → 두 독해) */
+  .fork{display:flex; flex-direction:column; align-items:center; margin-top:6px}
+  .fork-root{font-size:38px; font-weight:800; letter-spacing:-.01em;
+    border:1.5px solid var(--line); background:var(--panel); border-radius:12px; padding:18px 46px}
+  .fork svg{display:block; width:920px; height:64px}
+  .fork svg line{stroke:var(--faint); stroke-width:2}
+  .fork-branches{display:grid; grid-template-columns:1fr 1fr; gap:26px; width:100%}
+  .branch{border-radius:12px; padding:24px 28px; background:var(--panel); border:1.5px solid var(--line)}
+  .branch.true{border-color:var(--gold); background:var(--gold-soft)}
+  .branch.false{border-color:var(--warn)}
+  .branch .b-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:12px}
+  .branch .b-name{font-size:23px; font-weight:800}
+  .branch .b-quote{font-size:25px; font-weight:600; line-height:1.45; margin-bottom:10px}
+  .branch .b-why{font-size:18px; color:var(--muted); line-height:1.55}
+  .fork-trick{margin-top:24px; width:100%; text-align:center; font-size:21px;
+    border:1px dashed var(--faint); border-radius:10px; padding:16px 20px; color:var(--muted)}
+  .fork-trick b{color:var(--warn)}
+
+  /* two-context verdict (임대 사무실) */
+  .ctx-pair{display:grid; grid-template-columns:1fr 1fr; gap:26px; margin-top:8px}
+  .ctx{border:1px solid var(--line); border-radius:12px; padding:26px 28px; background:var(--panel)}
+  .ctx .c-where{font-size:17px; font-weight:700; letter-spacing:.1em; color:var(--muted); margin-bottom:14px}
+  .ctx .c-say{font-size:27px; font-weight:700; margin-bottom:12px}
+  .ctx .c-note{font-size:19px; color:var(--muted); line-height:1.55}
+  .ctx.ok{border-color:var(--gold)} .ctx.no{border-color:var(--warn)}
+
   /* chrome */
   #bar{position:absolute; left:0; bottom:0; height:4px; background:var(--gold); width:0; transition:width .2s}
   #meta{
@@ -249,6 +294,86 @@
     <div class="card"><div class="k">플랫폼이 하는 일</div><div class="v">관찰·재행동·오류 시 대처 — 루프 전체<small>여러분이 만든 게 아니다. 플랫폼을 떠나는 순간 "내 에이전트"는 없다</small></div></div>
   </div>
   <aside class="note">공격이 아니라 해부. "빌더가 나쁘다"가 아니라 "그 안에서 내가 만드는 자산이 무엇인지 알자"로.</aside>
+</section>
+
+<section class="slide" data-part="1교시 · 진실">
+  <div class="eyebrow">Skill과 에이전트의 관계</div>
+  <h1>일하는 에이전트는 곱셈의 결과입니다</h1>
+  <div class="equation">
+    <div class="eq-box mine">
+      <div class="eq-title">내가 쓴 문서</div>
+      <div class="eq-sub">Skill · 역할 정의<br>절차 · 판단 기준 · 도구 목록</div>
+      <div class="eq-tag gold">내 것 — 이식 · 상속</div>
+    </div>
+    <div class="eq-op">×</div>
+    <div class="eq-box">
+      <div class="eq-title">빌린 실행력</div>
+      <div class="eq-sub">루프 · 재시도 · 위임<br>(플랫폼의 하네스)</div>
+      <div class="eq-tag muted">구독 — 계약 종료 시 반납</div>
+    </div>
+    <div class="eq-op">=</div>
+    <div class="eq-box result">
+      <div class="eq-title">일하는 에이전트</div>
+      <div class="eq-sub">목표를 향해 관찰하고<br>재시도하는 실행 인스턴스</div>
+      <div class="eq-tag blue">둘이 결합된 순간에만 존재</div>
+    </div>
+  </div>
+  <div class="verdicts">
+    <div class="verdict"><span class="stamp t">참</span><span>"그것은 에이전트다" <small>— 결과물에 대한 분류의 문장</small></span></div>
+    <div class="verdict"><span class="stamp f">부정확</span><span>"내가 에이전트를 만들었다" <small>— 왼쪽 항 하나로 곱셈 전체를 주장</small></span></div>
+  </div>
+  <aside class="note">닭·달걀 멘트: "문서가 서브에이전트를 '낳는' 순간조차, 품어서 부화시키는 건 언제나 플랫폼입니다. 달걀은 스스로 부화하지 못합니다." — 에이전트다움의 공급원은 항상 한쪽이라 순환이 없다.</aside>
+</section>
+
+<section class="slide" data-part="1교시 · 진실">
+  <div class="eyebrow">그래서 "1인 1에이전트"는</div>
+  <h1>한 문장이 아니라, 두 문장의 겹침입니다</h1>
+  <div class="fork">
+    <div class="fork-root">"1인 1에이전트"</div>
+    <svg viewBox="0 0 920 64" aria-hidden="true"><line x1="460" y1="4" x2="235" y2="60"></line><line x1="460" y1="4" x2="685" y2="60"></line></svg>
+    <div class="fork-branches">
+      <div class="branch true">
+        <div class="b-head"><span class="b-name">사용의 독해</span><span class="stamp t">참</span></div>
+        <div class="b-quote">"1인당 에이전트 하나씩을 부린다"</div>
+        <div class="b-why">1인 1PC와 같은 문장. 이미 실현 가능하고, 심지어 바람직한 미래입니다.</div>
+      </div>
+      <div class="branch false">
+        <div class="b-head"><span class="b-name">소유의 독해</span><span class="stamp f">거짓</span></div>
+        <div class="b-quote">"1인당 에이전트 하나씩을 만들어 소유한다"</div>
+        <div class="b-why">계약이 끝나면 함께 사라지는 것은 소유가 아닙니다. 남는 것은 문서뿐입니다.</div>
+      </div>
+    </div>
+    <div class="fork-trick">마케팅의 화법: <b>왼쪽으로 증명하고, 오른쪽으로 판매합니다</b> — 같은 단어의 두 뜻 사이를 오가는 것</div>
+  </div>
+  <aside class="note">"애매어의 오류(equivocation)"라는 용어는 입으로만, 슬라이드엔 없음. "누구나 에이전트를 부릴 수 있다(참)를 보여주고 → 당신만의 에이전트를 만드세요(소유)로 계약서를 내민다."</aside>
+</section>
+
+<section class="slide" data-part="1교시 · 진실">
+  <div class="eyebrow">틀린 말인가?</div>
+  <h1>"내 사무실"은 틀린 말입니까</h1>
+  <div class="ctx-pair">
+    <div class="ctx ok">
+      <div class="c-where">대화에서</div>
+      <div class="c-say">"내 사무실로 오세요"</div>
+      <div class="c-note">임대 사무실이어도 다들 이렇게 말합니다. 맞는 말입니다.</div>
+    </div>
+    <div class="ctx no">
+      <div class="c-where">등기부등본에서</div>
+      <div class="c-say">"내 소유의 사무실"</div>
+      <div class="c-note">적는 순간 틀린 말이 됩니다. 건물주는 따로 있습니다.</div>
+    </div>
+  </div>
+  <div class="body" style="margin-top:30px">
+    <p>"1인 1에이전트"도 같습니다 — 구호로는 통용되지만, <span class="gold">예산·자산·인수인계 계획서에 적히는 순간</span> 소유의 문장이 되고, 그때 틀립니다.</p>
+  </div>
+  <aside class="note">청중 질문 "그래서 하지 말라는 건가요?" 대비 → 다음 슬라이드가 답. 판정하지 말고 장부를 물어라: "어느 장부에 적으실 겁니까?"</aside>
+</section>
+
+<section class="slide statement" data-part="1교시 · 진실">
+  <div class="eyebrow">상향 재정의</div>
+  <h1>1인 1에이전트 <em>(사용)</em><br>1인 N Skill <em>(소유)</em></h1>
+  <p class="sub">이 구호는 틀린 게 아니라 절반만 적혀 있었습니다.<br>나머지 절반 — 소유할 자산 — 을 오늘 채웁니다.</p>
+  <aside class="note">발주부서가 산 구호를 버리지 않고 회수해서 완성하는 슬라이드. 여기서 1교시의 긴장이 풀린다.</aside>
 </section>
 
 <section class="slide" data-part="1교시 · 진실">

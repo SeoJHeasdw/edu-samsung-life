@@ -40,3 +40,20 @@ next-env.d.ts
 /.wrangler/
 /outputs/
 /work/
+
+# typescript build info
+*.tsbuildinfo
+
+# project-specific — 강의 예제 / 개인 메모 / 빌드 산출물 (push 불필요)
+/3D_design_example/
+/claude_memory/
+/benchmark/
+/noname.png
+
+# openai hosting config (개인 설정)
+/.openai/
+
+# 대용량 미디어 (git-lfs 미사용 시 제외)
+public/assets/*.mp4
+public/assets/*.mov
+public/assets/*.avi
