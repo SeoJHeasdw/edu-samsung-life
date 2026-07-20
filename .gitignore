@@ -51,7 +51,6 @@ next-env.d.ts
 !/3D_design_example/*.md
 /3D_design_example/**/*
 !/3D_design_example/**/*.md
-/claude_memory/
 /benchmark/
 /noname.png
 

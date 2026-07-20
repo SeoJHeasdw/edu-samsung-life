@@ -11,7 +11,12 @@ const sceneNotes = [
   "프롬프트 2가 길어서가 아니다. 원하는 장면, 선택 기준, 시간 흐름, 기술 환경과 수정 권한까지 줬기 때문이다. 역할극과 예시는 여전히 재료지만 핵심은 아니다.",
   "‘프롬프트 엔지니어링은 끝났다’는 문장을 도발적으로 쓴다. 정확히는 마법 문장 찾기가 끝났다는 뜻이다. 최근 모델일수록 명령을 더 쌓는 것보다 맥락과 성공 기준을 잘 주는 편이 중요해졌다.",
   "여섯 문장은 외우게 하지 말고 하나만 오늘 써보게 한다. 특히 ‘나를 먼저 인터뷰해줘’와 ‘내가 놓친 것을 먼저 말해줘’를 추천한다.",
+  "AI가 빈칸을 마음대로 추측하게 두지 않는 가장 쉬운 방법이다. 보고서라면 독자·목적·분량·금기, 분석이라면 가설·데이터·판단 기준을 먼저 물어보게 한다. 질문에 답하는 과정 자체가 업무 정의가 된다.",
   "로그인 기능 예시는 비개발자에게도 통한다. ‘고객 안내문을 쓸 건데 내가 놓칠 민원 포인트를 먼저 짚어줘’처럼 자기 업무로 번역한다.",
+  "‘여러 개 보여줘’에서 멈추지 말고 서로 다른 방향이어야 한다고 말한다. HTML로 받으면 머릿속 설명이 아니라 실제 화면을 한 자리에서 비교할 수 있다. 네 개를 모두 완성안으로 보지 말고 선택지를 넓히는 탐색안으로 쓴다.",
+  "처음부터 거대한 완성품을 요구하면 구조의 좋고 나쁨을 알아보기 어렵다. 먼저 최소 본보기를 만들고 왜 좋은지 설명하게 한 다음 확장한다. 개발이 아닌 업무에서도 좋은 보고서 한 문단, 좋은 분석표 한 행으로 똑같이 적용된다.",
+  "오류 해결만 받아 적으면 다음 오류에서 다시 멈춘다. 로그를 신호·뜻·원인 후보·다음 확인으로 번역하게 하면, 문제를 푸는 동안 해당 분야의 언어를 함께 배울 수 있다.",
+  "설명을 읽은 직후의 ‘알겠다’는 착각일 수 있다. AI에게 짧은 퀴즈를 내게 하고, 오답에는 정답 대신 힌트만 달라고 한다. 내가 다시 설명할 수 있을 때 비로소 내 지식이 된다.",
   "Three.js 문법을 외운 게 아니라 카메라·모션·장면 전환이라는 판단 언어를 배웠다고 강조한다. AI가 구현을 채우고, 사람은 무엇을 배울지와 무엇을 고를지 정한다.",
   "12만/30만 줄은 생산성의 증명이 아니라 작업량의 체감치다. 6명×4년도 비교 실험이 아니라 강사의 경험적 추정이라고 분명히 말한다. 핵심 문장은 ‘지능이 100배가 아니라 실행 범위가 넓어졌다’이다.",
   "두 부류 모두 장단점이 있다. 한 제품을 깊게 파면 습관이 생기고, 여러 제품을 보면 모델·하네스 차이가 보인다. 강사는 둘 다 해봤고 지금은 비용 때문에 멀티툴에 가깝다고 말한다.",
@@ -19,8 +24,7 @@ const sceneNotes = [
   "샘 올트먼 사례의 billion-dollar는 매출이 아니라 기업가치 10억 달러다. 메차 카멜리온은 Steam에 표시된 단일 개발자 계정과 2주 700만 장 발표까지만 말하고, 690억 수익은 확정치로 쓰지 않는다.",
   "직업 간 간극이 사라진다기보다 이동 비용이 급격히 낮아진다고 설명한다. 개발자가 디자인을, 디자이너가 백엔드를 완전히 대체하는 것이 아니라 서로의 영역으로 더 멀리 들어갈 수 있다.",
   "AI가 사고를 퇴화시킨다고 의학적으로 단정하지 않는다. 위임의 방식에 따라 판단 훈련이 늘 수도, 줄 수도 있다는 실무 관찰로 말한다. DB DROP과 GitHub 사례는 검증권을 넘겼을 때의 위험이다.",
-  "주식 이야기는 ‘종목을 골라 달라’가 아니다. 내 가설의 약점, 반대 근거, 공시 누락과 최악의 경우를 찾아 달라고 한다. 최종 판단과 책임은 사람에게 남긴다.",
-  "1인 회사가 곧 100개의 독립된 두뇌를 소유한다는 뜻은 아니다. 비서·엔지니어·디자이너 페르소나는 서로 다른 직업인이 아니라 같은 기반 지능에 얹은 서로 다른 작업대다.",
+  "AI가 N명처럼 일한다는 말의 핵심은 사람의 역할이 사라진다는 뜻이 아니라, 작업자에서 총괄로 올라간다는 뜻이다. 목표와 완료 기준을 먼저 정하고, 역할별 결과를 중간 점검하며, 틀리거나 약한 결과는 구체적으로 지적해 재작업시킨다. ‘혼낸다’는 감정 표현이 아니라 검수권과 승인권을 사람이 끝까지 쥔다는 의미로 설명한다.",
   "마무리는 낙관과 긴장을 함께 둔다. 만드는 비용은 낮아졌지만 목적·취향·검증·책임은 자동화되지 않았다. 다음 장의 Agent/Skill 존재론으로 연결한다.",
 ];
 
@@ -31,7 +35,12 @@ const sceneLabels = [
   "차이",
   "전환",
   "새 문법",
+  "인터뷰",
   "실전",
+  "시안 4개",
+  "본보기",
+  "로그",
+  "퀴즈",
   "학습",
   "100×",
   "탐색",
@@ -39,15 +48,14 @@ const sceneLabels = [
   "신호",
   "경계",
   "두 갈래",
-  "판단",
-  "오해",
+  "총괄",
   "결론",
 ];
 
 const collaborationMoves = [
   ["01", "나를 인터뷰", "답부터 만들지 말고, 필요한 질문부터 해줘."],
   ["02", "놓친 부분", "내가 놓쳤을 위험과 전제를 먼저 짚어줘."],
-  ["03", "시안 4개", "완전히 다른 방향 네 개를 한 화면에 보여줘."],
+  ["03", "시안 4개", "디자인 시안은 HTML로, 서로 다른 디자인 4개를 보여줘."],
   ["04", "본보기 코드", "좋은 구조의 최소 예시부터 만들어줘."],
   ["05", "막힌 곳 로그", "이 로그가 뜻하는 것과 내가 모르는 개념을 설명해줘."],
   ["06", "나를 퀴즈", "내가 진짜 이해했는지 문제로 확인해줘."],
@@ -78,19 +86,11 @@ const promptModes = [
   },
 ];
 
-const roleModes = [
-  { name: "비서", work: "일정 · 메일", instruction: "우선순위와 후속 조치 중심으로 정리" },
-  { name: "엔지니어", work: "코드 · 배포", instruction: "실행 가능성과 장애 위험 중심으로 검토" },
-  { name: "디자이너", work: "화면 · 시안", instruction: "정보 위계와 사용 경험 중심으로 제안" },
-  { name: "분석가", work: "자료 · 가설", instruction: "근거와 반례 중심으로 검증" },
-];
-
 export function AiCollaborationExperience() {
   const deckRef = useRef<HTMLElement>(null);
   const [activeScene, setActiveScene] = useState(0);
   const [showNotes, setShowNotes] = useState(false);
   const [promptMode, setPromptMode] = useState(1);
-  const [activeRole, setActiveRole] = useState(0);
 
   const goToScene = useCallback((nextIndex: number) => {
     const safeIndex = Math.max(0, Math.min(sceneLabels.length - 1, nextIndex));
@@ -314,9 +314,37 @@ export function AiCollaborationExperience() {
 
       <section className={`${styles.scene} ${styles.paper}`} data-scene="6">
         <SceneNumber number="07" />
+        <div className={styles.interviewLayout}>
+          <div className={styles.collabIntro}>
+            <p className={styles.kicker}>실제 사용 문장 01 · 역질문 요청</p>
+            <span className={styles.collabIndex}>01 / 06 · INTERVIEW ME</span>
+            <h2>답을 받기 전에,<br /><mark>빈칸부터 함께 채웁니다.</mark></h2>
+            <blockquote>“이 일을 잘하려면 무엇을 알아야 하는지<br /><strong>나에게 질문부터 해줘.</strong>”</blockquote>
+          </div>
+          <div className={styles.interviewFlow} aria-label="AI의 질문이 업무 브리프로 정리되는 과정">
+            <div className={styles.interviewQuestions}>
+              <small>AI · 먼저 묻기</small>
+              <span><b>01</b>누가 읽나요?</span>
+              <span><b>02</b>무엇을 결정해야 하나요?</span>
+              <span><b>03</b>좋은 결과의 기준은?</span>
+              <span><b>04</b>지켜야 할 제약은?</span>
+            </div>
+            <div className={styles.interviewArrow}>→</div>
+            <div className={styles.briefSheet}>
+              <small>함께 완성한 업무 브리프</small>
+              <strong>임원 의사결정용<br />1페이지 비교 메모</strong>
+              <span>독자 · 목적 · 성공 기준 · 제약</span>
+              <b>추측할 빈칸 ↓</b>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className={`${styles.scene} ${styles.paper}`} data-scene="7">
+        <SceneNumber number="08" />
         <div className={styles.riskScene}>
           <div className={styles.promptStage}>
-            <p className={styles.kicker}>실제 사용 문장 · 사전 검토 요청</p>
+            <p className={styles.kicker}>실제 사용 문장 02 · 사전 검토 요청</p>
             <blockquote>
               “로그인 기능을 붙일 겁니다.
               <br />
@@ -338,8 +366,108 @@ export function AiCollaborationExperience() {
         </div>
       </section>
 
-      <section className={`${styles.scene} ${styles.ink}`} data-scene="7">
-        <SceneNumber number="08" />
+      <section className={`${styles.scene} ${styles.yellow}`} data-scene="8">
+        <SceneNumber number="09" />
+        <div className={styles.variantLayout}>
+          <div className={styles.collabIntro}>
+            <p className={styles.kicker}>실제 사용 문장 03 · 선택지 넓히기</p>
+            <span className={styles.collabIndex}>03 / 06 · FOUR DIRECTIONS</span>
+            <h2>한 개를 다듬기 전에,<br /><mark>네 방향을 펼칩니다.</mark></h2>
+            <blockquote>“디자인 시안은 <strong>HTML로,</strong><br /><strong>서로 다른 디자인 4개</strong>를 한 화면에 보여줘.”</blockquote>
+            <p className={styles.collabPoint}>설명을 상상하는 대신, 작동하는 화면을 나란히 놓고 고릅니다.</p>
+          </div>
+          <div className={styles.variantGrid} aria-label="서로 다른 네 가지 HTML 디자인 시안">
+            <article className={styles.variantEditorial}>
+              <div className={styles.variantChrome}><i /><i /><i /><span>01 · EDITORIAL</span></div>
+              <div className={styles.variantCanvas}><small>INSURANCE / 2026</small><strong>삶의 다음 장을<br />준비하는 방식</strong><b /></div>
+            </article>
+            <article className={styles.variantDashboard}>
+              <div className={styles.variantChrome}><i /><i /><i /><span>02 · DASHBOARD</span></div>
+              <div className={styles.variantCanvas}><strong>MY COVERAGE</strong><div><b /><b /><b /></div><small>83% READY</small></div>
+            </article>
+            <article className={styles.variantImmersive}>
+              <div className={styles.variantChrome}><i /><i /><i /><span>03 · IMMERSIVE</span></div>
+              <div className={styles.variantCanvas}><b /><strong>당신의 내일을<br />입체적으로 보다</strong><small>SCROLL TO EXPLORE</small></div>
+            </article>
+            <article className={styles.variantMinimal}>
+              <div className={styles.variantChrome}><i /><i /><i /><span>04 · MINIMAL</span></div>
+              <div className={styles.variantCanvas}><small>SAMSUNG LIFE</small><strong>보장은<br />단순하게.</strong><b>시작하기 →</b></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section className={`${styles.scene} ${styles.paper}`} data-scene="9">
+        <SceneNumber number="10" />
+        <div className={styles.exampleLayout}>
+          <div className={styles.collabIntro}>
+            <p className={styles.kicker}>실제 사용 문장 04 · 최소 본보기</p>
+            <span className={styles.collabIndex}>04 / 06 · EXEMPLAR FIRST</span>
+            <h2>완성품보다 먼저,<br /><mark>좋은 뼈대</mark>를 봅니다.</h2>
+            <blockquote>“좋은 구조의 <strong>최소 예시</strong>부터 만들어줘.<br />왜 좋은지 설명한 뒤 확장해줘.”</blockquote>
+          </div>
+          <div className={styles.exampleWorkbench} aria-label="최소 본보기 코드에서 실제 결과로 확장하는 과정">
+            <div className={styles.codeWindow}>
+              <header><i /><i /><i /><span>example.html</span></header>
+              <pre><code>{`<main>\n  <header />\n  <section>\n    <h1 />\n    <article />\n  </section>\n</main>`}</code></pre>
+            </div>
+            <div className={styles.exampleBridge}>
+              <span>구조를 본다</span><span>이유를 묻는다</span><span>내 일에 맞춘다</span>
+            </div>
+            <div className={styles.expandedFrame}>
+              <small>YOUR VERSION</small>
+              <strong>정보 위계는 유지하고<br />내용·브랜드·기능을 확장</strong>
+              <div><span>DATA</span><span>STYLE</span><span>INTERACTION</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className={`${styles.scene} ${styles.ink}`} data-scene="10">
+        <SceneNumber number="11" />
+        <div className={styles.logLayout}>
+          <div className={styles.collabIntro}>
+            <p className={styles.kicker}>실제 사용 문장 05 · 오류를 학습 재료로</p>
+            <span className={styles.collabIndex}>05 / 06 · READ THE LOG</span>
+            <h2>고치기 전에,<br /><mark>로그의 언어</mark>를 배웁니다.</h2>
+            <blockquote>“이 로그를 고치기 전에, 무슨 뜻인지와<br /><strong>내가 모르는 개념</strong>부터 설명해줘.”</blockquote>
+          </div>
+          <div className={styles.logWorkbench}>
+            <div className={styles.terminalPanel} aria-label="로그 오류 예시">
+              <header><span>●</span><span>●</span><span>●</span><b>auth.log</b></header>
+              <pre><code><i>10:31:08</i> POST /login <strong>401</strong>{"\n"}<i>10:31:08</i> TokenExpiredError{"\n"}<i>10:31:09</i> retry 3/3 <strong>failed</strong></code></pre>
+            </div>
+            <div className={styles.logDecode} aria-label="로그를 이해하는 네 단계">
+              <div><span>01</span><strong>신호</strong><small>무슨 일이 벌어졌나</small></div>
+              <div><span>02</span><strong>뜻</strong><small>문장이 무엇을 말하나</small></div>
+              <div><span>03</span><strong>개념</strong><small>토큰 · 만료 · 인증</small></div>
+              <div><span>04</span><strong>다음 확인</strong><small>어디부터 검증하나</small></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className={`${styles.scene} ${styles.blue}`} data-scene="11">
+        <SceneNumber number="12" />
+        <div className={styles.quizLayout}>
+          <div className={styles.collabIntro}>
+            <p className={styles.kicker}>실제 사용 문장 06 · 이해 검증</p>
+            <span className={styles.collabIndex}>06 / 06 · QUIZ ME</span>
+            <h2>“알겠어요”에서 멈추지 않고,<br /><mark>내 말로 꺼내봅니다.</mark></h2>
+            <blockquote>“내가 진짜 이해했는지 <strong>3문제로 확인해줘.</strong><br />틀리면 정답 대신 힌트만 줘.”</blockquote>
+          </div>
+          <div className={styles.quizBoard} aria-label="질문, 힌트, 재설명으로 이어지는 이해 검증">
+            <div className={styles.quizProgress}><span>1</span><span>2</span><span>3</span><b>UNDERSTANDING CHECK</b></div>
+            <div className={styles.quizQuestion}><small>QUESTION 02</small><strong>액세스 토큰과<br />리프레시 토큰은 왜 나눌까요?</strong></div>
+            <div className={styles.quizAnswer}><span>내 답</span><p>“하나는 짧게 쓰고…”</p></div>
+            <div className={styles.quizHint}><span>AI · HINT ONLY</span><p>편의성보다 먼저, 탈취됐을 때의 피해 범위를 떠올려보세요.</p></div>
+            <div className={styles.quizFinish}>답을 소비함 → <strong>설명할 수 있음</strong></div>
+          </div>
+        </div>
+      </section>
+
+      <section className={`${styles.scene} ${styles.ink}`} data-scene="12">
+        <SceneNumber number="13" />
         <div className={styles.learnLayout}>
           <div>
             <p className={styles.kicker}>학습 로그 · 무엇을 공부했는가</p>
@@ -355,8 +483,8 @@ export function AiCollaborationExperience() {
         </div>
       </section>
 
-      <section className={`${styles.scene} ${styles.paper}`} data-scene="8">
-        <SceneNumber number="09" />
+      <section className={`${styles.scene} ${styles.paper}`} data-scene="13">
+        <SceneNumber number="14" />
         <div className={styles.executionLayout}>
           <div className={styles.executionMap} aria-label="AI 사용 전후 한 사람이 감당하는 실행 범위">
             <div className={styles.radiusBefore}><span>혼자</span><small>기존 실행 반경</small></div>
@@ -380,8 +508,8 @@ export function AiCollaborationExperience() {
         <p className={styles.disclaimer}>코드 줄 수는 가치나 품질의 지표가 아닙니다. 이 숫자는 강사가 체감한 실행량을 설명하기 위한 개인 기록입니다.</p>
       </section>
 
-      <section className={`${styles.scene} ${styles.coral}`} data-scene="9">
-        <SceneNumber number="10" />
+      <section className={`${styles.scene} ${styles.coral}`} data-scene="14">
+        <SceneNumber number="15" />
         <div className={styles.twoCampLayout}>
           <p className={styles.kicker}>도구 탐색 방식 · 개인 경험</p>
           <h2>한 우물을 깊게 팔까,<br />여러 도구를 빠르게 건너갈까.</h2>
@@ -394,8 +522,8 @@ export function AiCollaborationExperience() {
         </div>
       </section>
 
-      <section className={`${styles.scene} ${styles.paper}`} data-scene="10">
-        <SceneNumber number="11" />
+      <section className={`${styles.scene} ${styles.paper}`} data-scene="15">
+        <SceneNumber number="16" />
         <div className={styles.subscriptionLayout}>
           <div className={styles.windowHeadline}>
             <p className={styles.kicker}>권장 방식 · 한 달 실험 프로토콜</p>
@@ -415,8 +543,8 @@ export function AiCollaborationExperience() {
         </div>
       </section>
 
-      <section className={`${styles.scene} ${styles.yellow}`} data-scene="11">
-        <SceneNumber number="12" />
+      <section className={`${styles.scene} ${styles.yellow}`} data-scene="16">
+        <SceneNumber number="17" />
         <div className={styles.signalLayout}>
           <div className={styles.signalQuote}>
             <p className={styles.kicker}>외부 신호 01 · 1인 기업</p>
@@ -435,8 +563,8 @@ export function AiCollaborationExperience() {
         </div>
       </section>
 
-      <section className={`${styles.scene} ${styles.paper}`} data-scene="12">
-        <SceneNumber number="13" />
+      <section className={`${styles.scene} ${styles.paper}`} data-scene="17">
+        <SceneNumber number="18" />
         <div className={styles.boundaryLayout}>
           <p className={styles.kicker}>역할 변화 · 이동 비용의 감소</p>
           <h2>직업의 경계가 사라지는 게 아니라,<br /><mark>경계를 넘는 비용</mark>이 낮아진다.</h2>
@@ -449,8 +577,8 @@ export function AiCollaborationExperience() {
         </div>
       </section>
 
-      <section className={`${styles.scene} ${styles.ink}`} data-scene="13">
-        <SceneNumber number="14" />
+      <section className={`${styles.scene} ${styles.ink}`} data-scene="18">
+        <SceneNumber number="19" />
         <div className={styles.forkLayout}>
           <p className={styles.kicker}>관찰 · 위임 방식에 따른 두 경로</p>
           <h2>AI를 쓸수록,<br />누군가는 확장되고 누군가는 약해진다.</h2>
@@ -462,67 +590,47 @@ export function AiCollaborationExperience() {
         </div>
       </section>
 
-      <section className={`${styles.scene} ${styles.paper}`} data-scene="14">
-        <SceneNumber number="15" />
+      <section className={`${styles.scene} ${styles.paper}`} data-scene="19">
+        <SceneNumber number="20" />
         <div className={styles.judgmentLayout}>
           <div>
-            <p className={styles.kicker}>사용 사례 · AI를 반론 도구로 쓰기</p>
-            <h2 className={styles.judgmentTitle}><span className={styles.nowrap}>판단을 맡기는 게 아니라,</span><br /><mark className={styles.nowrap}>판단을 공격하게 한다.</mark></h2>
+            <p className={styles.kicker}>운영 원칙 · AI 작업팀을 지휘하는 법</p>
+            <h2 className={styles.judgmentTitle}>AI가 N명처럼 일할수록,<br /><mark>나는 총괄처럼 검수해야 합니다.</mark></h2>
+            <blockquote className={styles.leadCommand}>“역할별로 나눠 진행해. 각 결과에 근거와 테스트를 붙이고, <strong>내가 승인하기 전에는 완료하지 마.</strong>”</blockquote>
           </div>
-          <div className={styles.auditLoop} aria-label="투자 가설을 AI가 반론으로 검토하고 다시 사람에게 돌려주는 과정">
-            <div className={styles.auditQuestion}><small>01 · HUMAN</small><strong>내 가설</strong><span>“좋아 보인다”</span></div>
-            <div className={styles.auditBranch}>
-              <span>약한 전제</span><span>반대 근거</span><span>놓친 공시</span><span>철회 조건</span>
+          <div className={styles.leadMap} aria-label="사람 총괄이 AI 작업팀에 일을 나누고 검수와 재작업을 반복하는 과정">
+            <div className={styles.leadBrief}>
+              <small>01 · HUMAN LEAD</small>
+              <strong>목표 · 기준 설계</strong>
+              <span>완료의 조건부터 정한다</span>
             </div>
-            <div className={styles.auditAnswer}><small>02 · AI</small><strong>가설 공격</strong><span>결정은 하지 않음</span></div>
-            <div className={styles.auditDecision}><small>03 · HUMAN</small><strong>판단 · 책임</strong></div>
+            <div className={styles.leadArrow}>→</div>
+            <div className={styles.aiCrew}>
+              <header><strong>02 · AI WORKSTREAMS</strong><span>N개의 실행 역할</span></header>
+              <div>
+                <article><b>DEV 01</b><strong>화면</strong><small>구현 결과</small></article>
+                <article><b>DEV 02</b><strong>백엔드</strong><small>연결 결과</small></article>
+                <article><b>DEV 03</b><strong>테스트</strong><small>검증 결과</small></article>
+                <article><b>DEV N</b><strong>문서</strong><small>설명 결과</small></article>
+              </div>
+            </div>
+            <div className={styles.reviewFeedback}>
+              <span>“틀렸어” → 근거 다시</span>
+              <span>“빠졌어” → 테스트 추가</span>
+              <span>“약해” → 대안 비교</span>
+            </div>
+            <div className={styles.reviewGate}>
+              <small>03 · HUMAN REVIEW</small>
+              <strong>검수 · 반려 · 재작업 · 승인</strong>
+              <span>최종 품질과 책임은 사람에게</span>
+            </div>
           </div>
         </div>
-        <p className={styles.disclaimer}>투자 권유가 아니라 AI를 ‘반론 생성기’로 쓰는 개인적 검토 방식의 예시입니다.</p>
+        <p className={styles.disclaimer}>‘혼낸다’는 감정적으로 대한다는 뜻이 아닙니다. 기준 미달을 구체적으로 지적하고 다시 일하게 하는 검수 루프입니다.</p>
       </section>
 
-      <section className={`${styles.scene} ${styles.blue}`} data-scene="15">
-        <SceneNumber number="16" />
-        <div className={styles.agentMythLayout}>
-          <p className={styles.kicker}>개념 구분 · 역할 ≠ 독립 지능</p>
-          <h2>비서도, 엔지니어도, 디자이너도<br /><mark>서로 다른 사람이 아닙니다.</mark></h2>
-          <div className={styles.sharedEngine}>
-            {roleModes.slice(0, 2).map((role, index) => (
-              <button
-                key={role.name}
-                className={`${styles.roleDesk} ${activeRole === index ? styles.roleDeskActive : ""}`}
-                onClick={() => setActiveRole(index)}
-                aria-pressed={activeRole === index}
-              >
-                <span>{role.name}</span><small>{role.work}</small>
-              </button>
-            ))}
-            <div className={styles.engineCore}>
-              <small>SHARED MODEL + ORCHESTRATOR</small>
-              <strong>{roleModes[activeRole].name} 모드</strong>
-              <span>{roleModes[activeRole].instruction}</span>
-              <b>기반 추론과 공통 한계는 바뀌지 않음</b>
-            </div>
-            {roleModes.slice(2).map((role, index) => {
-              const roleIndex = index + 2;
-              return (
-                <button
-                  key={role.name}
-                  className={`${styles.roleDesk} ${activeRole === roleIndex ? styles.roleDeskActive : ""}`}
-                  onClick={() => setActiveRole(roleIndex)}
-                  aria-pressed={activeRole === roleIndex}
-                >
-                  <span>{role.name}</span><small>{role.work}</small>
-                </button>
-              );
-            })}
-          </div>
-          <p className={styles.agentTruth}>‘직원 100명을 소유’하는 것이 아니라, <strong>하나의 범용 지능을 100개의 작업 방식으로 조직</strong>하는 것입니다.</p>
-        </div>
-      </section>
-
-      <section className={`${styles.scene} ${styles.yellow}`} data-scene="16">
-        <SceneNumber number="17" />
+      <section className={`${styles.scene} ${styles.yellow}`} data-scene="20">
+        <SceneNumber number="21" />
         <div className={styles.finalLayout}>
           <p className={styles.kicker}>결론 · 자동화 이후에도 남는 일</p>
           <h2>
