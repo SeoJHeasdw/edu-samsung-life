@@ -8,7 +8,7 @@
   :root{
     --paper:#F9F6EE; --ink:#22232A; --muted:#6C665E; --faint:#9C9587;
     --seal:#C2402A; --seal-soft:rgba(194,64,42,.08);
-    --slate:#47627E; --line:rgba(34,35,42,.16);
+    --slate:#47627E; --slate-soft:rgba(71,98,126,.07); --line:rgba(34,35,42,.16);
   }
   *{margin:0;padding:0;box-sizing:border-box}
   body{
@@ -18,57 +18,106 @@
   }
   .sheet{width:210mm; min-height:297mm; margin:0 auto; padding:14mm 16mm 12mm; position:relative}
   .sheet+.sheet{page-break-before:always; break-before:page}
-  .sheet.core h2{margin:13px 0 6px}
-  .sheet.core td{padding:5px 8px}
-  .sheet.core .prompt{padding:8px 12px; line-height:1.5}
-  .sheet.core .four{line-height:1.55}
-  .sheet.core .four li{margin-bottom:3px}
   header{display:flex; align-items:baseline; justify-content:space-between;
-    border-bottom:2.5px solid var(--ink); padding-bottom:10px; margin-bottom:16px}
-  header h1{font-size:21px; font-weight:800; letter-spacing:-.01em}
+    border-bottom:2.5px solid var(--ink); padding-bottom:10px; margin-bottom:14px}
+  header h1{font-size:20px; font-weight:800; letter-spacing:-.01em}
   header h1 em{font-style:normal; color:var(--seal)}
-  header .meta{font-size:11px; color:var(--muted); letter-spacing:.06em}
+  header .meta{font-size:10.5px; color:var(--muted); letter-spacing:.06em; flex:none; margin-left:14px}
   h2{display:flex; align-items:center; gap:8px;
-    font-size:12px; font-weight:800; letter-spacing:.18em; color:var(--seal);
-    margin:18px 0 8px}
+    font-size:11.5px; font-weight:800; letter-spacing:.17em; color:var(--seal);
+    margin:15px 0 7px}
   h2::before{content:""; width:8px; height:8px; background:var(--seal); flex:none}
-  table{border-collapse:collapse; width:100%; font-size:12.5px}
-  th{font-size:10px; font-weight:700; letter-spacing:.1em; color:var(--muted);
-    text-align:left; padding:5px 9px; border-bottom:1.5px solid var(--ink)}
-  td{padding:7px 9px; border-bottom:1px solid var(--line); line-height:1.5; vertical-align:top}
+  h2 span{font-weight:600; letter-spacing:0; color:var(--faint); font-size:10.5px}
+  table{border-collapse:collapse; width:100%; font-size:12px}
+  th{font-size:9.5px; font-weight:700; letter-spacing:.1em; color:var(--muted);
+    text-align:left; padding:5px 8px; border-bottom:1.5px solid var(--ink)}
+  td{padding:6px 8px; border-bottom:1px solid var(--line); line-height:1.45; vertical-align:top}
   tr.hl td{background:var(--seal-soft)}
   tr.hl td:first-child{border-left:2.5px solid var(--seal)}
+  tr.sl td{background:var(--slate-soft)}
   .seal-c{color:var(--seal); font-weight:700}
-  .slate-c{color:var(--slate)}
-  small.note{display:block; font-size:10.5px; color:var(--faint); margin-top:5px; line-height:1.5}
-  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:0 24px}
-  ol.steps{padding-left:20px; font-size:12.5px; line-height:1.65}
-  ol.steps li{margin-bottom:4px}
-  ul.qs{list-style:none; font-size:12.5px; line-height:1.6}
-  ul.qs li{padding:6px 0 6px 26px; position:relative; border-bottom:1px solid var(--line)}
+  .slate-c{color:var(--slate); font-weight:700}
+  small.note{display:block; font-size:10px; color:var(--faint); margin-top:5px; line-height:1.5}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:0 22px}
+  .grid2.tight{gap:0 18px}
+  ol.steps{padding-left:19px; font-size:12px; line-height:1.6}
+  ol.steps li{margin-bottom:3px}
+  ul.qs{list-style:none; font-size:12px; line-height:1.55}
+  ul.qs li{padding:5px 0 5px 24px; position:relative; border-bottom:1px solid var(--line)}
   ul.qs li:last-child{border-bottom:none}
-  ul.qs li b.q{position:absolute; left:0; top:6px; color:var(--seal); font-size:12px}
+  ul.qs li b.q{position:absolute; left:0; top:5px; color:var(--seal); font-size:11.5px}
   .prompt{border:1.5px solid var(--seal); border-radius:8px; background:var(--seal-soft);
-    padding:10px 14px; font-size:13.5px; font-weight:700; line-height:1.6; margin-top:2px}
-  .prompt small{display:block; font-weight:400; font-size:10.5px; color:var(--muted); margin-top:5px}
-  .hero{border-left:4px solid var(--seal); padding:9px 0 9px 15px; margin:6px 0 13px}
-  .hero strong{display:block; font-size:22px; line-height:1.35; letter-spacing:-.02em}
-  .hero p{font-size:12.5px; color:var(--muted); line-height:1.6; margin-top:6px}
+    padding:9px 13px; font-size:12.5px; font-weight:700; line-height:1.55; margin-top:2px}
+  .prompt small{display:block; font-weight:400; font-size:10px; color:var(--muted); margin-top:5px; line-height:1.5}
+  .hero{border-left:4px solid var(--seal); padding:8px 0 8px 14px; margin:5px 0 11px}
+  .hero strong{display:block; font-size:17px; line-height:1.4; letter-spacing:-.02em}
+  .hero p{font-size:11.5px; color:var(--muted); line-height:1.55; margin-top:5px}
   .formula{border:1.5px solid var(--seal); border-radius:8px; background:var(--seal-soft);
-    padding:11px 14px; font-size:14px; font-weight:800; line-height:1.65; text-align:center; margin:10px 0}
-  .callout{border:1px solid var(--line); border-radius:8px; padding:9px 12px; font-size:12px; line-height:1.6}
+    padding:10px 13px; font-size:13px; font-weight:800; line-height:1.6; text-align:center; margin:9px 0}
+  .callout{border:1px solid var(--line); border-radius:8px; padding:8px 11px; font-size:11.5px; line-height:1.55}
   .callout b{color:var(--seal)}
-  .four{counter-reset:f; font-size:13px; line-height:1.7; list-style:none}
-  .four li{padding-left:26px; position:relative; margin-bottom:5px}
+  .four{counter-reset:f; font-size:12.5px; line-height:1.65; list-style:none}
+  .four li{padding-left:24px; position:relative; margin-bottom:4px}
   .four li::before{counter-increment:f; content:counter(f);
-    position:absolute; left:0; top:1px; width:17px; height:17px;
+    position:absolute; left:0; top:1px; width:16px; height:16px;
     border:1.5px solid var(--seal); border-radius:4px; color:var(--seal);
-    font-size:10.5px; font-weight:800; display:flex; align-items:center; justify-content:center;
+    font-size:10px; font-weight:800; display:flex; align-items:center; justify-content:center;
     transform:rotate(-4deg)}
+  /* 작업대 4종 */
+  .benches{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:2px}
+  .bench{border:1px solid var(--line); border-top:3px solid var(--slate); border-radius:7px; padding:9px 10px}
+  .bench small{display:block; font-size:8.5px; letter-spacing:.1em; color:var(--faint); font-weight:700}
+  .bench b{display:block; font-size:13px; margin:4px 0 2px}
+  .bench i{display:block; font-style:normal; font-size:10.5px; color:var(--slate); line-height:1.4; min-height:29px}
+  .bench span{display:block; margin-top:6px; padding-top:6px; border-top:1px solid var(--line);
+    font-size:10.5px; line-height:1.4}
+  .bench span em{display:block; font-style:normal; font-size:8.5px; letter-spacing:.09em; color:var(--faint); margin-bottom:2px}
+  /* 창구 3종 */
+  .tiers{display:grid; grid-template-columns:repeat(3,1fr); gap:9px; margin-top:2px}
+  .tier{border:1px solid var(--line); border-top:3px solid var(--slate); border-radius:7px; padding:9px 11px}
+  .tier.local{border-top-color:var(--seal); background:var(--seal-soft)}
+  .tier small{display:block; font-size:9px; letter-spacing:.1em; color:var(--faint); font-weight:700}
+  .tier b{display:block; font-size:13px; margin:4px 0 5px}
+  .tier p{font-size:10.5px; color:var(--muted); line-height:1.5}
+  .tier .range{display:block; margin-top:6px; padding-top:6px; border-top:1px solid var(--line);
+    font-size:10.5px; color:var(--slate); font-weight:700}
+  .tier.local .range{color:var(--seal)}
+  /* 세 질문 */
+  .axes{display:grid; grid-template-columns:repeat(3,1fr); gap:9px}
+  .ax{border:1px solid var(--line); border-radius:7px; padding:9px 11px; position:relative}
+  .ax u{position:absolute; right:9px; top:7px; text-decoration:none; font-size:15px; font-weight:800; color:var(--line)}
+  .ax b{display:block; font-size:12.5px; margin-bottom:4px}
+  .ax p{font-size:10.5px; color:var(--muted); line-height:1.5}
+  .ax em{display:block; font-style:normal; margin-top:6px; padding-top:5px; border-top:1px solid var(--line);
+    font-size:10.5px; color:var(--seal); font-weight:700}
+  /* 워크시트 */
+  .ws{border:1px solid var(--line); border-radius:8px; padding:9px 12px 11px; background:#fff}
+  .ws+.ws{margin-top:7px}
+  .ws b{display:block; font-size:10px; letter-spacing:.11em; color:var(--seal); font-weight:800}
+  .ws i{display:block; font-style:normal; font-size:10px; color:var(--faint); margin:2px 0 7px; line-height:1.45}
+  .rule{border-bottom:1px dotted rgba(34,35,42,.35); height:16px}
+  .rule+.rule{margin-top:8px}
+  .checkline{display:flex; gap:9px; font-size:11.5px; line-height:1.5; margin-top:5px}
+  .checkline i{flex:none; width:12px; height:12px; border:1.3px solid var(--seal); border-radius:3px; margin-top:2px}
+  /* 3장(워크시트)만 압축 — 1·2장은 그대로 둔다 */
+  .sheet.tight h2{margin:7px 0 5px}
+  .sheet.tight .hero{margin:3px 0 7px; padding:5px 0 5px 13px}
+  .sheet.tight .hero strong{font-size:15px}
+  .sheet.tight .hero p{margin-top:3px; font-size:10.5px}
+  .sheet.tight .ws{padding:6px 11px 8px}
+  .sheet.tight .ws+.ws{margin-top:5px}
+  .sheet.tight .ws i{margin:2px 0 5px}
+  .sheet.tight .rule{height:15px}
+  .sheet.tight .rule+.rule{margin-top:6px}
+  .sheet.tight .prompt{padding:8px 12px; font-size:12px}
+  .sheet.tight td{padding:3.5px 8px; font-size:11.5px}
+  .sheet.tight .checkline{margin-top:3px; font-size:11px}
+  .sheet.tight .four{line-height:1.45; font-size:12px}
+  .sheet.tight .four li{margin-bottom:1px}
   footer{position:absolute; left:16mm; right:16mm; bottom:9mm;
     display:flex; justify-content:space-between; align-items:center;
     border-top:1px solid var(--line); padding-top:7px;
-    font-size:10px; color:var(--faint); letter-spacing:.05em}
+    font-size:9.5px; color:var(--faint); letter-spacing:.05em}
   footer span:first-child{min-width:0}
   footer span:last-child{flex:none; margin-left:12px}
   @media print{
@@ -79,24 +128,27 @@
 </style>
 </head>
 <body>
-<div class="sheet core">
+
+<!-- ══════════ 1장 · 개념 지도 ══════════ -->
+<div class="sheet">
   <header>
-    <h1>일하는 법을 만드는 4시간 — <em>핵심 유인물</em></h1>
+    <h1>일하는 법을 만드는 4시간 — <em>① 개념 지도</em></h1>
     <div class="meta">삼성생명 AI 활용 교육 · 2026-07-21 · 13:30–17:30</div>
   </header>
 
-  <h2>오늘 나오는 말은 네 개뿐입니다</h2>
+  <h2>오늘 나오는 말은 다섯 개뿐입니다</h2>
   <table>
-    <thead><tr><th style="width:78px">용어</th><th>한 줄 정의</th><th style="width:140px">회사 비유</th><th style="width:104px">오늘</th></tr></thead>
+    <thead><tr><th style="width:86px">용어</th><th>한 줄 정의</th><th style="width:132px">회사 비유</th><th style="width:92px">오늘</th></tr></thead>
     <tbody>
-      <tr class="hl"><td><b>Skill</b></td><td>AI에게 주는 재사용 가능한 업무 지침서 (문서 파일)</td><td>표준업무절차서</td><td class="seal-c">직접 만든다</td></tr>
-      <tr><td><b>Connector</b></td><td>AI가 외부 시스템에 접근하는 표준 연결 통로</td><td>시스템 권한 있는 창구</td><td class="seal-c">직접 연결한다</td></tr>
-      <tr><td><b>Plugin</b></td><td>Skill·설정·연결을 묶어 배포하는 패키지</td><td>팀 표준 업무 키트</td><td>개념만</td></tr>
-      <tr><td><b>Agent</b></td><td>위 재료로 "행동→관찰→사고→재행동" 루프를 도는 실행 주체</td><td>일 위임받은 주니어</td><td>준비됨</td></tr>
+      <tr class="hl"><td><b>Skill</b></td><td>AI에게 주는 재사용 가능한 업무 지침서 (문서 파일). <b>오픈 표준</b></td><td>표준업무절차서</td><td class="seal-c">직접 만든다</td></tr>
+      <tr class="hl"><td><b>Connector</b><br><small class="note" style="margin:1px 0 0">= MCP</small></td><td>AI가 외부 시스템에 접근하는 표준 연결 통로</td><td>시스템 권한 있는 창구</td><td class="seal-c">직접 연결한다</td></tr>
+      <tr><td><b>Plugin</b></td><td>Skill · 자료 · 창구 · 공용 명령을 묶어 배포하는 패키지</td><td>팀 표준 업무 키트</td><td>개념만</td></tr>
+      <tr class="sl"><td><b>하네스</b></td><td>모델을 실제 업무에 매어주는 실행 환경 (루프 · 재시도 · 도구 · 권한)</td><td>온보딩 · 결재선 · 시스템 계정</td><td class="slate-c">빌려 쓴다</td></tr>
+      <tr class="sl"><td><b>Agent</b></td><td>위 재료로 “행동 → 관찰 → 사고 → 재행동” 루프를 도는 실행 주체</td><td>일 위임받은 주니어</td><td class="slate-c">이미 준비됨</td></tr>
     </tbody>
   </table>
   <small class="note">MCP는 Connector의 기술 규격 이름입니다 — 대화에서는 Connector라고 부르시면 충분합니다.
-  색 규칙: <span class="seal-c">인주색 = 내 것(문서로 남는 자산)</span> · <span class="slate-c">회청색 = 빌려 쓰는 것(플랫폼·구독)</span></small>
+  색 규칙: <span class="seal-c">인주색 = 내 것(문서로 남는 자산)</span> · <span class="slate-c">회청색 = 빌려 쓰는 것(플랫폼 · 구독)</span></small>
 
   <h2>기억할 곱셈 한 줄</h2>
   <table>
@@ -104,10 +156,38 @@
       <tr>
         <td style="width:33%"><b class="seal-c">내가 쓴 문서 (Skill)</b><br>절차 · 판단 기준 · 도구 목록<br><small class="note">내 것 — 이식 · 상속</small></td>
         <td style="width:33%"><b class="slate-c">× 빌린 실행력 (하네스)</b><br>루프 · 재시도 · 위임<br><small class="note">구독 — 계약 종료 시 반납</small></td>
-        <td><b>= 일하는 에이전트</b><br>목표를 향해 관찰·재시도하는 실행<br><small class="note">둘이 결합된 순간에만 존재</small></td>
+        <td><b>= 일하는 에이전트</b><br>목표를 향해 관찰 · 재시도하는 실행<br><small class="note">둘이 결합된 순간에만 존재</small></td>
       </tr>
     </tbody>
   </table>
+
+  <h2>확장의 문법 <span>— 에이전트를 늘리는 것이 아니라, 하나를 확장합니다</span></h2>
+  <table>
+    <tbody>
+      <tr class="hl"><td style="width:150px"><b>지식을 더한다</b></td><td><b class="seal-c">Skill</b> — 내 업무의 절차와 기준을 문서로. 필요할 때 그 페이지만 펼쳐 읽는다.</td></tr>
+      <tr><td><b>손이 닿는 범위를 늘린다</b></td><td><b>Connector · MCP</b> — 메일 · 일정 · 사내 시스템으로 나가는 표준 창구.</td></tr>
+      <tr><td><b>팀으로 퍼뜨린다</b></td><td><b>Plugin</b> — 검증한 Skill · 자료 · 창구 · 명령을 한 상자에 담아 배포한다.</td></tr>
+      <tr class="sl"><td><b>손대지 않는 층</b></td><td><b class="slate-c">모델 · 런타임</b> — 고르기는 하되 만들지 않는다. 잘 고르고, 요구하고, 감사한다.</td></tr>
+    </tbody>
+  </table>
+  <small class="note">규격이 없다면 도구 4 × 시스템 5 = 개별 연동 20개. MCP라는 공통 규격이면 4 + 5 = 표준 연결 9개.
+  <b>Skill이 “일하는 법”의 표준이라면, MCP는 “연결”의 표준입니다 — 둘 다 규격이라서 도구를 갈아타도 남습니다.</b></small>
+
+  <h2>Agent의 개수는 지능의 개수가 아닙니다</h2>
+  <table>
+    <thead><tr><th style="width:118px">화면에서 보이는 것</th><th style="width:172px">쉽게 생기는 착각</th><th>실제로 확인할 것</th></tr></thead>
+    <tbody>
+      <tr><td><b>AI 비서 · AI 엔지니어</b></td><td>그 직무의 사람이 한 명 생겼다</td><td>캘린더 · 저장소 · 도구 · 테스트 · 승인 규칙이 실제로 있는가</td></tr>
+      <tr><td><b>Agent 간 토론 · 교차검토</b></td><td>전문가들이 독립적으로 검증한다</td><td>모델 · 자료 · 맥락 · 평가기준이 실제로 분리됐는가</td></tr>
+      <tr class="hl"><td><b>Agent 10개</b></td><td>AI 직원 10명이 생겼다</td><td class="seal-c">공용 모델 하나가 역할 카드 10장을 바꿔 읽는 것은 아닌가</td></tr>
+    </tbody>
+  </table>
+  <small class="note">역할 분리는 유효합니다. 다만 독립성은 이름이나 프로필 사진이 아니라 <b>다른 근거 자료 · 분리된 맥락 · 상이한 평가기준 · 외부 테스트 · 사람 검토</b>에서 생깁니다.</small>
+
+  <div class="formula">
+    사람 1명 ＋ 공용 AI 실행기 1개 ＋ 역할별 업무 시스템 N개<br>
+    <span class="seal-c">Skill · 데이터 · 도구 · 테스트 · 승인 기준</span> ＝ 실제 1인 회사
+  </div>
 
   <div class="grid2">
     <div>
@@ -122,113 +202,195 @@
       <h2>모델 고르기 — 내 업무 3문제 테스트</h2>
       <ol class="steps">
         <li>자주 하는 과제 3개 선정 (요약 1 · 판단 1 · 작성 1)</li>
-        <li>모델을 보기 전에 "좋은 결과의 기준"부터 적기</li>
+        <li>모델을 보기 전에 “좋은 결과의 기준”부터 적기</li>
         <li>후보 모델들에 동일하게 시키고 기준표로 채점</li>
-        <li>점수+속도+비용으로 결정 — 분기마다 재평가</li>
+        <li>점수 + 속도 + 비용으로 결정 — 분기마다 재평가</li>
       </ol>
     </div>
   </div>
 
-  <div class="grid2">
-    <div>
-      <h2>도구 3초 판별법</h2>
-      <table>
-        <tbody>
-          <tr><td>아이디어 탐색 · 문서 1~3개</td><td style="width:96px"><b>Desktop</b></td></tr>
-          <tr><td>보고서 20건 → 비교표 1개</td><td><b>Code</b></td></tr>
-          <tr class="hl"><td>매주 반복하는 정형 산출물</td><td class="seal-c"><b>Code + Skill</b></td></tr>
-          <tr><td>화면 보며 즉시 다듬기</td><td><b>Desktop</b></td></tr>
-        </tbody>
-      </table>
+  <footer>
+    <span>정확한 구호 — 1인 1Agent(업무 창구) · 1인 N Skill(업무 시스템) · 최종 책임은 사람</span>
+    <span>1 / 3</span>
+  </footer>
+</div>
+
+<!-- ══════════ 2장 · 도구와 창구 ══════════ -->
+<div class="sheet">
+  <header>
+    <h1>월요일 아침에 쓰는 판단표 — <em>② 도구와 창구</em></h1>
+    <div class="meta">삼성생명 AI 활용 교육 · 3교시</div>
+  </header>
+
+  <h2>작업대 네 종류 <span>— 축은 하나입니다: 얼마나 위임하는가</span></h2>
+  <div class="benches">
+    <div class="bench">
+      <small>ANTHROPIC · 화면</small><b>Claude Desktop</b>
+      <i>회의실의 대화 상대</i>
+      <span><em>잘 맞는 일</em>검토 · 초안 · 탐색<br>Connector로 메일 · 일정 연결</span>
     </div>
-    <div>
-      <h2>신사업 Skill 실습 — 복사해서 쓰기</h2>
-      <div class="prompt">"$discover-new-business-opportunities로 워크숍 mock을 실행해줘.<br>평가기준 하나와 Human Gate 하나를 바꾸고 변경 전후를 비교해줘. 실제 데이터는 쓰지 마."
-        <small>분해 공식: 분류체계→references · 입력표→assets · 계산→scripts · 절차→SKILL.md · 책임→Human Gate.<br>
-        내 업무로 복제할 때: ① 언제 하는 일 ② 판단 기준 ③ 결과물 ④ 승인 지점을 적습니다.</small>
-      </div>
+    <div class="bench">
+      <small>ANTHROPIC · 폴더</small><b>Claude Code</b>
+      <i>자리를 내준 동료</i>
+      <span><em>잘 맞는 일</em>대량 정리 · 반복 산출물<br>Skill · Plugin · MCP가 모두 붙음</span>
+    </div>
+    <div class="bench">
+      <small>OPENAI</small><b>Codex</b>
+      <i>같은 문법을 쓰는 다른 팀</i>
+      <span><em>잘 맞는 일</em>GPT 생태계 안의 위임 작업<br>지시는 AGENTS.md로</span>
+    </div>
+    <div class="bench">
+      <small>GOOGLE · MICROSOFT</small><b>Gemini CLI · Copilot</b>
+      <i>이미 깔려 있는 자리에서</i>
+      <span><em>잘 맞는 일</em>이미 쓰는 도구 옆에서<br>회사 계정 정책을 먼저 확인</span>
     </div>
   </div>
+  <small class="note">네 작업대가 모두 <b>같은 SKILL.md</b>를 읽습니다. <b>도구는 갈아탈 수 있고, 남는 것은 내 문서입니다.</b>
+  도구는 회사가 정하고, 자산은 본인이 가집니다.</small>
+
+  <h2>고르는 질문은 세 개면 충분합니다</h2>
+  <div class="axes">
+    <div class="ax"><u>01</u><b>결과물의 모양</b><p>내가 받고 싶은 것이 대화인가, 파일들인가.</p><em>→ 도구가 갈립니다</em></div>
+    <div class="ax"><u>02</u><b>자료의 경계</b><p>이 자료는 어디까지 나가도 되는가.</p><em>→ 창구가 갈립니다</em></div>
+    <div class="ax"><u>03</u><b>반복의 횟수</b><p>이번 한 번인가, 매주 돌아오는 일인가.</p><em>→ 남길 것이 갈립니다</em></div>
+  </div>
+
+  <h2>3초 판별법 <span>— 결과물이 “대화”인가 “파일들”인가</span></h2>
+  <table>
+    <tbody>
+      <tr><td>아이디어 탐색 · 일회성 질문 · 문서 1~3개 요약</td><td style="width:112px"><b>Desktop</b></td><td style="width:150px">왕복 대화가 빠르다</td></tr>
+      <tr><td>보고서 20건 → 비교표 1개</td><td><b>Code</b></td><td>폴더 단위 위임</td></tr>
+      <tr class="hl"><td>매주 반복하는 정형 산출물</td><td class="seal-c"><b>Code + Skill</b></td><td>절차의 자산화</td></tr>
+      <tr><td>사내 시스템 · 외부 서비스 자료 조회</td><td><b>둘 다</b></td><td>Connector — 권한이 곧 경계</td></tr>
+      <tr><td>결과를 화면에서 보며 다듬기</td><td><b>Desktop</b></td><td>즉시 피드백</td></tr>
+    </tbody>
+  </table>
+  <small class="note">Claude Code도 자연어로 씁니다. 명령어 암기는 필요 없고, 권한을 물어오면 확인하고 승인하는 습관이면 충분합니다.</small>
+
+  <h2>창구는 세 종류 <span>— 고르는 기준은 성능이 아니라 “자료가 가는 거리”</span></h2>
+  <div class="tiers">
+    <div class="tier">
+      <small>① 공식 커넥터</small><b>제공사가 만든 것</b>
+      <p>Gmail · 캘린더 · 드라이브 등. 로그인 승인(OAuth)으로 연결. 내 계정 권한 밖은 보지 못한다.</p>
+      <span class="range">→ 해당 서비스까지</span>
+    </div>
+    <div class="tier">
+      <small>② 원격 MCP</small><b>우리 회사가 만든 것</b>
+      <p>공식 커넥터가 없는 사내 시스템. 읽기 전용 · 권한 범위를 IT가 통제하고, 기록이 남는 구조로.</p>
+      <span class="range">→ 우리 서버까지</span>
+    </div>
+    <div class="tier local">
+      <small>③ 로컬 MCP</small><b>내 컴퓨터 안에서만</b>
+      <p>이 노트북 밖으로 나가지 않는다. 네트워크가 끊겨도 동작한다. 강의에서 시연한 “맥 비서”가 이것.</p>
+      <span class="range">→ 이 책상 위까지</span>
+    </div>
+  </div>
+
+  <div class="grid2 tight" style="margin-top:4px">
+    <div>
+      <h2>붙이기 전 다섯 가지</h2>
+      <ul class="qs">
+        <li><b class="q">①</b> 누가 만들었나 (제공사 · 우리 IT · 개인)</li>
+        <li><b class="q">②</b> 무엇을 <b>읽나</b> — 읽는 범위가 내 권한과 같은가</li>
+        <li><b class="q">③</b> 무엇을 <b>쓰나</b> — 보내기 · 수정 · 삭제 권한이 있는가</li>
+        <li><b class="q">④</b> 기록이 남나 — 감사 로그를 확인할 수 있는가</li>
+        <li><b class="q">⑤</b> <span class="seal-c">어떻게 끊나</span> — 해제 경로를 미리 찾아두었는가</li>
+      </ul>
+    </div>
+    <div>
+      <h2>안전 수칙 (금융사 필수)</h2>
+      <ul class="four">
+        <li>AI는 <b>내 권한 이상은 절대 못 봅니다</b> — 연결 전 권한 범위를 확인하세요.</li>
+        <li>붙이는 법만큼 <b class="seal-c">끊는 법</b>(연결 해제 · 권한 회수)을 알아두세요.</li>
+        <li>고객정보 · 내부정보는 회사 보안 지침이 허용하는 범위에서만.</li>
+        <li>외부로 나가는 행동(발송 · 등록 · 수정)은 <b>사람 승인</b>을 남기세요.</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>
+    <span>Plugin은 새로운 능력이 아니라 배포 단위입니다 — Skill 하나는 내 자산, Skill 묶음은 팀 자산.</span>
+    <span>2 / 3</span>
+  </footer>
+</div>
+
+<!-- ══════════ 3장 · 실습 워크시트 ══════════ -->
+<div class="sheet tight">
+  <header>
+    <h1>실습 워크시트 — <em>③ 내 업무를 Skill로</em></h1>
+    <div class="meta">삼성생명 AI 활용 교육 · 4교시 · 이 장은 적으면서 쓰세요</div>
+  </header>
+
+  <div class="hero">
+    <strong>화려한 결과가 목표가 아닙니다.<br>내 지침대로 결과의 형식이 바뀌는 것을 눈으로 확인하면 성공입니다.</strong>
+    <p>Skill은 한 번에 완성되지 않고 기릅니다. 오늘은 1번 버전을 만들고, 아쉬운 점 한 가지를 추가하는 데까지 갑니다.</p>
+  </div>
+
+  <h2>① 최근 한 달간 두 번 이상 반복한 업무 하나를 고릅니다</h2>
+  <div class="ws">
+    <b>업무 이름</b>
+    <div class="rule"></div>
+  </div>
+  <div class="ws">
+    <b>언제 이 일을 하는가</b>
+    <i>이 한 줄이 가장 중요합니다 — AI는 평소엔 이 줄만 기억하다가, 해당 상황이 오면 본문을 펼쳐 읽습니다.</i>
+    <div class="rule"></div>
+  </div>
+  <div class="ws">
+    <b>일하는 순서</b>
+    <i>무엇을 읽고 → 무엇을 판단하고 → 무엇을 만드는가</i>
+    <div class="rule"></div><div class="rule"></div>
+  </div>
+  <div class="ws">
+    <b>결과물이 갖춰야 할 형식</b>
+    <i>분량 · 순서 · 반드시 들어갈 항목 · 절대 넣지 말 것</i>
+    <div class="rule"></div>
+  </div>
+  <div class="ws">
+    <b>사람이 승인해야 하는 지점 (Human Gate)</b>
+    <i>누가 · 무엇을 · 언제 확인하고 넘기는가</i>
+    <div class="rule"></div>
+  </div>
+
+  <h2>② 위 내용을 그대로 붙여넣고 요청합니다</h2>
+  <div class="prompt">“이걸 재사용 가능한 Skill(업무 지침서)로 만들어줘.<br>빠진 정보가 있으면 질문을 5개까지만 해줘.”
+    <small>Claude의 질문에 답하며 완성 → Claude Desktop에 Skill로 등록 → 샘플 입력으로 실행 → 아쉬운 점 한 가지를 지침에 추가.</small>
+  </div>
+
+  <h2>③ 공통 예제 — 신사업 발굴 Skill 실행하기</h2>
+  <div class="prompt">“$discover-new-business-opportunities로 워크숍 mock을 실행해줘.<br>우리 팀에 맞게 평가기준 하나와 Human Gate 하나를 바꾸고, 변경 전후 순위와 근거를 비교해줘. 실제 데이터는 쓰지 마.”
+    <small>성공 기준 — 설명을 길게 쓰는 것이 아니라, <b>기준을 바꾸면 결과가 재현 가능하게 달라지는 것</b>.</small>
+  </div>
+
+  <h2>④ 한 장짜리 방법론이 파일로 분해되는 공식</h2>
+  <table>
+    <tbody>
+      <tr><td style="width:168px"><b>분류체계 · 참고 기준</b></td><td><code>references/</code> — 판단의 근거가 되는 자료</td></tr>
+      <tr><td><b>입력표 · 평가 서식</b></td><td><code>assets/</code> — 매번 채워 넣는 빈 양식</td></tr>
+      <tr class="hl"><td><b>계산 · 순위 매기기</b></td><td><code>scripts/</code> — 사람이 손으로 하면 틀리는 부분</td></tr>
+      <tr><td><b>일하는 절차</b></td><td><code>SKILL.md</code> — 언제 · 어떤 순서로 · 무엇을 내놓는가</td></tr>
+      <tr><td><b>책임의 경계</b></td><td><b>Human Gate</b> — 자동화할수록 더 선명해야 하는 선</td></tr>
+    </tbody>
+  </table>
+
+  <h2>⑤ Connector 실습 체크</h2>
+  <div class="checkline"><i></i><div>설정 → Connectors → <b>Gmail</b> 연결 → 구글 로그인 승인</div></div>
+  <div class="checkline"><i></i><div>과제: “지난 2주 받은 메일 중 아직 회신하지 않은 것 같은 메일을 찾아 3줄씩 요약하고 발신자를 표시해줘.”</div></div>
+  <div class="checkline"><i></i><div><b class="seal-c">연결 해제</b> 경로와 권한 확인 화면을 직접 눌러보기 — 오늘 반드시 해볼 것</div></div>
 
   <h2>오늘의 네 문장</h2>
   <ul class="four">
     <li>1인 1Agent는 1인 1두뇌가 아니다 — <b class="seal-c">페르소나는 직함, Skill은 일</b>을 만든다.</li>
-    <li>모델은 점수표가 아니라 <b class="seal-c">내 업무 3문제</b>로, 하네스와의 묶음으로 고른다.</li>
-    <li>대화면 Desktop, 파일 작업이면 Code.</li>
-    <li>배워야 할 것은 구현 기술이 아니라 <b class="seal-c">내 업무의 연출 언어</b>다.</li>
-  </ul>
-
-  <h2>안전 수칙 (금융사 필수)</h2>
-  <ul class="four" style="counter-reset:f">
-    <li>AI는 <b>내 권한 이상은 절대 못 봅니다</b> — 연결 전 권한 범위를 확인하세요.</li>
-    <li>붙이는 법만큼 <b class="seal-c">끊는 법</b>(연결 해제·권한 회수)을 알아두세요.</li>
-    <li>고객정보·내부정보는 회사 보안 지침이 허용하는 범위에서만.</li>
+    <li>런타임 하네스는 플랫폼에 요구하고, <b class="seal-c">업무 하네스</b>는 지도 · Skill · 자료 · 기준으로 직접 설계한다.</li>
+    <li>대화면 Desktop, 파일 작업이면 Code. 지식은 Skill, 손이 닿는 범위는 Connector, 팀 배포는 Plugin.</li>
+    <li>배워야 할 것은 구현 기술이 아니라 <b class="seal-c">내 업무의 연출 언어</b> — 분류체계 · 평가기준 · Human Gate다.</li>
   </ul>
 
   <footer>
     <span>다음 주 과제 — Skill 딱 하나만 더 만들어보기. 그 파일이 어느 플랫폼을 쓰든 들고 다닐 자산입니다.</span>
-    <span>1 / 2</span>
+    <span>3 / 3</span>
   </footer>
 </div>
 
-<div class="sheet">
-  <header>
-    <h1>1인 회사의 존재론적 착시 — <em>Agent 수 ≠ 지능 수</em></h1>
-    <div class="meta">삼성생명 AI 활용 교육 · 보충 읽기</div>
-  </header>
-
-  <div class="hero">
-    <strong>1인 1Agent는 대체로 ‘1인 1두뇌’가 아니라<br>‘1인 1업무 프로필’입니다.</strong>
-    <p>사람마다 독립적인 AI 지능을 새로 만드는 것이 아니라, 같은 공용 모델에 각자의 지침·기억·권한·도구를 붙여 사용합니다.</p>
-  </div>
-
-  <h2>화면의 직원 수와 실제 지능의 수를 구분하세요</h2>
-  <table>
-    <thead><tr><th style="width:122px">화면에서 보이는 것</th><th style="width:180px">쉽게 생기는 착각</th><th>실제로 확인할 것</th></tr></thead>
-    <tbody>
-      <tr><td><b>AI 비서</b></td><td>실제 비서 한 명이 생겼다</td><td>캘린더·이메일·우선순위·승인 규칙이 있는가</td></tr>
-      <tr><td><b>AI 엔지니어</b></td><td>전문 개발자 한 명이 생겼다</td><td>저장소·요구사항·실행 도구·테스트가 있는가</td></tr>
-      <tr><td><b>AI 재무담당자</b></td><td>재무 판단을 맡길 수 있다</td><td>원장·규정·검산·사람 승인 체계가 있는가</td></tr>
-      <tr><td><b>Agent 간 토론</b></td><td>전문가들이 독립 검증한다</td><td>모델·자료·맥락·평가기준이 실제로 분리됐는가</td></tr>
-      <tr><td><b>장기 기억</b></td><td>경험을 쌓으며 스스로 성장한다</td><td>무엇을 저장하고 언제 다시 불러오는가</td></tr>
-      <tr class="hl"><td><b>Agent 10개</b></td><td>AI 직원 10명이 생겼다</td><td class="seal-c">공용 모델이 역할 카드 10장을 바꿔 읽는 것은 아닌가</td></tr>
-    </tbody>
-  </table>
-
-  <div class="grid2">
-    <div>
-      <h2>페르소나는 직함, 재료가 직능을 만듭니다</h2>
-      <div class="callout"><b>비서의 재료</b><br>캘린더 · 이메일 · 선호 시간 · 충돌 기준 · 승인 규칙 · 기억 · 에스컬레이션</div>
-      <div class="callout" style="margin-top:7px"><b>엔지니어의 재료</b><br>저장소 · 요구사항 · 코딩 규칙 · 실행 도구 · 테스트 · 보안 검사 · 권한 경계</div>
-    </div>
-    <div>
-      <h2>같은 모델은 같은 맹점을 공유할 수 있습니다</h2>
-      <div class="callout">역할을 나누면 맥락 분리와 관점 전환에는 도움이 됩니다. 그러나 같은 모델끼리의 토론은 독립 전문가 여러 명의 검증과 같지 않습니다.<br><br><b>독립성은 이름이 아니라</b> 다른 자료, 분리된 맥락, 다른 평가기준, 외부 테스트와 사람 검토에서 만들어집니다.</div>
-    </div>
-  </div>
-
-  <div class="formula">
-    사람 1명 ＋ 공용 AI 실행기 1개 ＋ 역할별 업무 시스템 N개<br>
-    <span class="seal-c">Skill · 데이터 · 도구 · 테스트 · 승인 기준</span> ＝ 실제 1인 회사
-  </div>
-
-  <h2>‘AI 직원’을 만들기 전에 역할을 동사로 바꾸세요</h2>
-  <table>
-    <tbody>
-      <tr><td style="width:34%"><b>“유능한 엔지니어 Agent”</b></td><td>요구사항을 읽는다 → 코드를 찾는다 → 수정한다 → 테스트한다 → 실패를 관찰한다 → 기준을 통과하면 보고한다</td></tr>
-      <tr class="hl"><td><b>핵심 질문</b></td><td class="seal-c">무슨 이름을 붙일지가 아니라, 무엇을 보고·판단하고·행동하고·검사하게 할 것인가?</td></tr>
-    </tbody>
-  </table>
-
-  <div class="hero" style="margin-top:14px">
-    <strong>페르소나는 직함을 만들고, Skill은 일을 만듭니다.</strong>
-    <p>모자를 여러 개 만들지 말고, 입력·판단 기준·도구·검증·승인 지점이 있는 업무를 여러 개 설계하십시오.</p>
-  </div>
-
-  <footer>
-    <span>정확한 구호 — 1인 1Agent(업무 창구) · 1인 N Skill(업무 시스템) · 최종 책임은 사람</span>
-    <span>2 / 2</span>
-  </footer>
-</div>
 </body>
 </html>
