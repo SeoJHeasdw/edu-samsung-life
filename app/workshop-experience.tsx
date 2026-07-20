@@ -31,13 +31,13 @@ const concepts: Concept[] = [
   {
     id: "plugin",
     number: "02",
-    eyebrow: "CONNECTED TOOLS",
-    title: "필요한 도구를\nClaude 곁으로 연결.",
-    plain: "업무 도구와의 연결 장치",
+    eyebrow: "PACKAGED CAPABILITIES",
+    title: "필요한 업무 기능을\n한 번에 설치.",
+    plain: "업무 기능을 묶은 확장 패키지",
     description:
-      "파일과 서비스가 있는 곳까지 Claude가 손을 뻗게 합니다. 복사하고 붙이는 단계를 줄여 흐름을 이어갑니다.",
-    example: "이 폴더의 설문 파일을 읽고 핵심만 모아줘.",
-    result: "끊김 없는 흐름",
+      "Skill·에이전트·자동화 규칙·연결 기능을 하나로 묶어 Claude에 더합니다. 검증한 업무 기능을 팀과 공유하고 같은 환경을 빠르게 갖춥니다.",
+    example: "우리 팀 리서치 플러그인으로 자료 조사부터 보고서까지 해줘.",
+    result: "팀 표준을 한 번에 장착",
     color: "#d97757",
   },
   {
@@ -75,7 +75,7 @@ const promptExamples = [
 const workflowSteps = [
   { label: "GOAL", title: "목표 이해", copy: "결과물과 기준을 확인합니다." },
   { label: "SKILL", title: "기준 불러오기", copy: "보고서 작성 방식을 적용합니다." },
-  { label: "PLUGIN", title: "정보 연결", copy: "교육 만족도 파일을 읽습니다." },
+  { label: "PLUGIN", title: "업무 기능 장착", copy: "팀의 분석 패키지를 불러옵니다." },
   { label: "CONNECTOR", title: "도구 연결·실행", copy: "파일을 읽고 결과를 제자리에 전달합니다." },
 ];
 

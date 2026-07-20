@@ -45,7 +45,12 @@ next-env.d.ts
 *.tsbuildinfo
 
 # project-specific — 강의 예제 / 개인 메모 / 빌드 산출물 (push 불필요)
-/3D_design_example/
+# 3D_design_example: .md 파일만 추적, 나머지 제외
+!/3D_design_example/
+/3D_design_example/*
+!/3D_design_example/*.md
+/3D_design_example/**/*
+!/3D_design_example/**/*.md
 /claude_memory/
 /benchmark/
 /noname.png
