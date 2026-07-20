@@ -60,3 +60,6 @@ public/assets/*.avi
 
 # 내부 문서 (공개 불필요)
 260715_당사 학습회 운영관련.pdf
+
+# 외부 skill (타인 레포)
+skill_list/skillathon/

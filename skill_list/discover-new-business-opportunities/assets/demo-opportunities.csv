@@ -1,4 +1,4 @@
-opportunity_id,sector,value_chain_stage,business_model,market_size,market_growth,margin_potential,adoption_urgency,regulatory_tailwind,maturity_window,capability_fit,customer_access,execution_feasibility,evidence_count,evidence_quality,notes
+﻿opportunity_id,sector,value_chain_stage,business_model,market_size,market_growth,margin_potential,adoption_urgency,regulatory_tailwind,maturity_window,capability_fit,customer_access,execution_feasibility,evidence_count,evidence_quality,notes
 OPP-001,스마트 제조,생산,비전검사 AI 구독,4,5,5,5,3,5,5,5,4,4,4,기존 카메라와 생산라인 데이터를 활용하는 월 구독형 품질검사
 OPP-002,스마트 제조,서비스,예지보전 SaaS,5,4,5,5,3,5,5,5,4,4,4,센서 시계열 기반 고장 예측과 유지보수 워크플로우 구독
 OPP-003,스마트 제조,핵심기술,중소 제조사 데이터 통합 관리,4,4,4,4,3,4,5,5,5,3,3,설비·MES·ERP 데이터를 연결하는 관리형 데이터 서비스

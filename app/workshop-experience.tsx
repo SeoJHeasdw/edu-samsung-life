@@ -41,15 +41,15 @@ const concepts: Concept[] = [
     color: "#d97757",
   },
   {
-    id: "agent",
+    id: "connector",
     number: "03",
-    eyebrow: "GOAL TO OUTCOME",
-    title: "목표만 건네면\n계획하고 끝까지 실행.",
-    plain: "일을 나눠 맡는 디지털 동료",
+    eyebrow: "BRIDGE TO YOUR TOOLS",
+    title: "Claude가 직접\n도구와 데이터로 연결.",
+    plain: "시스템과 Claude를 잇는 다리",
     description:
-      "큰 목표를 작은 작업으로 나누고, 필요한 도구를 고르고, 결과를 확인하면서 완료 지점까지 이동합니다.",
-    example: "분석하고, 초안을 만들고, 오류까지 검토해줘.",
-    result: "완료된 업무",
+      "메일·캘린더·파일·사내 시스템 등 이미 쓰고 있는 도구를 Claude와 연결합니다. 복사·붙이기 없이 정보가 흐르고, 결과가 제자리에 놓입니다.",
+    example: "이번 주 캘린더 보고 내일 회의 자료 미리 정리해줘.",
+    result: "연결된 업무 흐름",
     color: "#f3eee7",
   },
 ];
@@ -76,7 +76,7 @@ const workflowSteps = [
   { label: "GOAL", title: "목표 이해", copy: "결과물과 기준을 확인합니다." },
   { label: "SKILL", title: "기준 불러오기", copy: "보고서 작성 방식을 적용합니다." },
   { label: "PLUGIN", title: "정보 연결", copy: "교육 만족도 파일을 읽습니다." },
-  { label: "AGENT", title: "실행과 검토", copy: "분석부터 최종 점검까지 완료합니다." },
+  { label: "CONNECTOR", title: "도구 연결·실행", copy: "파일을 읽고 결과를 제자리에 전달합니다." },
 ];
 
 function clamp(value: number, min: number, max: number) {
@@ -577,7 +577,7 @@ export function ClaudeWorkshopExperience() {
         <div className="page-rail-track">
           <div className="page-rail-fill" />
         </div>
-        <span>07</span>
+        <span>08</span>
       </div>
 
       <section className="hero" id="top">
@@ -596,7 +596,7 @@ export function ClaudeWorkshopExperience() {
             </span>
           </h1>
           <p className="hero-intro">
-            Skill · Plugin · Agent를 코드가 아닌 <strong>업무의 언어</strong>로 경험하는 하루.
+            Skill · Plugin · Connector를 코드가 아닌 <strong>업무의 언어</strong>로 경험하는 하루.
             오늘, Claude와 일하는 방식이 달라집니다.
           </p>
           <div className="hero-actions">
@@ -613,7 +613,7 @@ export function ClaudeWorkshopExperience() {
         <div className="hero-orbit-labels" aria-hidden="true">
           <span className="orbit-label orbit-label-skill">01 · SKILL</span>
           <span className="orbit-label orbit-label-plugin">02 · PLUGIN</span>
-          <span className="orbit-label orbit-label-agent">03 · AGENT</span>
+          <span className="orbit-label orbit-label-agent">03 · CONNECTOR</span>
         </div>
 
         <div className="hero-bottomline">
@@ -628,10 +628,50 @@ export function ClaudeWorkshopExperience() {
         </div>
       </section>
 
+      <section className="instructor" id="instructor">
+        <div className="night-portrait" aria-hidden="true">
+          <img src="/assets/seo-jaeho-night.jpeg" alt="" />
+          <div className="night-overlay" />
+          <span className="night-caption">FROM SEOUL, WITH CURIOSITY</span>
+        </div>
+
+        <div className="instructor-content">
+          <p className="section-kicker">YOUR GUIDE · 01</p>
+          <div className="profile-card">
+            <div className="profile-photo-wrap">
+              <img
+                src="/assets/seo-jaeho-profile.jpg"
+                alt="검은색 터틀넥을 입은 서제호 강사의 정면 프로필 사진"
+              />
+              <span>AI ENGINEER</span>
+            </div>
+            <div className="profile-copy">
+              <span className="profile-overline">INSTRUCTOR</span>
+              <h2>서제호</h2>
+              <p>
+                복잡한 기술을 누구나 움직일 수 있는
+                <br />
+                <strong>경험의 언어로 번역합니다.</strong>
+              </p>
+            </div>
+          </div>
+
+          <div className="career-list">
+            <div><span>NOW</span><strong>IBM Korea · AI Engineer</strong></div>
+            <div><span>BEFORE</span><strong>KT DS · Tech Leader & 사내 AI 강사</strong></div>
+            <div><span>TEACH</span><strong>Udemy - Agentic RAG 이론 & 실습</strong></div>
+          </div>
+          <p className="instructor-note">
+            "오늘의 목표는 기능을 많이 아는 것이 아니라,
+            내 일에 바로 가져갈 수 있는 한 가지 흐름을 만드는 것입니다."
+          </p>
+        </div>
+      </section>
+
       <section className="manifesto" id="why">
         <div className="manifesto-inner">
           <div className="manifesto-copy">
-            <p className="section-kicker dark-kicker">BEGINNER FIRST · 00</p>
+            <p className="section-kicker dark-kicker">BEGINNER FIRST · 02</p>
             <h2>
               전혀 어렵지
               <br />
@@ -685,7 +725,7 @@ export function ClaudeWorkshopExperience() {
 
       <section className="blueprint" id="blueprint">
         <header className="blueprint-intro">
-          <p className="section-kicker">THE CLAUDE WORK SYSTEM · 01—03</p>
+          <p className="section-kicker">THE CLAUDE WORK SYSTEM · 03—05</p>
           <h2>
             막연함을 구조로 바꾸는
             <br />
@@ -717,13 +757,13 @@ export function ClaudeWorkshopExperience() {
 
       <section className="assembly">
         <div className="assembly-content">
-          <p className="section-kicker">THE MOMENT IT CLICKS · 04</p>
-          <div className="assembly-equation" aria-label="Skill 더하기 Plugin 더하기 Agent">
+          <p className="section-kicker">THE MOMENT IT CLICKS · 06</p>
+          <div className="assembly-equation" aria-label="Skill 더하기 Plugin 더하기 Connector">
             <span>SKILL</span>
             <i>+</i>
             <span>PLUGIN</span>
             <i>+</i>
-            <span>AGENT</span>
+            <span>CONNECTOR</span>
           </div>
           <h2>
             세 가지가 연결되는 순간,
@@ -731,9 +771,9 @@ export function ClaudeWorkshopExperience() {
             AI는 <em>업무 파트너</em>가 됩니다.
           </h2>
           <p>
-            나의 방식으로, 필요한 정보와 연결해,
+            나의 방식으로, 필요한 도구와 데이터를 연결해,
             <br />
-            목표가 끝날 때까지 함께 움직이는 시스템.
+            업무가 끊김 없이 흐르는 시스템.
           </p>
         </div>
         <div className="assembly-ring" aria-hidden="true">
@@ -743,7 +783,7 @@ export function ClaudeWorkshopExperience() {
 
       <section className="playground" id="playground">
         <div className="playground-heading">
-          <p className="section-kicker dark-kicker">A SMALL DEMO · 05</p>
+          <p className="section-kicker dark-kicker">A SMALL DEMO · 07</p>
           <h2>
             한 문장으로
             <br />
@@ -804,49 +844,9 @@ export function ClaudeWorkshopExperience() {
         </div>
       </section>
 
-      <section className="instructor" id="instructor">
-        <div className="night-portrait" aria-hidden="true">
-          <img src="/assets/seo-jaeho-night.jpeg" alt="" />
-          <div className="night-overlay" />
-          <span className="night-caption">FROM SEOUL, WITH CURIOSITY</span>
-        </div>
-
-        <div className="instructor-content">
-          <p className="section-kicker">YOUR GUIDE · 06</p>
-          <div className="profile-card">
-            <div className="profile-photo-wrap">
-              <img
-                src="/assets/seo-jaeho-profile.jpg"
-                alt="검은색 터틀넥을 입은 서제호 강사의 정면 프로필 사진"
-              />
-              <span>AI ENGINEER</span>
-            </div>
-            <div className="profile-copy">
-              <span className="profile-overline">INSTRUCTOR</span>
-              <h2>서제호</h2>
-              <p>
-                복잡한 기술을 누구나 움직일 수 있는
-                <br />
-                <strong>경험의 언어로 번역합니다.</strong>
-              </p>
-            </div>
-          </div>
-
-          <div className="career-list">
-            <div><span>NOW</span><strong>IBM Korea · AI Engineer</strong></div>
-            <div><span>BEFORE</span><strong>KT DS · Tech Leader & 사내 AI 강사</strong></div>
-            <div><span>TEACH</span><strong>Udemy - Agentic RAG 이론 & 실습</strong></div>
-          </div>
-          <p className="instructor-note">
-            “오늘의 목표는 기능을 많이 아는 것이 아니라,
-            내 일에 바로 가져갈 수 있는 한 가지 흐름을 만드는 것입니다.”
-          </p>
-        </div>
-      </section>
-
       <section className="finale">
         <div className="finale-grid" aria-hidden="true" />
-        <p className="section-kicker">READY TO WORK DIFFERENTLY? · 07</p>
+        <p className="section-kicker">READY TO WORK DIFFERENTLY? · 08</p>
         <h2>
           Claude를 잘 쓰는 법보다,
           <br />
