@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RICE 오케스트레이터 — 한 턴의 아키텍처</title>
+<style>
+  :root{
+    --ground:#17181D; --panel:#1F2026; --panel2:#1B1C22;
+    --ink:#F1EBDF;   --muted:#A79F90; --faint:#6E685C;
+    --seal:#E4593B;  --seal-soft:rgba(228,89,59,.12);
+    --slate:#8FA4BC; --slate-soft:rgba(143,164,188,.12);
+    --line:rgba(241,235,223,.18); --line-strong:rgba(241,235,223,.36);
+    --arrow:#8a8374;
+  }
+  :root[data-theme="light"]{
+    --ground:#F6F1E6; --panel:#FDFAF2; --panel2:#EFE9DB;
+    --ink:#22232A;   --muted:#6C665A; --faint:#9C9587;
+    --seal:#C2402A;  --seal-soft:rgba(194,64,42,.10);
+    --slate:#47627E; --slate-soft:rgba(71,98,126,.10);
+    --line:rgba(34,35,42,.16); --line-strong:rgba(34,35,42,.34);
+    --arrow:#7d7668;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    background:var(--ground); color:var(--ink);
+    font-family:"Apple SD Gothic Neo","Pretendard","Noto Sans KR","Malgun Gothic",sans-serif;
+    overflow:hidden; -webkit-font-smoothing:antialiased;
+  }
+  #viewport{position:fixed; inset:0}
+  .stage{
+    position:absolute; left:50%; top:50%;
+    width:1280px; height:720px;
+    transform:translate(-50%,-50%) scale(var(--s,1));
+    transform-origin:center center;
+    background:var(--ground);
+  }
+
+  /* ---------- 공통 박스 ---------- */
+  .box{
+    position:absolute; border:1.5px solid var(--line-strong); border-radius:12px;
+    background:var(--panel); padding:12px 16px;
+    display:flex; flex-direction:column; justify-content:center; gap:5px;
+  }
+  .box .t{font-size:18px; font-weight:800; letter-spacing:-.01em; line-height:1.3}
+  .box .d{font-size:13px; color:var(--muted); line-height:1.45}
+  .box .code{font-size:10.5px; color:var(--faint); font-family:ui-monospace,Menlo,monospace; letter-spacing:0}
+  .box.mine{border-color:var(--seal); background:var(--seal-soft)}
+  .box.rent{border-color:var(--slate); background:var(--slate-soft); border-radius:26px}
+  .box.hot{border-color:var(--seal); background:var(--seal-soft)}
+
+  .badge{
+    position:absolute; top:-13px; left:14px; font-size:13px; font-weight:800;
+    background:var(--ground); color:var(--seal); padding:2px 8px;
+    letter-spacing:.08em; border-radius:6px;
+  }
+
+  /* 런타임 컨테이너 */
+  .container{
+    position:absolute; border:2px solid var(--seal); border-radius:16px;
+    background:var(--panel2);
+  }
+  .container .head{
+    position:absolute; top:14px; left:24px; right:24px;
+    display:flex; align-items:baseline; gap:12px;
+  }
+  .container .head .t{font-size:20px; font-weight:800; color:var(--seal)}
+  .container .head .s{font-size:13px; color:var(--muted)}
+
+  .num{
+    flex:none; width:26px; height:26px; border-radius:50%;
+    border:2px solid var(--seal); color:var(--seal);
+    font-size:14px; font-weight:800; display:flex; align-items:center; justify-content:center;
+    font-variant-numeric:tabular-nums;
+  }
+  .stagebox{flex-direction:row; align-items:center; gap:14px}
+  .stagebox .tx{display:flex; flex-direction:column; gap:4px}
+
+  .chev{position:absolute; font-size:16px; color:var(--seal); font-weight:700;
+    width:500px; text-align:center}
+
+  /* 제목/부제 */
+  .title{position:absolute; left:48px; top:26px; right:48px}
+  .title h1{font-size:31px; font-weight:800; letter-spacing:-.02em}
+  .title h1 em{font-style:normal; color:var(--seal)}
+  .title p{font-size:15.5px; color:var(--muted); margin-top:6px; line-height:1.5}
+  .swapB{display:none}
+  .xray .swapA{display:none}
+  .xray .swapB{display:inline}
+
+  /* 화살표 라벨 */
+  .albl{position:absolute; font-size:12.5px; font-weight:700; color:var(--arrow);
+    background:var(--ground); padding:1px 6px; border-radius:4px; white-space:nowrap;
+    transform:translate(-50%,-50%)}
+
+  /* 범례 · 힌트 · 펀치라인 */
+  .legend{position:absolute; left:48px; bottom:20px; display:flex; gap:22px;
+    font-size:13px; color:var(--muted); align-items:center}
+  .legend .sw{display:inline-block; width:13px; height:13px; border-radius:4px;
+    margin-right:7px; vertical-align:-2px}
+  .legend .sw.m{background:var(--seal-soft); border:1.5px solid var(--seal)}
+  .legend .sw.r{background:var(--slate-soft); border:1.5px solid var(--slate)}
+  .punch{
+    position:absolute; left:172px; width:600px; bottom:18px;
+    text-align:center; font-size:16.5px; line-height:1.55; color:var(--muted);
+    border:1px dashed var(--faint); border-radius:10px; padding:10px 18px;
+  }
+  .punch b{color:var(--seal)}
+  .hint{position:absolute; right:48px; bottom:20px; font-size:12px; color:var(--faint)}
+
+  svg.wires{position:absolute; inset:0; width:1280px; height:720px; pointer-events:none}
+  svg.wires line, svg.wires path{stroke:var(--arrow); stroke-width:2; fill:none}
+  svg.wires .em{stroke:var(--seal)}
+  svg.wires .dash{stroke-dasharray:5 5}
+
+  /* ---------- 뷰 B: 엑스레이 (실제 배선) ---------- */
+  .box.b{padding:9px 12px; gap:3px; border-radius:9px; border-width:1px; justify-content:flex-start}
+  .box.b .t{font-size:12.5px; font-weight:800; line-height:1.3}
+  .box.b .d{font-size:9.5px; line-height:1.45}
+  .box.b .code{font-size:8.5px; line-height:1.4}
+  .box.b .badge{font-size:11px; top:-11px}
+  .tag{display:inline-block; font-size:9px; font-weight:800; color:var(--seal);
+    border:1px solid var(--seal); border-radius:4px; padding:0 5px; margin-right:5px;
+    vertical-align:2px; letter-spacing:.04em}
+  .viewA, .va{transition:opacity .35s}
+  .xray .viewA, .xray .viewA.on, .xray .va{opacity:0 !important; pointer-events:none; transition:opacity .18s}
+  .xray .viewB{transition-delay:.15s}
+
+  /* 스포트라이트: 서랍만 남긴다 — 전원 동시에 딤 */
+  .spot .dim, .spot .dim.on{opacity:.13 !important; transition:opacity .5s; transition-delay:0s !important}
+  .spot .box.mine.b{box-shadow:0 0 0 4px var(--seal-soft), 0 10px 34px rgba(194,64,42,.28)}
+
+  /* ---------- 단계 리빌 ---------- */
+  [data-fr]{opacity:0; transform:translateY(10px);
+    transition:opacity .5s cubic-bezier(.2,.75,.25,1), transform .5s cubic-bezier(.2,.75,.25,1)}
+  svg.wires [data-fr]{transform:none}
+  [data-fr].on{opacity:1; transform:none}
+  @media (prefers-reduced-motion:reduce){ [data-fr]{transform:none; transition:opacity .2s} }
+
+  @media print{
+    html,body{height:auto; overflow:visible}
+    #viewport{position:static}
+    .stage{position:static; transform:none}
+    [data-fr]{opacity:1; transform:none}
+    .viewB{display:none}
+    @page{size:1280px 720px; margin:0}
+  }
+  :focus-visible{outline:2px solid var(--seal); outline-offset:2px}
+</style>
+</head>
+<body>
+<div id="viewport"><div class="stage" id="stage">
+
+  <div class="title">
+    <h1><span class="swapA">요청 하나가 처리되는 길 — <em>오케스트레이터</em>는 순서만 지휘합니다</span><span class="swapB">같은 네 걸음의 엑스레이 — <em>이만큼</em>이 이미 만들어져 있습니다</span></h1>
+    <p><span class="swapA">실제 제 프로그램(RICE)의 구조입니다. 두뇌도, 도구도 직접 일하지 않습니다 — 가운데 지휘자가 부를 때만 움직입니다.</span><span class="swapB">방금 본 슬라이드의 실제 배선입니다. 상자 이름은 코드의 모듈 이름 그대로 — 읽으시라고 띄운 게 아니라, 크기를 보여드리려고 띄웠습니다.</span></p>
+  </div>
+
+  <!-- ═════════════ 뷰 A: 네 걸음 (쉬운 지도) ═════════════ -->
+
+  <!-- 좌: 사용자 / 앱 / 중계 -->
+  <div class="box viewA" style="left:48px; top:150px; width:174px; height:62px; text-align:center">
+    <div class="t">사용자</div>
+  </div>
+  <div class="box viewA" style="left:48px; top:262px; width:174px; height:104px">
+    <div class="t">RICE 앱</div>
+    <div class="d">채팅 화면 · 계획 카드<br>승인 카드</div>
+  </div>
+  <div class="box viewA" style="left:48px; top:470px; width:174px; height:96px" data-fr="5">
+    <div class="t">실황 중계</div>
+    <div class="d">생각·도구 사용·승인 요청이 실시간으로 흘러나온다</div>
+    <div class="code">SSE stream</div>
+  </div>
+
+  <!-- 중앙: 런타임(오케스트레이터) -->
+  <div class="container viewA" style="left:262px; top:120px; width:548px; height:502px">
+    <div class="head">
+      <span class="t">오케스트레이터</span>
+      <span class="s">순서의 지휘자 — 네 걸음의 차례만 소유한다 · <span style="font-family:ui-monospace,Menlo,monospace; font-size:11px">rice-runtime</span></span>
+    </div>
+  </div>
+
+  <div class="box stagebox viewA" style="left:286px; top:178px; width:500px; height:82px" data-fr="1">
+    <div class="num">1</div>
+    <div class="tx">
+      <div class="t">준비 — 스킬·기억을 꺼낸다</div>
+      <div class="d">이 요청과 관련 있는 '일하는 법'만 골라 책상 위에 — 나머지는 목차만</div>
+    </div>
+  </div>
+  <div class="chev viewA" style="left:286px; top:262px" data-fr="2">▾</div>
+  <div class="box stagebox viewA" style="left:286px; top:284px; width:500px; height:78px" data-fr="2">
+    <div class="num">2</div>
+    <div class="tx">
+      <div class="t">도구 조립 — 쓸 도구만 올린다</div>
+      <div class="d">도구가 너무 많으면 접어 두고, 필요할 때 펼친다</div>
+    </div>
+  </div>
+  <div class="chev viewA" style="left:286px; top:364px" data-fr="3">▾</div>
+  <div class="box stagebox hot viewA" style="left:286px; top:386px; width:500px; height:106px" data-fr="3">
+    <div class="num">3</div>
+    <div class="tx">
+      <div class="t">실행 — 행동 → 관찰 → 계획 반영, 될 때까지</div>
+      <div class="d">복잡한 일은 계획을 세워 단계별로 · 매 걸음 두뇌에게 "다음은?" 묻는다<br>되돌리기 어려운 행동은 <b style="color:var(--seal)">사람의 승인</b>을 기다린다</div>
+      <div class="code">ReAct loop + Plan layer + HITL</div>
+    </div>
+  </div>
+  <div class="chev viewA" style="left:286px; top:494px" data-fr="4">▾</div>
+  <div class="box stagebox viewA" style="left:286px; top:516px; width:500px; height:82px" data-fr="4">
+    <div class="num">4</div>
+    <div class="tx">
+      <div class="t">마무리 — 기록하고, 배운다</div>
+      <div class="d">잘된 방식은 "스킬로 저장할까요?" 제안 — 다음번 시행착오가 준다</div>
+    </div>
+  </div>
+
+  <!-- 우: 자산 / 도구 / 두뇌 / 기록 -->
+  <div class="box mine viewA" style="left:872px; top:178px; width:360px; height:82px" data-fr="1">
+    <div class="badge">내 것</div>
+    <div class="t">내 서랍 — Skill · 기억</div>
+    <div class="d">여러분이 글로 적는 '일하는 법'이 꽂히는 곳</div>
+    <div class="code">~/.rice/skills · memories</div>
+  </div>
+  <div class="box viewA" style="left:872px; top:284px; width:360px; height:78px" data-fr="2">
+    <div class="t">도구함</div>
+    <div class="d">기본 도구(파일·문서) · 커넥터(Gmail 등 — 허용/승인/차단 규칙) · 플러그인</div>
+  </div>
+  <div class="box rent viewA" style="left:872px; top:386px; width:360px; height:106px" data-fr="3">
+    <div class="badge" style="color:var(--slate)">빌린 것</div>
+    <div class="t">두뇌 — LLM</div>
+    <div class="d">Claude 또는 사내 로컬 모델.<br>정리된 맥락을 받아 '다음 행동'을 생각만 한다 — 손발은 없다</div>
+  </div>
+  <div class="box viewA" style="left:872px; top:516px; width:360px; height:82px" data-fr="4">
+    <div class="t">기록 보관</div>
+    <div class="d">대화·도구 사용·학습 이력 전부</div>
+    <div class="code">state.db</div>
+  </div>
+
+  <!-- ═════════════ 뷰 B: 엑스레이 (실제 배선) ═════════════ -->
+
+  <!-- 좌 레일 -->
+  <div class="box b viewB dim" style="left:24px; top:104px; width:132px; height:32px; text-align:center" data-fr="6">
+    <div class="t">사용자</div>
+  </div>
+  <div class="box b viewB dim" style="left:24px; top:146px; width:132px; height:56px" data-fr="6" >
+    <div class="t">RICE 앱</div>
+    <div class="d">ChatScreen<br>계획·승인 카드</div>
+  </div>
+  <div class="box b viewB dim" style="left:24px; top:214px; width:132px; height:104px" data-fr="6" >
+    <div class="t">API Route</div>
+    <div class="d">요청 수신 → 턴 시작</div>
+    <div class="code">POST /sessions/{id}/messages · server/routes/messages.py</div>
+  </div>
+  <div class="box b viewB dim" style="left:24px; top:430px; width:132px; height:150px" data-fr="6">
+    <div class="t">실황 중계 — SSE</div>
+    <div class="d">thinking · plan_updated · tool_call · tool_result · message · memory_written · skill_patched · done · error + 승인 제어 이벤트</div>
+  </div>
+
+  <!-- 중앙: 런타임 실제 모듈 -->
+  <div class="container viewB dim" style="left:172px; top:100px; width:600px; height:452px" data-fr="6">
+    <div class="head">
+      <span class="t" style="font-size:16px">오케스트레이터</span>
+      <span class="s" style="font-size:10.5px">턴 순서 소유 · TurnContext 조립 · 서비스 배선 — <span style="font-family:ui-monospace,Menlo,monospace; font-size:9.5px">agent/orchestrator.py</span></span>
+    </div>
+  </div>
+
+  <div class="box b viewB dim" style="left:188px; top:150px; width:280px; height:96px; transition-delay:.06s" data-fr="6">
+    <div class="t"><span class="tag">걸음 1</span>Prefetch — 준비물 선적재</div>
+    <div class="d">활성 스킬(learned/builtin) · 플러그인 SKILL.md · 기억+선호 · SKILL_GUIDANCE를 시스템 프롬프트에 주입</div>
+    <div class="code">LearningService.prefetch</div>
+  </div>
+  <div class="box b viewB dim" style="left:478px; top:150px; width:282px; height:96px; transition-delay:.1s" data-fr="6">
+    <div class="t"><span class="tag">걸음 1</span>Skill Relevance Router</div>
+    <div class="d">임베딩·벡터DB 없이 어휘 매칭: 명시 언급→이름/태그→설명/본문→bigram→한/영 의도 · 점수≥3.0만 전문 주입(최대 2) · 나머지는 목차+skill_view</div>
+    <div class="code">core/lexical.py · skill/relevance.py</div>
+  </div>
+  <div class="box b viewB dim" style="left:188px; top:258px; width:280px; height:88px; transition-delay:.14s" data-fr="6">
+    <div class="t"><span class="tag">걸음 3</span>Context Manager — 맥락 정제</div>
+    <div class="d">비밀 마스킹 → 긴 출력 증류 → 오래된 턴 압축 → 배선 수리 → 렌더 감사, 두뇌 호출 때마다</div>
+    <div class="code">agent/context_manager.py</div>
+  </div>
+  <div class="box b viewB dim" style="left:478px; top:258px; width:282px; height:88px; transition-delay:.18s" data-fr="6">
+    <div class="t"><span class="tag">걸음 2</span>Tool Assembly — 도구 예산</div>
+    <div class="d">예산 초과 도구는 접기(fold) · builtin 직결 · connector/plugin은 브리지로 폴딩 · 관련 도구만 스포트라이트</div>
+    <div class="code">ToolDispatcher · fold_tools_for_budget</div>
+  </div>
+  <div class="box b viewB dim" style="left:188px; top:358px; width:280px; height:100px; transition-delay:.22s" data-fr="6">
+    <div class="t"><span class="tag">걸음 3</span>Plan Layer — 계획 상태기계</div>
+    <div class="d">복잡 과제는 선계획(eager) · 진행 중 필요하면 늦은 계획(lazy start_plan) · update_plan 가상 도구 · 스텝 단위 ReAct</div>
+    <div class="code">TurnPlanner · PlanState</div>
+  </div>
+  <div class="box b hot viewB dim" style="left:478px; top:358px; width:282px; height:100px; transition-delay:.26s" data-fr="6">
+    <div class="t"><span class="tag">걸음 3</span>AgentLoop — ReAct 실행</div>
+    <div class="d">행동→관찰→재평가 반복 · 도구 호출 전 근거 서술 · 위험한 도구는 사람 승인(HITL) 대기</div>
+    <div class="code">agent/loop.py</div>
+  </div>
+  <div class="box b viewB dim" style="left:188px; top:470px; width:572px; height:62px; transition-delay:.3s" data-fr="6">
+    <div class="t"><span class="tag">걸음 4</span>Post-turn Hooks — 턴 후 학습</div>
+    <div class="d">스킬 사용 집계·학습 큐 처리(learning.observe) · 제목 생성(/title) · 학습 리뷰(/learning-review) → 기억·스킬 패치 제안으로 환류</div>
+  </div>
+
+  <!-- 우 레일 -->
+  <div class="box b mine viewB" style="left:800px; top:108px; width:456px; height:80px; transition-delay:.12s" data-fr="6">
+    <div class="badge">내 것</div>
+    <div class="t">내 서랍 — ~/.rice</div>
+    <div class="d">skills · memories · config — 여러분이 md로 적는 '일하는 법'이 꽂히는 곳. 이 지도 전체에서 여러분이 직접 쓰는 유일한 칸</div>
+    <div class="code">~/.rice/skills · memories · config</div>
+  </div>
+  <div class="box b viewB dim" style="left:800px; top:200px; width:456px; height:84px; transition-delay:.16s" data-fr="6">
+    <div class="t">기본 도구 — Builtins</div>
+    <div class="d">read · write · edit · list · search · terminal · fetch_url · vision · skill_search · skill_view · propose_skill · subagent · office create_*</div>
+  </div>
+  <div class="box b viewB dim" style="left:800px; top:296px; width:456px; height:72px; transition-delay:.2s" data-fr="6">
+    <div class="t">커넥터 — Connectors</div>
+    <div class="d">Gmail · Calendar · Drive · 로컬/원격 MCP — 도구마다 정책이 붙는다: allow / approval / block</div>
+  </div>
+  <div class="box b viewB dim" style="left:800px; top:380px; width:456px; height:56px; transition-delay:.24s" data-fr="6">
+    <div class="t">플러그인 — Plugins</div>
+    <div class="d">plugin tools · 번들 SKILL.md · 마켓 아티팩트 — 격리 실행(sandboxed)</div>
+  </div>
+  <div class="box b rent viewB dim" style="left:800px; top:448px; width:456px; height:76px; transition-delay:.28s" data-fr="6">
+    <div class="badge" style="color:var(--slate)">빌린 것</div>
+    <div class="t">두뇌 — LLM Provider</div>
+    <div class="d">Ollama / OpenAI / Claude — 정제된 맥락을 받아 '다음 행동'을 생각만 한다. 손발은 없다</div>
+  </div>
+  <div class="box b viewB dim" style="left:800px; top:536px; width:456px; height:54px; transition-delay:.32s" data-fr="6">
+    <div class="t">기록 — state.db</div>
+    <div class="d">sessions · messages · learning_events</div>
+  </div>
+
+  <!-- ═══ 화살표 ═══ -->
+  <svg class="wires" viewBox="0 0 1280 720" aria-hidden="true">
+    <defs>
+      <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0,0 L10,5 L0,10 z" fill="var(--arrow)" stroke="none"/>
+      </marker>
+      <marker id="ahs" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0,0 L10,5 L0,10 z" fill="var(--seal)" stroke="none"/>
+      </marker>
+    </defs>
+    <!-- 뷰 A -->
+    <line class="va" x1="135" y1="216" x2="135" y2="258" marker-end="url(#ah)" marker-start="url(#ah)"/>
+    <line class="va" x1="226" y1="308" x2="258" y2="308" marker-end="url(#ah)"/>
+    <line class="va" x1="868" y1="219" x2="790" y2="219" marker-end="url(#ah)" data-fr="1"/>
+    <line class="va" x1="868" y1="323" x2="790" y2="323" marker-end="url(#ah)" data-fr="2"/>
+    <path class="va em" d="M790,412 C830,412 840,380 868,364" marker-end="url(#ahs)" data-fr="3"/>
+    <line class="va em" x1="790" y1="446" x2="868" y2="446" marker-end="url(#ahs)" marker-start="url(#ahs)" data-fr="3"/>
+    <line class="va" x1="790" y1="557" x2="868" y2="557" marker-end="url(#ah)" data-fr="4"/>
+    <line class="va" x1="258" y1="518" x2="226" y2="518" marker-end="url(#ah)" data-fr="5"/>
+    <line class="va" x1="135" y1="466" x2="135" y2="370" marker-end="url(#ah)" data-fr="5"/>
+    <!-- 뷰 B -->
+    <g class="dim" style="transition-delay:.4s" data-fr="6">
+      <line x1="90" y1="138" x2="90" y2="143" marker-end="url(#ah)"/>
+      <line x1="90" y1="204" x2="90" y2="211" marker-end="url(#ah)"/>
+      <line x1="158" y1="247" x2="168" y2="247" marker-end="url(#ah)"/>
+      <line x1="174" y1="495" x2="160" y2="495" marker-end="url(#ah)"/>
+      <path d="M40,428 C4,398 4,238 40,208" marker-end="url(#ah)"/>
+      <line class="em" x1="796" y1="148" x2="776" y2="148" marker-end="url(#ahs)"/>
+      <path d="M796,242 C780,242 778,286 776,296" marker-end="url(#ah)"/>
+      <path d="M796,332 C782,332 780,314 776,306" marker-end="url(#ah)"/>
+      <path d="M796,408 C778,408 776,340 774,314" marker-end="url(#ah)"/>
+      <path class="em" d="M764,432 C788,442 788,472 792,480" marker-end="url(#ahs)" marker-start="url(#ahs)"/>
+      <path d="M762,510 C786,516 786,548 792,556" marker-end="url(#ah)"/>
+      <path class="em dash" d="M762,484 C1280,458 1280,160 1258,146" marker-end="url(#ahs)" stroke-opacity=".45" stroke-width="1.5"/>
+    </g>
+  </svg>
+  <div class="albl viewA" style="left:242px; top:293px">요청</div>
+  <div class="albl viewA" style="left:829px; top:204px" data-fr="1">꺼낸다</div>
+  <div class="albl viewA" style="left:829px; top:308px" data-fr="2">고른다</div>
+  <div class="albl viewA" style="left:838px; top:388px; color:var(--seal)" data-fr="3">쓴다</div>
+  <div class="albl viewA" style="left:829px; top:462px; color:var(--seal)" data-fr="3">묻는다 · 답한다</div>
+  <div class="albl viewA" style="left:829px; top:542px" data-fr="4">남긴다</div>
+  <div class="albl viewA" style="left:242px; top:503px" data-fr="5">중계</div>
+  <div class="albl viewB dim" style="left:1200px; top:96px; color:var(--seal); font-size:10.5px" data-fr="6">배움의 환류</div>
+
+  <!-- ═══ 하단 ═══ -->
+  <div class="legend viewA">
+    <span><span class="sw m"></span>내 것 — 내가 쓰는 문서</span>
+    <span><span class="sw r"></span>빌린 것 — 구독하는 두뇌</span>
+  </div>
+  <div class="punch viewB" data-fr="7">이 지도 전체가 '에이전트'입니다 — 그리고 이미 만들어져 있습니다.<br>여러분이 직접 쓰는 칸은 <b>인주색 서랍 하나</b> — <b>1인 1에이전트(사용) · 1인 N Skill(소유)</b>.</div>
+  <div class="hint">→ 순서대로 · X 엑스레이 · F 전체 · T 배경</div>
+
+</div></div>
+<script>
+  const steps=[...document.querySelectorAll('[data-fr]')];
+  const maxFr=Math.max(...steps.map(e=>+e.dataset.fr));
+  const stage=document.getElementById('stage');
+  let cur=0;
+  function reveal(n){
+    cur=Math.max(0,Math.min(maxFr,n));
+    steps.forEach(e=>e.classList.toggle('on', +e.dataset.fr<=cur));
+    stage.classList.toggle('xray', cur>=6);
+    stage.classList.toggle('spot', cur>=7);
+  }
+  addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key===' ') reveal(cur+1);
+    else if(e.key==='ArrowLeft') reveal(cur-1);
+    else if(e.key==='f'||e.key==='F') reveal(maxFr);
+    else if(e.key==='x'||e.key==='X') reveal(cur>=6?5:6);
+    else if(e.key==='t'||e.key==='T'){
+      const r=document.documentElement;
+      r.dataset.theme = r.dataset.theme==='light' ? '' : 'light';
+    }
+  });
+  addEventListener('click',()=>reveal(cur+1));
+  function fit(){
+    const s=Math.min(innerWidth/1280, innerHeight/720);
+    stage.style.setProperty('--s', s);
+  }
+  addEventListener('resize',fit); fit();
+  const q=+new URLSearchParams(location.search).get('fr');
+  if(q) reveal(q);
+</script>
+</body>
+</html>

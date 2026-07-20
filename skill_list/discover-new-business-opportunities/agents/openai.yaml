@@ -1,0 +1,4 @@
+interface:
+  display_name: "신사업 기회 발굴 데모"
+  short_description: "섹터 스크리닝부터 BM 채점과 검증 보고서까지 수행"
+  default_prompt: "Use $discover-new-business-opportunities to run the bundled mock-data demo, rank the business models, validate the evidence ledger, and summarize the Human Gates."
