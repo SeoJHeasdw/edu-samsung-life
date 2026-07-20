@@ -225,14 +225,14 @@
   <h2>작업대 네 종류 <span>— 축은 하나입니다: 얼마나 위임하는가</span></h2>
   <div class="benches">
     <div class="bench">
-      <small>ANTHROPIC · 화면</small><b>Claude Desktop</b>
-      <i>회의실의 대화 상대</i>
-      <span><em>잘 맞는 일</em>검토 · 초안 · 탐색<br>Connector로 메일 · 일정 연결</span>
+      <small>ANTHROPIC · 앱</small><b>Claude 앱 · Cowork</b>
+      <i>폴더를 맡기는 지식노동자의 자리</i>
+      <span><em>잘 맞는 일</em>문서 · 분석 · 리서치 산출물<br>터미널 없이 폴더를 읽고 · 고치고 · 만든다</span>
     </div>
     <div class="bench">
-      <small>ANTHROPIC · 폴더</small><b>Claude Code</b>
-      <i>자리를 내준 동료</i>
-      <span><em>잘 맞는 일</em>대량 정리 · 반복 산출물<br>Skill · Plugin · MCP가 모두 붙음</span>
+      <small>ANTHROPIC · 터미널</small><b>Claude Code</b>
+      <i>개발자의 운전석</i>
+      <span><em>잘 맞는 일</em>코드 · 시스템 · 대량 자동화<br>Cowork와 같은 엔진, 통제 범위가 더 넓다</span>
     </div>
     <div class="bench">
       <small>OPENAI</small><b>Codex</b>
@@ -245,24 +245,24 @@
       <span><em>잘 맞는 일</em>이미 쓰는 도구 옆에서<br>회사 계정 정책을 먼저 확인</span>
     </div>
   </div>
-  <small class="note">네 작업대가 모두 <b>같은 SKILL.md</b>를 읽습니다. <b>도구는 갈아탈 수 있고, 남는 것은 내 문서입니다.</b>
+  <small class="note">Cowork와 Code는 <b>같은 엔진</b>이고, 넷 다 <b>같은 SKILL.md</b>를 읽습니다. <b>도구는 갈아탈 수 있고, 남는 것은 내 문서입니다.</b>
   도구는 회사가 정하고, 자산은 본인이 가집니다.</small>
 
   <h2>고르는 질문은 세 개면 충분합니다</h2>
   <div class="axes">
-    <div class="ax"><u>01</u><b>결과물의 모양</b><p>내가 받고 싶은 것이 대화인가, 파일들인가.</p><em>→ 도구가 갈립니다</em></div>
+    <div class="ax"><u>01</u><b>결과물의 모양</b><p>내가 받고 싶은 것이 답 하나인가, 산출물인가.</p><em>→ 도구가 갈립니다</em></div>
     <div class="ax"><u>02</u><b>자료의 경계</b><p>이 자료는 어디까지 나가도 되는가.</p><em>→ 창구가 갈립니다</em></div>
     <div class="ax"><u>03</u><b>반복의 횟수</b><p>이번 한 번인가, 매주 돌아오는 일인가.</p><em>→ 남길 것이 갈립니다</em></div>
   </div>
 
-  <h2>3초 판별법 <span>— 결과물이 “대화”인가 “파일들”인가</span></h2>
+  <h2>3초 판별법 <span>— 내가 원하는 것이 “답”인가 “산출물”인가</span></h2>
   <table>
     <tbody>
-      <tr><td>아이디어 탐색 · 일회성 질문 · 문서 1~3개 요약</td><td style="width:112px"><b>Desktop</b></td><td style="width:150px">왕복 대화가 빠르다</td></tr>
-      <tr><td>보고서 20건 → 비교표 1개</td><td><b>Code</b></td><td>폴더 단위 위임</td></tr>
-      <tr class="hl"><td>매주 반복하는 정형 산출물</td><td class="seal-c"><b>Code + Skill</b></td><td>절차의 자산화</td></tr>
+      <tr><td>답 하나가 필요하다 · 아이디어 탐색</td><td style="width:112px"><b>채팅</b></td><td style="width:150px">왕복 대화가 빠르다</td></tr>
+      <tr><td>폴더 안 문서를 읽고 산출물을 만든다</td><td><b>Cowork</b></td><td>폴더 단위 위임</td></tr>
+      <tr class="hl"><td>매주 반복하는 정형 산출물</td><td class="seal-c"><b>Cowork + Skill</b></td><td>절차의 자산화</td></tr>
       <tr><td>사내 시스템 · 외부 서비스 자료 조회</td><td><b>둘 다</b></td><td>Connector — 권한이 곧 경계</td></tr>
-      <tr><td>결과를 화면에서 보며 다듬기</td><td><b>Desktop</b></td><td>즉시 피드백</td></tr>
+      <tr><td>코드 · 시스템 · 전체 파일시스템</td><td><b>Code</b></td><td>개발자의 통제 범위</td></tr>
     </tbody>
   </table>
   <small class="note">Claude Code도 자연어로 씁니다. 명령어 암기는 필요 없고, 권한을 물어오면 확인하고 승인하는 습관이면 충분합니다.</small>
@@ -347,7 +347,7 @@
     <div class="rule"></div>
   </div>
   <div class="ws">
-    <b>사람이 승인해야 하는 지점 (Human Gate)</b>
+    <b>사람이 승인해야 하는 지점 (HITL)</b>
     <i>누가 · 무엇을 · 언제 확인하고 넘기는가</i>
     <div class="rule"></div>
   </div>
@@ -358,7 +358,7 @@
   </div>
 
   <h2>③ 공통 예제 — 신사업 발굴 Skill 실행하기</h2>
-  <div class="prompt">“$discover-new-business-opportunities로 워크숍 mock을 실행해줘.<br>우리 팀에 맞게 평가기준 하나와 Human Gate 하나를 바꾸고, 변경 전후 순위와 근거를 비교해줘. 실제 데이터는 쓰지 마.”
+  <div class="prompt">“$discover-new-business-opportunities로 워크숍 mock을 실행해줘.<br>우리 팀에 맞게 평가기준 하나와 HITL 하나를 바꾸고, 변경 전후 순위와 근거를 비교해줘. 실제 데이터는 쓰지 마.”
     <small>성공 기준 — 설명을 길게 쓰는 것이 아니라, <b>기준을 바꾸면 결과가 재현 가능하게 달라지는 것</b>.</small>
   </div>
 
@@ -369,7 +369,7 @@
       <tr><td><b>입력표 · 평가 서식</b></td><td><code>assets/</code> — 매번 채워 넣는 빈 양식</td></tr>
       <tr class="hl"><td><b>계산 · 순위 매기기</b></td><td><code>scripts/</code> — 사람이 손으로 하면 틀리는 부분</td></tr>
       <tr><td><b>일하는 절차</b></td><td><code>SKILL.md</code> — 언제 · 어떤 순서로 · 무엇을 내놓는가</td></tr>
-      <tr><td><b>책임의 경계</b></td><td><b>Human Gate</b> — 자동화할수록 더 선명해야 하는 선</td></tr>
+      <tr><td><b>책임의 경계</b></td><td><b>HITL</b> — 자동화할수록 더 선명해야 하는 선</td></tr>
     </tbody>
   </table>
 
@@ -382,8 +382,8 @@
   <ul class="four">
     <li>1인 1Agent는 1인 1두뇌가 아니다 — <b class="seal-c">페르소나는 직함, Skill은 일</b>을 만든다.</li>
     <li>런타임 하네스는 플랫폼에 요구하고, <b class="seal-c">업무 하네스</b>는 지도 · Skill · 자료 · 기준으로 직접 설계한다.</li>
-    <li>대화면 Desktop, 파일 작업이면 Code. 지식은 Skill, 손이 닿는 범위는 Connector, 팀 배포는 Plugin.</li>
-    <li>배워야 할 것은 구현 기술이 아니라 <b class="seal-c">내 업무의 연출 언어</b> — 분류체계 · 평가기준 · Human Gate다.</li>
+    <li>답이면 채팅, <b class="seal-c">산출물이면 Cowork</b>, 시스템이면 Code. 지식은 Skill, 손이 닿는 범위는 Connector, 팀 배포는 Plugin.</li>
+    <li>배워야 할 것은 구현 기술이 아니라 <b class="seal-c">내 업무의 연출 언어</b> — 분류체계 · 평가기준 · HITL이다.</li>
   </ul>
 
   <footer>

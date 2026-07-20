@@ -1,4 +1,4 @@
 interface:
   display_name: "신사업 기회 발굴 워크숍"
-  short_description: "섹터 Short-list와 BM 채점·Human Gate를 실습"
-  default_prompt: "Use $discover-new-business-opportunities to run the safe Samsung Life workshop demo with mock data, then show the sector shortlist, priority business models, and Human Gates."
+  short_description: "섹터 Short-list와 BM 채점·HITL를 실습"
+  default_prompt: "Use $discover-new-business-opportunities to run the safe Samsung Life workshop demo with mock data, then show the sector shortlist, priority business models, and HITLs."

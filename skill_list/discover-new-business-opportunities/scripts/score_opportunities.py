@@ -201,7 +201,7 @@ def markdown_report(result, top):
             "- Gate 4: 최종 투자·제휴·보류 결정은 사람이 수행할 것",
         ]
     )
-    lines.extend(["", "## Human Gate", "", *gate_lines, ""])
+    lines.extend(["", "## HITL", "", *gate_lines, ""])
     return "\n".join(lines)
 
 
