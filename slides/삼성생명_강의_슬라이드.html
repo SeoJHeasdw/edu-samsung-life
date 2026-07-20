@@ -320,6 +320,12 @@
   .diagram-slide h1{font-size:43px; line-height:1.18; margin-bottom:20px}
   .diagram-caption{margin-top:auto; text-align:center; font-size:23px; color:var(--muted)}
   .diagram-caption b{color:var(--seal)}
+  .slide[data-part="2교시 · 런타임 하네스"]{box-shadow:inset 0 5px 0 var(--slate)}
+  .slide[data-part="2교시 · 런타임 하네스"] .eyebrow{color:var(--slate)}
+  .slide[data-part="2교시 · 런타임 하네스"] .eyebrow::before{background:var(--slate)}
+  .slide[data-part="2교시 · 업무 하네스"]{box-shadow:inset 0 5px 0 var(--seal)}
+  .slide[data-part="2교시 · 역할 전환"]{box-shadow:inset 0 5px 0 var(--ink)}
+  .harness-boundary .contract-compare{min-height:280px}.harness-boundary .contract-side{padding:22px 27px}.harness-boundary .contract-side b{margin:9px 0 12px;font-size:25px}.harness-boundary .contract-side li{padding:8px 0;font-size:15px}.harness-boundary .diagram-caption{font-size:20px}.harness-boundary .fn{padding-top:12px;font-size:14px}
 
   .one-brain-many{display:grid; grid-template-columns:1.35fr 120px .65fr; align-items:center; min-height:350px}
   .role-cloud{display:grid; grid-template-columns:repeat(2,1fr); gap:18px}
@@ -1117,8 +1123,8 @@
   <aside class="note">OpenAI 글의 핵심 문장 “Humans steer. Agents execute.”를 소개한다. 하네스 엔지니어링이 단순 프롬프트 기법이 아니라 사람의 역할 재설계라는 점을 먼저 잡는다.</aside>
 </section>
 
-<section class="slide diagram-slide" data-part="2교시 · 엔진">
-  <div class="eyebrow rise">정확한 정의</div>
+<section class="slide diagram-slide" data-part="2교시 · 런타임 하네스">
+  <div class="eyebrow rise">A · 런타임 하네스 · 개발자 심화</div>
   <h1 class="rise d1">하네스는 도구 상자가 아니라,<br><em>런타임 중개층</em>입니다</h1>
   <div class="runtime-system rise d2">
     <div class="runtime-model fr"><small>LATENT CAPABILITY</small><b>MODEL</b><span>추론 · 계획 · 생성<br>도구 호출 요청</span></div>
@@ -1132,9 +1138,9 @@
   <aside class="note">Microsoft는 모델을 실제로 행동하게 만드는 런타임, Anthropic은 입력 처리·도구 호출·결과 반환을 조율하는 scaffold로 설명한다. 최신 연구의 model–harness–environment 구도를 비개발자 언어로 번역한 장표.</aside>
 </section>
 
-<section class="slide diagram-slide" data-part="2교시 · 엔진">
-  <div class="eyebrow rise">하네스 엔지니어링의 설계 범위</div>
-  <h1 class="rise d1">실제로 관리해야 하는 책임은 열한 가지입니다</h1>
+<section class="slide diagram-slide" data-part="2교시 · 런타임 하네스">
+  <div class="eyebrow rise">A · 런타임 하네스 · 설계 범위</div>
+  <h1 class="rise d1">플랫폼·개발팀이 관리하는 책임은 열한 가지입니다</h1>
   <div class="harness-groups rise d2">
     <div class="hgroup g2 fr"><small>01 · CONTRACT</small><b>목표 계약</b><p><em>과제 명세</em> · 성공 기준 · 제약</p></div>
     <div class="hgroup g2 key fr"><small>02 · CONTEXT</small><b>맥락과 상태</b><p><em>컨텍스트 선택</em> · 프로젝트 기억 · 과제 상태</p></div>
@@ -1146,8 +1152,8 @@
   <p class="fn"><a href="https://arxiv.org/abs/2605.13357" target="_blank" rel="noreferrer">Zhong &amp; Zhu · AI Harness Engineering, 2026 ↗</a></p>
 </section>
 
-<section class="slide diagram-slide" data-part="2교시 · 엔진">
-  <div class="eyebrow rise">하네스 성숙도 · H0 → H3</div>
+<section class="slide diagram-slide" data-part="2교시 · 런타임 하네스">
+  <div class="eyebrow rise">A · 런타임 하네스 · H0 → H3</div>
   <h1 class="rise d1">자율성은 프롬프트 길이가 아니라,<br>런타임 지원이 쌓이면서 올라갑니다</h1>
   <div class="harness-ladder rise d2">
     <div class="hlevel fr"><small>H0 · MINIMAL</small><b>과제 + 저장소</b><span>설명과 파일만 제공</span></div>
@@ -1159,64 +1165,62 @@
   <aside class="note">이 H0–H3는 2026년 제안된 연구 프레임이지 업계 공식 표준은 아니다. 핵심은 모델을 그대로 두고 런타임 지원을 하나씩 늘리면 하네스의 기여를 분리해 볼 수 있다는 것.</aside>
 </section>
 
-<section class="slide diagram-slide" data-part="2교시 · 엔진">
-  <div class="eyebrow rise">플랫폼·개발팀 · 실패를 자산으로 바꾸는 법</div>
-  <h1 class="rise d1">“다시 해봐” 대신, 빠진 능력을 하네스에 넣습니다</h1>
+<section class="slide diagram-slide harness-boundary" data-part="2교시 · 역할 전환">
+  <div class="eyebrow rise">여기서 역할이 바뀝니다</div>
+  <h1 class="rise d1">여기까지는 플랫폼의 런타임.<br>지금부터는 <em>여러분의 업무 설계</em>입니다</h1>
+  <div class="contract-compare rise d2">
+    <div class="contract-side fr"><small>A · RUNTIME HARNESS</small><b>이해할 영역</b><ul><li>루프 · 문맥 · 상태 관리<span>Claude Code · Codex 등 플랫폼</span></li><li>도구 실행 · 샌드박스<span>개발팀 · 관리자</span></li><li>재시도 · 복구 · 로그<span>직접 구현하지 않음</span></li></ul></div>
+    <div class="contract-mid">×</div>
+    <div class="contract-side key fr"><small>B · BUSINESS HARNESS*</small><b>직접 설계할 영역</b><ul><li>지도 · Skill · 업무 자료<span>무엇을 읽고 어떤 순서로 일할지</span></li><li>판단 기준 · 좋은 예시<span>무엇을 좋은 결과로 볼지</span></li><li>승인 · 예외 · 완료 조건<span>어디서 멈추고 사람에게 넘길지</span></li></ul></div>
+  </div>
+  <p class="diagram-caption"><b>모델 × 런타임 하네스 × 업무 설계층</b> — 세 요소가 함께 결과를 만듭니다.</p>
+  <p class="fn">* ‘업무 하네스’는 이 강의에서 비개발자가 다루는 <b>하네스의 업무 설계층</b>을 구분하기 위한 표현입니다.</p>
+  <aside class="note">이 장에서 책임선을 확실히 긋는다. “앞의 세 장은 좋은 플랫폼을 알아보기 위한 심화였습니다. 지금부터가 여러분이 직접 만드는 부분입니다.”</aside>
+</section>
+
+<section class="slide diagram-slide" data-part="2교시 · 업무 하네스">
+  <div class="eyebrow rise">B · 업무 하네스 · 실패를 자산으로</div>
+  <h1 class="rise d1">“다시 해봐” 대신,<br><em>무엇을 고칠지</em> 업무 자산에 남깁니다</h1>
   <div class="harness-retro rise d2">
-    <div class="retro-node fr"><small>01</small><b>실패 관찰</b><span>무엇이 실제로 틀렸나</span></div><div class="retro-arrow">→</div>
-    <div class="retro-node key fr"><small>02</small><b>원인 분류</b><span>모델 문제인가<br>하네스 공백인가</span></div><div class="retro-arrow">→</div>
-    <div class="retro-node fr"><small>03</small><b>환경에 인코딩</b><span>지도 · 도구 · 검사 · 규칙</span></div><div class="retro-arrow">→</div>
-    <div class="retro-node fr"><small>04</small><b>다음 실행 강화</b><span>한 번의 검수가 계속 복리로</span></div>
+    <div class="retro-node fr"><small>01</small><b>실패 관찰</b><span>결과에서 무엇이 틀렸나</span></div><div class="retro-arrow">→</div>
+    <div class="retro-node key fr"><small>02</small><b>원인 분류</b><span>절차 · 자료 · 기준<br>권한 중 무엇인가</span></div><div class="retro-arrow">→</div>
+    <div class="retro-node fr"><small>03</small><b>자산 수정</b><span>Skill · 자료 · 예시<br>승인 조건 갱신</span></div><div class="retro-arrow">→</div>
+    <div class="retro-node fr"><small>04</small><b>다음 실행</b><span>한 번의 검수가<br>계속 재사용됨</span></div>
   </div>
   <div class="retro-cases rise d3">
-    <div class="retro-case fr"><b>엉뚱한 파일</b><span>→ 프로젝트 지도</span></div><div class="retro-case fr"><b>무작위 수정</b><span>→ 재현·원인 분류</span></div><div class="retro-case fr"><b>성급한 완료</b><span>→ 결정적 검사</span></div><div class="retro-case fr"><b>구조가 흐트러짐</b><span>→ linter·구조 테스트</span></div>
+    <div class="retro-case fr"><b>순서가 틀림</b><span>→ Skill 절차</span></div><div class="retro-case fr"><b>근거가 빠짐</b><span>→ 자료 · 지도</span></div><div class="retro-case fr"><b>결과가 약함</b><span>→ 예시 · 판단 기준</span></div><div class="retro-case fr"><b>위험한 행동</b><span>→ 승인 · 에스컬레이션</span></div>
   </div>
-  <p class="fn"><a href="https://openai.com/index/harness-engineering/" target="_blank" rel="noreferrer">OpenAI · 실패를 도구·가드레일·문서로 되먹임하는 방식 ↗</a></p>
-  <aside class="note">OpenAI 사례의 핵심: 실패했을 때 “더 열심히 해”가 아니라 무엇이 없었는지 묻고, 그 능력을 에이전트가 읽고 따를 수 있으며 기계적으로 강제 가능한 형태로 만든다.</aside>
+  <p class="diagram-caption">검수 의견을 대화에서 흘려보내지 않고, <b>다음 실행이 읽을 규칙</b>으로 바꿉니다.</p>
 </section>
 
-<section class="slide diagram-slide" data-part="2교시 · 엔진">
-  <div class="eyebrow rise">플랫폼·개발팀 · 프롬프트에서 계약으로</div>
-  <h1 class="rise d1">말로 부탁한 규칙보다,<br><em>기계가 막는 규칙</em>이 강합니다</h1>
+<section class="slide diagram-slide" data-part="2교시 · 업무 하네스">
+  <div class="eyebrow rise">B · 업무 하네스 · 부탁에서 계약으로</div>
+  <h1 class="rise d1">잘하라는 말 대신,<br><em>검수 가능한 업무 계약</em>을 적습니다</h1>
   <div class="contract-compare rise d2">
-    <div class="contract-side fr"><small>PROMPT ONLY</small><b>“잘 지켜줘”</b><ul><li>“레이어를 침범하지 마”<span>문맥이 길어지면 놓칠 수 있음</span></li><li>“테스트하고 끝내”<span>어떤 테스트면 충분한지 모호함</span></li><li>“위험하면 물어봐”<span>위험의 경계가 모델 판단에 남음</span></li></ul></div>
+    <div class="contract-side fr"><small>PROMPT ONLY</small><b>“잘 검토해줘”</b><ul><li>“중요한 것을 확인해줘”<span>무엇이 중요한지 모호함</span></li><li>“문제가 있으면 알려줘”<span>통과와 반려의 경계가 없음</span></li><li>“보기 좋게 정리해줘”<span>산출물 형식이 매번 달라짐</span></li></ul></div>
     <div class="contract-mid">→</div>
-    <div class="contract-side key fr"><small>HARNESS CONTRACT</small><b>위반하면 멈춤</b><ul><li>구조 linter · 의존성 검사<span>잘못된 경로를 기계적으로 거부</span></li><li>요구사항별 테스트 · 검증표<span>완료 조건을 실행 가능한 증거로</span></li><li>권한 정책 · 승인 게이트<span>허용·금지 행동을 실행 전에 차단</span></li></ul></div>
+    <div class="contract-side key fr"><small>BUSINESS CONTRACT</small><b>기준을 글로 고정</b><ul><li>확인 항목 · 필수 근거<span>무엇을 반드시 읽고 확인할지</span></li><li>통과 · 재작업 조건<span>어떤 상태를 완료로 볼지</span></li><li>보고 형식 · 승인 경계<span>언제 멈추고 누구에게 물을지</span></li></ul></div>
   </div>
-  <p class="diagram-caption">판단을 모델 안의 문장에만 두지 않고, <b>모델 밖의 코드 · 스키마 · 테스트</b>로 옮깁니다.</p>
-  <p class="fn"><a href="https://openai.com/index/harness-engineering/" target="_blank" rel="noreferrer">OpenAI · custom linters, structural tests, feedback loops ↗</a></p>
+  <p class="diagram-caption">코드를 몰라도 <b>절차 · 판단 기준 · 중단 조건</b>은 설계할 수 있습니다.</p>
 </section>
 
-<section class="slide diagram-slide" data-part="2교시 · 엔진">
-  <div class="eyebrow rise">H3 · 완료의 정의</div>
-  <h1 class="rise d1">완료는 “됐습니다”가 아니라,<br><em>증거 묶음</em>입니다</h1>
+<section class="slide diagram-slide" data-part="2교시 · 업무 하네스">
+  <div class="eyebrow rise">B · 업무 하네스 · 내가 정하는 완료</div>
+  <h1 class="rise d1">완료는 “됐습니다”가 아니라,<br><em>결과와 근거를 함께 받는 것</em>입니다</h1>
   <div class="evidence-flow rise d2">
-    <div class="evidence-step fr"><small>01</small><b>재현</b><span>수정 전 실패 확인</span></div><div class="evidence-arr">→</div>
-    <div class="evidence-step fr"><small>02</small><b>원인 분류</b><span>관찰과 추측 분리</span></div><div class="evidence-arr">→</div>
-    <div class="evidence-step fr"><small>03</small><b>표적 수정</b><span>진단한 층만 변경</span></div><div class="evidence-arr">→</div>
-    <div class="evidence-step key fr"><small>04</small><b>검증</b><span>요구사항 + 기존 동작</span></div><div class="evidence-arr">→</div>
-    <div class="evidence-step fr"><small>05</small><b>보고</b><span>증거와 한계 기록</span></div>
+    <div class="evidence-step fr"><small>01</small><b>원문 확인</b><span>사용할 자료와 범위</span></div><div class="evidence-arr">→</div>
+    <div class="evidence-step fr"><small>02</small><b>기준 적용</b><span>체크리스트로 판단</span></div><div class="evidence-arr">→</div>
+    <div class="evidence-step fr"><small>03</small><b>결과 작성</b><span>정해둔 형식 준수</span></div><div class="evidence-arr">→</div>
+    <div class="evidence-step key fr"><small>04</small><b>자체 검수</b><span>누락 · 충돌 · 예외</span></div><div class="evidence-arr">→</div>
+    <div class="evidence-step fr"><small>05</small><b>함께 보고</b><span>결과 · 근거 · 한계</span></div>
   </div>
-  <div class="evidence-pack rise d3"><span>행동 기록</span><span>도구 기록</span><span>컨텍스트 기록</span><span class="key">검증 결과</span><span>실패 원인</span><span>사람 개입</span><span>잔여 기술부채</span></div>
-  <p class="diagram-caption">정답을 냈는지가 아니라, <b>검증 가능하고 유지 가능한 변경을 만들었는가</b>를 봅니다.</p>
-  <p class="fn"><a href="https://arxiv.org/html/2605.13357" target="_blank" rel="noreferrer">Zhong &amp; Zhu · trace-based episode package ↗</a></p>
+  <div class="evidence-pack rise d3"><span>사용한 출처</span><span>기준별 체크</span><span class="key">검증 결과</span><span>누락 · 불확실성</span><span>승인이 필요한 항목</span></div>
+  <p class="diagram-caption">검사는 플랫폼이 실행해도, <b>무엇을 증거로 받을지는 업무 담당자가 정의</b>합니다.</p>
 </section>
 
-<section class="slide dense" data-part="2교시 · 엔진">
-  <div class="eyebrow rise">오늘 청중의 경계</div>
-  <h1 class="rise d1">알아야 하지만,<br>여러분이 직접 만드는 층은 아닙니다</h1>
-  <div class="layers harness-stack rise d2">
-    <div class="layer fr"><div class="name">모델</div><div class="what">추론하고 생성하는 기반 지능</div><div class="who">모델 회사</div></div>
-    <div class="layer fr"><div class="name">기본 하네스</div><div class="what">루프 · 도구 실행 · 문맥 관리의 기본기</div><div class="who">Claude Code / Codex</div></div>
-    <div class="layer fr"><div class="name">사내 하네스</div><div class="what">권한 · 감사 · 사내 도구 · 검증 체계</div><div class="who">IT / 개발 / 관리자</div></div>
-    <div class="layer top fr"><div class="name">업무 설계</div><div class="what">Skill · 자료 · 판단 기준 · 예외 · 보고 형식</div><div class="who">여러분</div></div>
-  </div>
-  <p class="tbl-note">비개발자는 루프·샌드박스·문맥 관리자·복구 로직을 구현하지 않습니다. <b>플랫폼을 고르고, 공개된 설정면에 내 업무를 넣습니다.</b></p>
-</section>
-
-<section class="slide diagram-slide" data-part="2교시 · 엔진">
-  <div class="eyebrow rise">Builder가 보여주는 설정면</div>
-  <h1 class="rise d1">비개발자가 만지는 것은,<br><em>하네스 전체가 아니라 노출된 조절판</em>입니다</h1>
+<section class="slide diagram-slide" data-part="2교시 · 업무 하네스">
+  <div class="eyebrow rise">B · 업무 하네스 · Builder 조절판</div>
+  <h1 class="rise d1">비개발자는 Builder에서<br><em>하네스의 업무 설계층</em>을 구성합니다</h1>
   <div class="control-surface rise d2">
     <div class="scope-box locked fr"><small>PLATFORM · 보이지 않음</small><b>하네스 내부</b><ul><li>에이전트 루프 · 재시도 · 복구</li><li>컨텍스트 압축 · 상태 관리</li><li>도구 실행기 · 샌드박스</li><li>로그 · 추적 · 검증 저장</li></ul></div>
     <div class="scope-arrow">→<small>일부만<br>노출</small></div>
@@ -1228,22 +1232,22 @@
     <div class="fix-case key"><b>절차가 틀림</b><span>→ Skill 수정</span></div><div class="fix-case key"><b>자료가 없음</b><span>→ 파일 · Connector</span></div><div class="fix-case"><b>기억·재시도 한계</b><span>→ 플랫폼 선택 / 요청</span></div><div class="fix-case"><b>권한·감사 문제</b><span>→ 관리자 · IT</span></div>
   </div>
   <p class="fn">* 실제 노출 범위는 플랫폼과 조직 정책에 따라 다릅니다.</p>
-  <aside class="note">핵심 멘트: “여러분은 하네스 엔지니어가 될 필요가 없습니다. 좋은 하네스를 가진 플랫폼을 고르고, 그 조절판 안에 여러분만 아는 업무 절차와 기준을 넣는 사람입니다.” 하네스를 배우는 이유는 문제의 위치를 구분하기 위해서다.</aside>
+  <aside class="note">핵심 멘트: “여러분은 런타임 하네스를 구현하지 않습니다. 좋은 하네스를 가진 플랫폼을 고르고, 그 조절판 안에 여러분만 아는 업무 절차와 기준을 넣습니다.” 하네스를 배우는 이유는 문제의 위치를 구분하기 위해서다.</aside>
 </section>
 
-<section class="slide diagram-slide" data-part="2교시 · 엔진">
-  <div class="eyebrow rise">비개발자가 직접 만드는 최대 범위</div>
-  <h1 class="rise d1">여러분이 만드는 것은 하네스가 아니라,<br><em>하네스가 읽고 쓸 업무 자산</em>입니다</h1>
+<section class="slide diagram-slide" data-part="2교시 · 업무 하네스">
+  <div class="eyebrow rise">B · 업무 하네스 · 직접 만드는 최대 범위</div>
+  <h1 class="rise d1">런타임을 만들지 않아도,<br><em>업무 하네스는 직접 구성</em>할 수 있습니다</h1>
   <div class="user-assets rise d2">
     <div class="asset-box key fr"><small>01 · MAP</small><b>업무 지도 · 기억</b><ul><li><code>claude_memory/MEMORY.md</code></li><li><code>gpt_memory/AGENTS.md</code></li><li>용어 · 결정 · 자료 위치 색인</li></ul></div>
     <div class="asset-box fr"><small>02 · MATERIAL</small><b>업무 재료</b><ul><li><code>SKILL.md</code> · 실행 절차</li><li>원문 문서 · 데이터 · 링크</li><li>좋은 예시 · 템플릿</li></ul></div>
     <div class="asset-box fr"><small>03 · CONTRACT</small><b>업무 계약</b><ul><li>판단 기준 · 산출물 형식</li><li>승인 · 예외 · 중단 조건</li><li>사람에게 넘길 조건</li></ul></div>
   </div>
-  <p class="diagram-caption">코드로 루프를 만드는 대신, <b>모델이 찾아 읽고 그대로 일할 수 있는 지도·재료·기준</b>을 만듭니다.</p>
+  <p class="diagram-caption">코드로 루프를 만드는 대신, <b>모델이 찾아 읽고 그대로 일할 지도 · 재료 · 기준</b>을 만듭니다.</p>
 </section>
 
-<section class="slide diagram-slide" data-part="2교시 · 엔진">
-  <div class="eyebrow rise">그렇다면 플랫폼에는 무엇을 요청할까요?</div>
+<section class="slide diagram-slide" data-part="2교시 · 업무 하네스">
+  <div class="eyebrow rise">B · 업무 하네스 · 플랫폼에 요구할 것</div>
   <h1 class="rise d1">내가 업무 자산을 만들면,<br>플랫폼은 <em>여섯 가지를 보장</em>해야 합니다</h1>
   <div class="platform-asks rise d2">
     <div class="platform-ask key fr"><small>01 · LOAD</small><b>정확한 로딩</b><span>지도를 먼저 읽고, 관련 원문만 선택해 불러오기</span></div>
@@ -1257,8 +1261,8 @@
   <aside class="note">제품 이름이 아니라 요구사항을 말하게 한다. 각 제품에 “가능/불가/관리자 설정 필요”를 체크하면 플랫폼 비교표가 된다.</aside>
 </section>
 
-<section class="slide diagram-slide" data-part="2교시 · 엔진">
-  <div class="eyebrow rise">플랫폼 내부를 들여다보기 · claude_memory</div>
+<section class="slide diagram-slide" data-part="2교시 · 업무 하네스">
+  <div class="eyebrow rise">B · 업무 하네스 · claude_memory</div>
   <h1 class="rise d1">이 앱을 만들며 쌓인 실제 작업 지도입니다</h1>
   <div class="memory-proof rise d2">
     <div class="folder-tree fr"><small>PROJECT FOLDER</small><code><b>claude_memory/</b>
@@ -1273,9 +1277,9 @@
   <aside class="note">여기서 실제 claude_memory 폴더를 연다. MEMORY.md는 짧게, 주제 메모는 나뉘어 있는 모습을 보여준다.</aside>
 </section>
 
-<section class="slide diagram-slide" data-part="2교시 · 엔진">
-  <div class="eyebrow rise">AUTO HARNESS · 기억 루프</div>
-  <h1 class="rise d1">기억 하네스를 붙이면, 일하면서 지도를 갱신합니다</h1>
+<section class="slide diagram-slide" data-part="2교시 · 업무 하네스">
+  <div class="eyebrow rise">B · 업무 하네스 · 기억 루프</div>
+  <h1 class="rise d1">플랫폼이 기억 기능을 제공하면,<br>모델이 일하면서 지도를 갱신합니다</h1>
   <div class="memory-route rise d2">
     <div class="route-node fr"><small>01 · OBSERVE</small><b>작업에서 발견</b><span>결정 · 실수 · 제약</span></div><div class="route-arrow">→</div>
     <div class="route-node fr"><small>02 · COMPRESS</small><b>짧게 요약</b><span>주제별 메모로 분리</span></div><div class="route-arrow">→</div>
@@ -1285,8 +1289,8 @@
   <p class="diagram-caption">하네스가 저장 자리와 불러오는 규칙을 제공하고, <b>모델이 요약과 색인을 작성</b>합니다.</p>
 </section>
 
-<section class="slide diagram-slide" data-part="2교시 · 엔진">
-  <div class="eyebrow rise">Codex도 같은 패턴</div>
+<section class="slide diagram-slide" data-part="2교시 · 업무 하네스">
+  <div class="eyebrow rise">B · 업무 하네스 · Codex</div>
   <h1 class="rise d1">Codex에는 <em>AGENTS.md</em>를 줍니다</h1>
   <div class="agents-proof rise d2">
     <div class="agents-file fr"><small>강의용 샘플 보관</small><b>gpt_memory/<br>AGENTS.md</b><span>단수 agent.md가 아니라 복수형</span></div>
@@ -1297,8 +1301,8 @@
   <aside class="note">강의용 예시 파일 gpt_memory/AGENTS.md를 연다. 저장소 전체에 적용하려면 루트로 옮겨야 한다고 분명히 말한다. Codex 공식 문서의 요지: 저장소 레이아웃, 실행법, 관례, 금지사항, 완료·검증 기준을 짧고 정확하게 둔다.</aside>
 </section>
 
-<section class="slide diagram-slide" data-part="2교시 · 엔진">
-  <div class="eyebrow rise">하나의 운영 법칙</div>
+<section class="slide diagram-slide" data-part="2교시 · 업무 하네스">
+  <div class="eyebrow rise">B · 업무 하네스 · 하나의 운영 법칙</div>
   <h1 class="rise d1">RAG · 메모리 · 온톨로지에는<br>공통된 운영 패턴이 있습니다</h1>
   <div class="one-law rise d2">
     <div class="head">분야</div><div class="head">먼저 보는 지도</div><div class="head">필요할 때 펼치는 것</div>
@@ -1310,8 +1314,8 @@
   <p class="diagram-caption">전부 넣지 말고 — <b>찾을 수 있게 구조화한 뒤, 지금 필요한 것만 펼칩니다.</b></p>
 </section>
 
-<section class="slide diagram-slide" data-part="2교시 · 엔진">
-  <div class="eyebrow rise">왜 지도부터 그릴까요?</div>
+<section class="slide diagram-slide" data-part="2교시 · 업무 하네스">
+  <div class="eyebrow rise">B · 업무 하네스 · 왜 지도부터?</div>
   <h1 class="rise d1">단순한 Markdown이, attention을 아끼는 주소표가 됩니다</h1>
   <div class="attention-map rise d2">
     <div class="attention-box fr"><small>원문을 전부 넣기</small><b>모든 토큰이 경쟁</b><div class="token-grid"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>표준 self-attention의 계산량<br><strong>O(n²)</strong></p></div>
@@ -1324,7 +1328,7 @@
 
 <section class="slide statement" data-part="2교시 · 엔진">
   <div class="eyebrow rise">2교시 요약</div>
-  <h1 class="rise d1 summary-fit"><span>“내가 만드는 것은</span><br><span><em>지도 · Skill · 자료 · 기준.</em></span><br><span>플랫폼에 요구할 것은</span><br><span><em>로딩 · 실행 · 검증 · 감사.</em>”</span></h1>
+  <h1 class="rise d1 summary-fit"><span>“런타임 하네스는 플랫폼이,</span><br><span><em>업무 하네스는 내가.</em></span><br><span>나는 지도 · Skill · 자료 · 기준을 만들고,</span><br><span><em>로딩 · 실행 · 검증 · 감사</em>를 요구합니다.”</span></h1>
 </section>
 
 <section class="slide break-slide" data-part="쉬는 시간" data-sec="600">
@@ -1539,7 +1543,7 @@
   <h1 class="rise d1">가지고 가실 것</h1>
   <ul class="plain rise d2">
     <li class="fr">에이전트는 이미 준비되어 있다 — 내가 만들 것은 <span class="seal-c">Skill</span>이다</li>
-    <li class="fr">나는 <span class="seal-c">지도 · Skill · 자료 · 기준</span>을 만들고, 플랫폼에는 로딩 · 실행 · 검증 · 감사를 요구한다</li>
+    <li class="fr"><span class="slate-c">런타임 하네스</span>는 플랫폼에 요구하고, <span class="seal-c">업무 하네스</span>는 지도 · Skill · 자료 · 기준으로 직접 설계한다</li>
     <li class="fr">대화면 Desktop, 파일 작업이면 Code</li>
     <li class="fr">배워야 할 것은 구현 기술이 아니라 <span class="seal-c">내 업무의 연출 언어</span>다</li>
   </ul>
